@@ -372,7 +372,7 @@ Part of your job is to build a model to find out which drug might be appropriate
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Some features in this dataset are categorical, such as Sex and BP. Unfortunately, sklearn Decsion Trees do not handle categorical variables. So convert these features to numerical values. <strong>pandas.get_dummies()</strong> converts categorical variables into dummy/indicator variables.</p>
+<p>Some features in this dataset are categorical, such as Sex and BP. Unfortunately, sklearn Decision Trees do not handle categorical variables. So convert these features to numerical values. <code>pandas.get_dummies()</code> converts categorical variables into dummy/indicator variables.</p>
 
 </div>
 </div>
@@ -536,7 +536,7 @@ The shape of the test set target (60,)
 <h3 id="Modeling">
 <a class="anchor" href="#Modeling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modeling<a class="anchor-link" href="#Modeling"> </a>
 </h3>
-<p>First, we will create an instance of the <strong>DecisionTreeClassifier</strong> called <strong>drugTree</strong>. Inside of the classifier, specify <em>criterion='entropy'</em> so that we can see the information gain of each node.</p>
+<p>First, we will create an instance of the <strong>DecisionTreeClassifier</strong> called <strong>drugTree</strong>. Inside of the classifier, specify <code>criterion='entropy'</code> so that we can see the information gain of each node.</p>
 
 </div>
 </div>
@@ -633,7 +633,7 @@ The shape of the test set target (60,)
 <h3 id="Prediction">
 <a class="anchor" href="#Prediction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prediction<a class="anchor-link" href="#Prediction"> </a>
 </h3>
-<p>Let's make some predictions on the testing dataset and store it into a variable called <strong>PredTree</strong>.</p>
+<p>Let's make some predictions on the testing dataset and store it into a variable called <code>predTree</code>.</p>
 
 </div>
 </div>
@@ -708,7 +708,7 @@ Name: Drug, dtype: object
 <h3 id="Evaluation">
 <a class="anchor" href="#Evaluation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluation<a class="anchor-link" href="#Evaluation"> </a>
 </h3>
-<p>Next, let's import <strong>metrics</strong> from sklearn and check the accuracy of our model.</p>
+<p>Next, let's import <code>metrics</code> from sklearn and check the accuracy of our model.</p>
 
 </div>
 </div>
