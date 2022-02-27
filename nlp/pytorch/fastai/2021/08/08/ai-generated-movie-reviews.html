@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>AI-generated Movie Reviews | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="AI-generated Movie Reviews" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="We will create a language model that will generate its own movie reviews." />
+<meta property="og:description" content="We will create a language model that will generate its own movie reviews." />
+<link rel="canonical" href="https://shirolepranav.github.io/blog/nlp/pytorch/fastai/2021/08/08/ai-generated-movie-reviews.html" />
+<meta property="og:url" content="https://shirolepranav.github.io/blog/nlp/pytorch/fastai/2021/08/08/ai-generated-movie-reviews.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-08T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="AI-generated Movie Reviews" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-08-08T00:00:00-05:00","datePublished":"2021-08-08T00:00:00-05:00","description":"We will create a language model that will generate its own movie reviews.","headline":"AI-generated Movie Reviews","mainEntityOfPage":{"@type":"WebPage","@id":"https://shirolepranav.github.io/blog/nlp/pytorch/fastai/2021/08/08/ai-generated-movie-reviews.html"},"url":"https://shirolepranav.github.io/blog/nlp/pytorch/fastai/2021/08/08/ai-generated-movie-reviews.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shirolepranav.github.io/blog/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">AI-generated Movie Reviews</h1><p class="page-description">We will create a language model that will generate its own movie reviews.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-08-08T00:00:00-05:00" itemprop="datePublished">
+        Aug 8, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#nlp">nlp</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#pytorch">pytorch</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#fastai">fastai</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/shirolepranav/blog/tree/master/_notebooks/2021-08-08-ai-generated-movie-reviews.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/shirolepranav/blog/master?filepath=_notebooks%2F2021-08-08-ai-generated-movie-reviews.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/shirolepranav/blog/blob/master/_notebooks/2021-08-08-ai-generated-movie-reviews.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fshirolepranav%2Fblog%2Fblob%2Fmaster%2F_notebooks%2F2021-08-08-ai-generated-movie-reviews.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Training-a-Text-Classifier">Training a Text Classifier </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Language-Model-using-DataBlock">Language Model using DataBlock </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Fine-tuning-the-Language-Model">Fine-tuning the Language Model </a></li>
+<li class="toc-entry toc-h2"><a href="#Text-Generation">Text Generation </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-08-08-ai-generated-movie-reviews.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This blog post is basically a continuation of my previous post and you should definitely read that if you want to better understand the methodology behind the process used in this task.</p>
+<p>The dataset we’ll be using is the <a href="https://ai.stanford.edu/~amaas/data/sentiment/">IMDb Large Movie Review Dataset</a>, which contains 25,000 highly polarized movie reviews for training, and 25,000 for testing.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">Uqq</span> <span class="n">fastbook</span>
+<span class="kn">import</span> <span class="nn">fastbook</span>
+<span class="n">fastbook</span><span class="o">.</span><span class="n">setup_book</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>     |████████████████████████████████| 727kB 4.4MB/s 
+     |████████████████████████████████| 204kB 37.9MB/s 
+     |████████████████████████████████| 51kB 5.7MB/s 
+     |████████████████████████████████| 1.2MB 38.5MB/s 
+     |████████████████████████████████| 61kB 5.9MB/s 
+     |████████████████████████████████| 61kB 7.2MB/s 
+Mounted at /content/gdrive
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">fastbook</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">fastai.text.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">untar_data</span><span class="p">(</span><span class="n">URLs</span><span class="o">.</span><span class="n">IMDB</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">Path</span><span class="o">.</span><span class="n">BASE_PATH</span> <span class="o">=</span> <span class="n">path</span>
+<span class="n">path</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#7) [Path('imdb.vocab'),Path('train'),Path('README'),Path('tmp_clas'),Path('test'),Path('tmp_lm'),Path('unsup')]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We’ll grab the text files using <code>get_text_files</code>, which gets all the text files in a pth. We can optionally pass <code>folders</code> to restrict the search to a particular list of subfolders.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">files</span> <span class="o">=</span> <span class="n">get_text_files</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">folders</span><span class="o">=</span><span class="p">[</span><span class="s1">'train'</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">,</span> <span class="s1">'unsup'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">txt</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">open</span><span class="p">()</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">txt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>"Dressed to Kill (1980) is a mystery horror film from Brian De Palma and it really works.The atmosphere is right there.The atmosphere that makes you scared.And isn't that what a horror film is supposed to do.All the actors are in the right places.Michael Caine is perfect as Dr. Robert Elliott, the shrink with a little secret.Angie Dickinson as Kate Miller, the sexually frustrated mature woman is terrific.Keith Gordon as her son Peter is brilliant.Nancy Allen as Liz Blake the call girl is fantastic.Dennis Franz does his typical detective role.His Detective Marino is one of the most colorful in this movie.There are plenty of creepy scenes in this movie.The elevator scene is one of them.There have been made comparisons between this and Alfred Hitchcock's Psycho (1960).There are some similarities between these two movies.Both of these movies may cause some sleepless nights."</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Training-a-Text-Classifier">
+<a class="anchor" href="#Training-a-Text-Classifier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training a Text Classifier<a class="anchor-link" href="#Training-a-Text-Classifier"> </a>
+</h2>
+<h3 id="Language-Model-using-DataBlock">
+<a class="anchor" href="#Language-Model-using-DataBlock" aria-hidden="true"><span class="octicon octicon-link"></span></a>Language Model using DataBlock<a class="anchor-link" href="#Language-Model-using-DataBlock"> </a>
+</h3>
+<p>Fastai handles tokenization and numericalization automatically when <code>TextBlock</code> is passed to <code>DataBlock</code>.
+Let’s create a language model using <code>TextBlock</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">get_imdb</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">get_text_files</span><span class="p">,</span> <span class="n">folders</span><span class="o">=</span><span class="p">[</span><span class="s1">'train'</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">,</span> <span class="s1">'unsup'</span><span class="p">])</span>
+
+<span class="n">dls_lm</span> <span class="o">=</span> <span class="n">DataBlock</span><span class="p">(</span>
+    <span class="n">blocks</span><span class="o">=</span><span class="n">TextBlock</span><span class="o">.</span><span class="n">from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">is_lm</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">get_items</span><span class="o">=</span><span class="n">get_imdb</span><span class="p">,</span> <span class="n">splitter</span><span class="o">=</span><span class="n">RandomSplitter</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">72</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">dls_lm</span><span class="o">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>text_</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>xxbos xxmaj being that i am not a fan of xxmaj snoop xxmaj dogg , as an actor , that made me even more anxious to check out this flick . i remember he was interviewed on " jay xxmaj leno , " and said that he turned down a role in the big - budget xxmaj adam xxmaj sandler comedy " the xxmaj longest xxmaj yard " to be in this</td>
+      <td>xxmaj being that i am not a fan of xxmaj snoop xxmaj dogg , as an actor , that made me even more anxious to check out this flick . i remember he was interviewed on " jay xxmaj leno , " and said that he turned down a role in the big - budget xxmaj adam xxmaj sandler comedy " the xxmaj longest xxmaj yard " to be in this film</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>viewer , the first number in the series does provide an unexpected element of suspense in addition to capable costuming from xxmaj ha xxmaj nguyen , fine stunt performing , and a polished turn from xxmaj carr . xxmaj an unrated version is available that seemingly promises to provide additional footage of the ardent romantic actions shared by the mismatched lovers . xxbos xxmaj the xxmaj minion is about … well ,</td>
+      <td>, the first number in the series does provide an unexpected element of suspense in addition to capable costuming from xxmaj ha xxmaj nguyen , fine stunt performing , and a polished turn from xxmaj carr . xxmaj an unrated version is available that seemingly promises to provide additional footage of the ardent romantic actions shared by the mismatched lovers . xxbos xxmaj the xxmaj minion is about … well , a</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that our data is ready, we can fine-tune the pretrained language model.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Fine-tuning-the-Language-Model">
+<a class="anchor" href="#Fine-tuning-the-Language-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fine-tuning the Language Model<a class="anchor-link" href="#Fine-tuning-the-Language-Model"> </a>
+</h2>
+<p>To convert the integer word indices into activations that we can use for our neural network, we will use embeddings. We’ll feed those embeddings into a <em>recurrent neural network</em> (RNN), using an architecture called <em>AWD-LSTM</em>.
+The embeddings in the pretrained model are merged with random embeddings added for words that weren’t in the pretraining vocabulary. This is handled automatically inside <code>language_model_learner</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">language_model_learner</span><span class="p">(</span>
+    <span class="n">dls_lm</span><span class="p">,</span> <span class="n">AWD_LSTM</span><span class="p">,</span> <span class="n">drop_mult</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">Perplexity</span><span class="p">()]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to_fp16</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">2e-2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>perplexity</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>4.128321</td>
+      <td>4.070849</td>
+      <td>0.284800</td>
+      <td>58.606724</td>
+      <td>29:54</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>3.995339</td>
+      <td>3.938066</td>
+      <td>0.296213</td>
+      <td>51.319229</td>
+      <td>29:57</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3.860701</td>
+      <td>3.867283</td>
+      <td>0.303124</td>
+      <td>47.812309</td>
+      <td>30:00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">unfreeze</span><span class="p">()</span>
+<span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">2e-3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>perplexity</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>3.675387</td>
+      <td>3.746690</td>
+      <td>0.317715</td>
+      <td>42.380569</td>
+      <td>32:10</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>3.645742</td>
+      <td>3.704438</td>
+      <td>0.322705</td>
+      <td>40.627209</td>
+      <td>32:08</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3.605402</td>
+      <td>3.664308</td>
+      <td>0.327991</td>
+      <td>39.029121</td>
+      <td>31:54</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3.535574</td>
+      <td>3.633687</td>
+      <td>0.331826</td>
+      <td>37.852131</td>
+      <td>31:51</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>3.451682</td>
+      <td>3.618303</td>
+      <td>0.334019</td>
+      <td>37.274242</td>
+      <td>31:41</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3.417034</td>
+      <td>3.603825</td>
+      <td>0.336183</td>
+      <td>36.738476</td>
+      <td>31:49</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>3.359589</td>
+      <td>3.594853</td>
+      <td>0.337721</td>
+      <td>36.410355</td>
+      <td>31:44</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>3.266180</td>
+      <td>3.592850</td>
+      <td>0.338945</td>
+      <td>36.337505</td>
+      <td>31:36</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>3.213485</td>
+      <td>3.597207</td>
+      <td>0.339176</td>
+      <td>36.496162</td>
+      <td>31:34</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>3.178523</td>
+      <td>3.602469</td>
+      <td>0.339008</td>
+      <td>36.688713</td>
+      <td>31:36</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Text-Generation">
+<a class="anchor" href="#Text-Generation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Text Generation<a class="anchor-link" href="#Text-Generation"> </a>
+</h2>
+<p>Let’s use our model to generate random reviews. Since it is trained to guess what the next word of the sentence is, we can use the model to write new reviews.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">TEXT</span> <span class="o">=</span> <span class="s1">'This movie is terrible'</span>
+<span class="n">N_WORDS</span> <span class="o">=</span> <span class="mi">70</span>
+<span class="n">N_SENTENCES</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="p">[</span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">N_WORDS</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_SENTENCES</span><span class="p">)]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">preds</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>This movie is terrible ! It 's terrible . The actors are ALL bad . The story is bad . The special effects are TERRIBLE . And that 's really the only thing that will save this movie . The plot is pathetic . The movie is just boring . a group of people are about to end up in a mental hospital where they
+
+This movie is terrible . My friend went to see it and we were so disappointed . I 'm not usually a fan of the book but i had earlier read that Chris Columbus wrote some of the best writing , directing and directing since , well , there are no words to describe how bad this piece of garbage was . It was a complete waste of time
+
+This movie is terrible . And it has been very long . i did n't think it was even worth the rental , but it was very recommended . If you are into action movies , be sure to rent Titanic . You will be disappointed . It is a well made movie . The acting is good enough to keep your interest . Everything about this
+
+This movie is terrible . Not only is it offensive in spots , it only gets worse . It has no story line . No acting and dead and cheap special effects . What a waste of talent . My 3 year old son was laughing , not laughing . Well , i really loved the first film . This one is clearly one of the
+
+This movie is terrible , i do n't know why i could n't find it , it was so awful that i had to leave the room after this horrible film was finished . 
+
+ The plot was so stupid that it went on way too long . It was painful to watch . The fact that the audience was so bored was incredible . The only reason this film
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="shirolepranav/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/nlp/pytorch/fastai/2021/08/08/ai-generated-movie-reviews.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" target="_blank" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
