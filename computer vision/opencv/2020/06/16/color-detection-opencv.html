@@ -1,21 +1,110 @@
-<h1 id="creating-a-color-detector-using-opencv-and-python">Creating a Color Detector using OpenCV and Python</h1>
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Creating a Color Detector using OpenCV | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Creating a Color Detector using OpenCV" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="We will create a Color Detector that will detect color names and RGB values from any picture." />
+<meta property="og:description" content="We will create a Color Detector that will detect color names and RGB values from any picture." />
+<link rel="canonical" href="https://shirolepranav.github.io/blog/computer%20vision/opencv/2020/06/16/color-detection-opencv.html" />
+<meta property="og:url" content="https://shirolepranav.github.io/blog/computer%20vision/opencv/2020/06/16/color-detection-opencv.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-16T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Creating a Color Detector using OpenCV" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-06-16T00:00:00-05:00","datePublished":"2020-06-16T00:00:00-05:00","description":"We will create a Color Detector that will detect color names and RGB values from any picture.","headline":"Creating a Color Detector using OpenCV","mainEntityOfPage":{"@type":"WebPage","@id":"https://shirolepranav.github.io/blog/computer%20vision/opencv/2020/06/16/color-detection-opencv.html"},"url":"https://shirolepranav.github.io/blog/computer%20vision/opencv/2020/06/16/color-detection-opencv.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shirolepranav.github.io/blog/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 
-<blockquote>
-  <p>We will create a Color Detector that will detect color names and RGB values from any picture.</p>
-</blockquote>
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
 
-<ul>
-  <li>toc: true</li>
-  <li>branch: master</li>
-  <li>badges: true</li>
-  <li>comments: true</li>
-  <li>categories: [computer vision, opencv]</li>
-</ul>
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
 
-<p>In this blog post, we will create a Color Detector that will detect color names and RGB values from any picture using Python and OpenCV. The application will gives us the name of the color when we click on any area in the picture.<br />
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Creating a Color Detector using OpenCV</h1><p class="page-description">We will create a Color Detector that will detect color names and RGB values from any picture.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-16T00:00:00-05:00" itemprop="datePublished">
+        Jun 16, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#computer vision">computer vision</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#opencv">opencv</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#the-dataset">The dataset</a></li>
+</ul><p>In this blog post, we will create a Color Detector that will detect color names and RGB values from any picture using Python and OpenCV. The application will gives us the name of the color when we click on any area in the picture.<br>
 We have a data file that contains color names and its RGB values. We will calculate the distance from each color and find the shortest one. We can use an IDE like Spyder or PyCharm for this project.</p>
 
-<h2 id="the-dataset">The dataset</h2>
+<h2 id="the-dataset">
+<a class="anchor" href="#the-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>The dataset</h2>
 <p>Colors are made up of 3 primary colors: red, green and blue. Computers define each color value within a range of 0 to 255. We will be using a dataset (<a href="https://github.com/codebrainz/color-names/blob/master/output/colors.csv">download here</a>) that contains 865 RGB values with their corresponding names.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># import libraries
@@ -81,7 +170,7 @@ We have a data file that contains color names and its RGB values. We will calcul
     <span class="k">return</span> <span class="n">cname</span>
 </code></pre></div></div>
 
-<p>Whenever we double-click on a pixel on the image, the corresponding color name and RGB values will appear on the top of the window.<br />
+<p>Whenever we double-click on a pixel on the image, the corresponding color name and RGB values will appear on the top of the window.<br>
 Using the <code class="language-plaintext highlighter-rouge">cv2.imshow()</code> function, we draw the image on the window. When the user double clicks the window, we draw a rectangle using <code class="language-plaintext highlighter-rouge">cv2.rectangle</code> and get the color name to draw text on the window using <code class="language-plaintext highlighter-rouge">cv2.putText()</code>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
@@ -118,11 +207,53 @@ Using the <code class="language-plaintext highlighter-rouge">cv2.imshow()</code>
 
 <p>Below are some examples of color detection on an image in my files. The area surrounded by a red square is where I double-clicked my mouse to find the color of that spot. You can use this application on some of your images as well.</p>
 
-<p><img src="/blog/images/notebooks/color_detection/Capture4.png" alt="" /></p>
+<p><img src="/blog/images/notebooks/color_detection/Capture4.png" alt=""></p>
 
-<p><img src="/blog/images/notebooks/color_detection/Capture5.png" alt="" /></p>
+<p><img src="/blog/images/notebooks/color_detection/Capture5.png" alt=""></p>
 
-<p><img src="/blog/images/notebooks/color_detection/Capture6.png" alt="" /></p>
+<p><img src="/blog/images/notebooks/color_detection/Capture6.png" alt=""></p>
 
-<hr />
+<hr>
 
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="shirolepranav/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/computer%20vision/opencv/2020/06/16/color-detection-opencv.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" target="_blank" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
