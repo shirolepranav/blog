@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Classifying movie reviews using Sentiment Analysis and ULMFit | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Classifying movie reviews using Sentiment Analysis and ULMFit" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="We will create a language model that will classify movie reviews into positive reviews and negative reviews, based on their sentiment." />
+<meta property="og:description" content="We will create a language model that will classify movie reviews into positive reviews and negative reviews, based on their sentiment." />
+<link rel="canonical" href="https://shirolepranav.github.io/blog/nlp/pytorch/fastai/2021/07/15/classifying-movie-reviews.html" />
+<meta property="og:url" content="https://shirolepranav.github.io/blog/nlp/pytorch/fastai/2021/07/15/classifying-movie-reviews.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-07-15T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Classifying movie reviews using Sentiment Analysis and ULMFit" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-07-15T00:00:00-05:00","datePublished":"2021-07-15T00:00:00-05:00","description":"We will create a language model that will classify movie reviews into positive reviews and negative reviews, based on their sentiment.","headline":"Classifying movie reviews using Sentiment Analysis and ULMFit","mainEntityOfPage":{"@type":"WebPage","@id":"https://shirolepranav.github.io/blog/nlp/pytorch/fastai/2021/07/15/classifying-movie-reviews.html"},"url":"https://shirolepranav.github.io/blog/nlp/pytorch/fastai/2021/07/15/classifying-movie-reviews.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shirolepranav.github.io/blog/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Classifying movie reviews using Sentiment Analysis and ULMFit</h1><p class="page-description">We will create a language model that will classify movie reviews into positive reviews and negative reviews, based on their sentiment.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-07-15T00:00:00-05:00" itemprop="datePublished">
+        Jul 15, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      29 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#nlp">nlp</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#pytorch">pytorch</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#fastai">fastai</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/shirolepranav/blog/tree/master/_notebooks/2021-07-15-classifying-movie-reviews.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/shirolepranav/blog/master?filepath=_notebooks%2F2021-07-15-classifying-movie-reviews.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/shirolepranav/blog/blob/master/_notebooks/2021-07-15-classifying-movie-reviews.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fshirolepranav%2Fblog%2Fblob%2Fmaster%2F_notebooks%2F2021-07-15-classifying-movie-reviews.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Preprocessing-the-text">Preprocessing the text </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Tokenization">Tokenization </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Word-Tokenization">Word Tokenization </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Numericalization">Numericalization </a></li>
+<li class="toc-entry toc-h3"><a href="#Putting-our-Texts-into-Batches-for-a-Language-Model">Putting our Texts into Batches for a Language Model </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Training-a-Text-Classifier">Training a Text Classifier </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Language-Model-using-DataBlock">Language Model using DataBlock </a></li>
+<li class="toc-entry toc-h3"><a href="#Fine-tuning-the-Language-Model">Fine-tuning the Language Model </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Creating-the-Classifier-DataLoaders">Creating the Classifier DataLoaders </a></li>
+<li class="toc-entry toc-h2"><a href="#Fine-Tuning-the-Classifier">Fine-Tuning the Classifier </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-07-15-classifying-movie-reviews.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this blog post, we will create a language model that will classify movie reviews into positive reviews and negative reviews, based on their sentiment.</p>
+<p>A language model is basically a model that can guess the next word in a text, while having read the ones before. This kind of task is called self-supervised learning, wherein we train a model using labels that are embeeded in the independent variable, rather than requiring external labels.</p>
+<p>The dataset we'll be using is the <a href="http://ai.stanford.edu/~amaas/data/sentiment/">IMDb Large Movie Review Dataset</a>, which contains 25,000 highly polarized movie reviews for training, and 25,000 for testing.</p>
+<p>For this task, we will be using the <strong>Universal Language Model Fine-Tuning (ULMFit)</strong> approach. First, we will train our language model using a model pretrained on Wikipedia. Then we will go one step further by fine-tuning our pretrained language model to the IMBD corpus, and then use <em>that</em> as the base for our classifer. Basically, we'll be fine-tuning the sequence-based language model prior to fine-tuning the classification model.
+Even if our language model knows the basics of the language we are using in the task, it is benefitial to understand the style of the corpus we are targeting. For e.g., in the IMDB dataset, there will be lots of names of movie directors and actors, and often a less formal style of language than that seen in Wikipedia.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install -Uqq fastbook
+<span class="kn">import</span> <span class="nn">fastbook</span>
+<span class="n">fastbook</span><span class="o">.</span><span class="n">setup_book</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>     |████████████████████████████████| 727kB 11.2MB/s 
+     |████████████████████████████████| 1.2MB 23.8MB/s 
+     |████████████████████████████████| 204kB 30.5MB/s 
+     |████████████████████████████████| 51kB 5.4MB/s 
+     |████████████████████████████████| 61kB 5.7MB/s 
+     |████████████████████████████████| 51kB 6.2MB/s 
+Mounted at /content/gdrive
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">fastbook</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's download the dataset.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">fastai.text.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">untar_data</span><span class="p">(</span><span class="n">URLs</span><span class="o">.</span><span class="n">IMDB</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">Path</span><span class="o">.</span><span class="n">BASE_PATH</span> <span class="o">=</span> <span class="n">path</span>
+<span class="n">path</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#7) [Path('tmp_lm'),Path('test'),Path('train'),Path('README'),Path('tmp_clas'),Path('unsup'),Path('imdb.vocab')]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We'll grab the text files using <code>get_text_files</code>, which gets all the text files in a pth. We can optionally pass <code>folders</code> to restrict the search to a particular list of subfolders.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">files</span> <span class="o">=</span> <span class="n">get_text_files</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">folders</span><span class="o">=</span><span class="p">[</span><span class="s1">'train'</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">,</span> <span class="s1">'unsup'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here's a random review we can look at.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">txt</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">open</span><span class="p">()</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">txt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'I saw this "movie" partly because of the sheer number of good reviews at Netflix, and from it I leaned a valuable lesson. Not a lesson about ethnic diversity however...the lesson I learned is "Don\'t trust reviews".&lt;br /&gt;&lt;br /&gt;Yes, racism sucks and people are complicated, but the people who actually need to see this movie are going to be the ones who are the least drawn to it and least affected by it if they DO see it. The only reason that I can think of for the number of good reviews is that it\'s being reviewed by people who aren\'t used to thinking, or who\'ve seen their first thought-provoking movie and somehow think that Haggis invented the concept. In fact, he basically made this film, which should be called "Racism For Dummies", as emotionally wrenching as possible, seemingly to give people who don\'t spend a lot of time thinking the impression that they\'ve discovered some fundamental truth that\'s never been covered in a film before. Zen and the Art of Motorcycle Maintanence it\'s not... An after-school special for the unthinking masses, cut into bite-sized overwrought ham-fisted pieces to make it easier to swallow without too much introspection.&lt;br /&gt;&lt;br /&gt;It\'s as if they portrayed everyone as being the worst possible extreme, simply to make us happy that we\'re such good people because we don\'t identify with the characters. Let\'s face it people. NOBODY identifies with these characters because they\'re all cardboard cutouts and stereotypes (or predictably reverse-stereotypes). It\'s well acted (even if the dialog is atrocious) and cleverly executed, so much that you don\'t think to ask "where\'s the beef?" until you can tell the film is winding down. The flaming car scene was well executed, like much of the movie, but went nowhere in the end. &lt;br /&gt;&lt;br /&gt;The messages are very heavy-handed, and from the "behind the scenes" blurb, the producers were clearly watching a different movie, because there is very little to laugh about in this movie, even during the intended funny parts. I have to stress that this is NOT entertainment, more like a high school diversity lesson...call it the "Blood on the Highway" of racism. They could even show this in high schools if it weren\'t for the "side-nude" shot of Jennifer Esposito.&lt;br /&gt;&lt;br /&gt;In this film, everyone\'s a jerk and everyone learns a lesson (except for Michael Pena who gets the best role, but the most predictable storyline).&lt;br /&gt;&lt;br /&gt;This is a bad film, with bad writing, and good actors....an ugly cartoon crafted by Paul Haggis for people who can\'t handle anything but the bold strokes in storytelling....a picture painted with crayons.&lt;br /&gt;&lt;br /&gt;Crash is a depressing little nothing, that provokes emotion, but teaches you nothing if you already know racism and prejudice are bad things.'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Preprocessing-the-text">
+<a class="anchor" href="#Preprocessing-the-text" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preprocessing the text<a class="anchor-link" href="#Preprocessing-the-text"> </a>
+</h2>
+<p>We'll be using the following operations to preprocess the text:</p>
+<ol>
+<li>Tokenization</li>
+<li>Numericalization</li>
+<li>Language-model DataLoader creation</li>
+<li>Language-model creation</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Tokenization">
+<a class="anchor" href="#Tokenization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tokenization<a class="anchor-link" href="#Tokenization"> </a>
+</h3>
+<p>Tokenization converts the text into a list of words or characters or substrings, depending on the granularity of the model.<br>
+There are three main approaches: word-based, subword based, and character-based.<br>
+We'll use word tokenization here since we're just dealing with the plain English language and words are separated by spaces.</p>
+<h4 id="Word-Tokenization">
+<a class="anchor" href="#Word-Tokenization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Word Tokenization<a class="anchor-link" href="#Word-Tokenization"> </a>
+</h4>
+<p>We'll use <code>WordTokenizer</code> for word tokenization. It uses fastai's current default word tokenizer, which is <em>spaCy</em> for now. The <em>spaCy</em> library has a sophisticated rules engine with special rules for URLs, individual special English words, and much more.<br>
+We'll use fastai's <code>coll_repr(collection, n)</code> function to display the results. This displays the first <em>n</em> items of a <em>collection</em>, along with the full size. Also, fastai's tokenizers take a collection of documents to tokenize, so we have to wrap <code>txt</code> in a list.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">spacy</span> <span class="o">=</span> <span class="n">WordTokenizer</span><span class="p">()</span>
+<span class="n">toks</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">spacy</span><span class="p">([</span><span class="n">txt</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">coll_repr</span><span class="p">(</span><span class="n">toks</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(#560) ['I','saw','this','"','movie','"','partly','because','of','the','sheer','number','of','good','reviews','at','Netflix',',','and','from','it','I','leaned','a','valuable','lesson','.','Not','a','lesson'...]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As you can see, the words and punctuations have been separated.</p>
+<p>Let's use the <code>Tokenizer</code> class to add some additional functionality to the tokenization process.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tkn</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span><span class="n">spacy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">coll_repr</span><span class="p">(</span><span class="n">tkn</span><span class="p">(</span><span class="n">txt</span><span class="p">),</span> <span class="mi">35</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(#598) ['xxbos','i','saw','this','"','movie','"','partly','because','of','the','sheer','number','of','good','reviews','at','xxmaj','netflix',',','and','from','it','i','leaned','a','valuable','lesson','.','xxmaj','not','a','lesson','about','ethnic'...]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Everything is now lower-cased. There are now some tokens that start with the characters "xx". These are <em>special tokens</em>. Fastai adds these tokens by default, by applying a number of rules when preprocessing text, which are designed to make it easier for a model to recognize the important parts of a sentence.<br>
+Some of the main special tokens are:</p>
+<ul>
+<li>
+<code>xxbos</code>: indicates the beginning of a text</li>
+<li>
+<code>xxmaj</code>: indicates the next word begins with a capital</li>
+<li>
+<code>xxunk</code>: indicates the next word is unknown</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Numericalization">
+<a class="anchor" href="#Numericalization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numericalization<a class="anchor-link" href="#Numericalization"> </a>
+</h3>
+<p><em>Numericalization</em> is the process of mapping tokens to integers. It makes a list of all the unique words that appear (the vocab), and convert each word into a number, by looking up its index in the vocab.</p>
+<p>Let's take a look at this in action. We need to call <code>setup</code> (a special fastai method) on <code>Numericalize</code> to create the vocab.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">txts</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">open</span><span class="p">()</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">files</span><span class="p">[:</span><span class="mi">2000</span><span class="p">])</span>
+<span class="n">txts</span><span class="p">[</span><span class="mi">0</span><span class="p">][:]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'I saw this "movie" partly because of the sheer number of good reviews at Netflix, and from it I leaned a valuable lesson. Not a lesson about ethnic diversity however...the lesson I learned is "Don\'t trust reviews".&lt;br /&gt;&lt;br /&gt;Yes, racism sucks and people are complicated, but the people who actually need to see this movie are going to be the ones who are the least drawn to it and least affected by it if they DO see it. The only reason that I can think of for the number of good reviews is that it\'s being reviewed by people who aren\'t used to thinking, or who\'ve seen their first thought-provoking movie and somehow think that Haggis invented the concept. In fact, he basically made this film, which should be called "Racism For Dummies", as emotionally wrenching as possible, seemingly to give people who don\'t spend a lot of time thinking the impression that they\'ve discovered some fundamental truth that\'s never been covered in a film before. Zen and the Art of Motorcycle Maintanence it\'s not... An after-school special for the unthinking masses, cut into bite-sized overwrought ham-fisted pieces to make it easier to swallow without too much introspection.&lt;br /&gt;&lt;br /&gt;It\'s as if they portrayed everyone as being the worst possible extreme, simply to make us happy that we\'re such good people because we don\'t identify with the characters. Let\'s face it people. NOBODY identifies with these characters because they\'re all cardboard cutouts and stereotypes (or predictably reverse-stereotypes). It\'s well acted (even if the dialog is atrocious) and cleverly executed, so much that you don\'t think to ask "where\'s the beef?" until you can tell the film is winding down. The flaming car scene was well executed, like much of the movie, but went nowhere in the end. &lt;br /&gt;&lt;br /&gt;The messages are very heavy-handed, and from the "behind the scenes" blurb, the producers were clearly watching a different movie, because there is very little to laugh about in this movie, even during the intended funny parts. I have to stress that this is NOT entertainment, more like a high school diversity lesson...call it the "Blood on the Highway" of racism. They could even show this in high schools if it weren\'t for the "side-nude" shot of Jennifer Esposito.&lt;br /&gt;&lt;br /&gt;In this film, everyone\'s a jerk and everyone learns a lesson (except for Michael Pena who gets the best role, but the most predictable storyline).&lt;br /&gt;&lt;br /&gt;This is a bad film, with bad writing, and good actors....an ugly cartoon crafted by Paul Haggis for people who can\'t handle anything but the bold strokes in storytelling....a picture painted with crayons.&lt;br /&gt;&lt;br /&gt;Crash is a depressing little nothing, that provokes emotion, but teaches you nothing if you already know racism and prejudice are bad things.'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">toks200</span> <span class="o">=</span> <span class="n">txts</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">tkn</span><span class="p">)</span>
+<span class="n">toks200</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#598) ['xxbos','i','saw','this','"','movie','"','partly','because','of'...]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can pass this to <code>setup</code> to create our vocab.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num</span> <span class="o">=</span> <span class="n">Numericalize</span><span class="p">()</span>
+<span class="n">num</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">toks200</span><span class="p">)</span>
+<span class="n">coll_repr</span><span class="p">(</span><span class="n">num</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>"(#1920) ['xxunk','xxpad','xxbos','xxeos','xxfld','xxrep','xxwrep','xxup','xxmaj','the','.',',','a','and','of','to','is','it','in','this'...]"</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The special tokens appear first and then every word appears once, in the descending order of frequency.</p>
+<p>Once we've created our <code>Numericalize</code> object, we can use it as if it were a function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nums</span> <span class="o">=</span> <span class="n">num</span><span class="p">(</span><span class="n">toks</span><span class="p">)[:</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">nums</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>TensorText([  0, 268,  19,  22,  24,  22,   0, 101,  14,   9, 915, 475,  14,  73, 719,  45,   0,  11,  13,  51])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Our tokens have been converted to a tensor of integers that our model can receive. We can check if they map back to the original text.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">num</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">o</span><span class="p">]</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'xxunk saw this " movie " xxunk because of the sheer number of good reviews at xxunk , and from'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have numbers, we need to put them in batches for our model.</p>
+<h3 id="Putting-our-Texts-into-Batches-for-a-Language-Model">
+<a class="anchor" href="#Putting-our-Texts-into-Batches-for-a-Language-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Putting our Texts into Batches for a Language Model<a class="anchor-link" href="#Putting-our-Texts-into-Batches-for-a-Language-Model"> </a>
+</h3>
+<p>Fastai provides an <code>LMDataLoader</code> class which automatically handles creating a dependent variable that is offset from the independent variable by one token. It automatically shuffles the collection of documents at every epoch and concatenates them into a stream of tokens. It then cuts that stream into a batch of fixed-size consecutive mini-streams. Our model will then read the mini-streams in order, and thanks to an inner state, it will product the same activation whatever sequence length we picked.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nums200</span> <span class="o">=</span> <span class="n">toks200</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dl</span> <span class="o">=</span> <span class="n">LMDataLoader</span><span class="p">(</span><span class="n">nums200</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's confirm that this gives the expected results, by grabbing the first batch.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(torch.Size([64, 72]), torch.Size([64, 72]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here <code>64</code> is the batch size, and <code>72</code> is the sequence length.<br>
+Let's look at the first row of the independent variable, which should be the start of the first text.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">num</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">o</span><span class="p">]</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">200</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'xxbos i saw this " movie " xxunk because of the sheer number of good reviews at xxmaj xxunk , and from it i xxunk a xxunk lesson . xxmaj not a lesson about xxunk xxunk however … the lesson i learned is " do n\'t xxunk reviews " . \n\n xxmaj yes , racism sucks and people are xxunk , but the people who actually need to see this movie are'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This concludes all the preprocessing steps we need to apply to our data. We are now ready to train our text classifier.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Training-a-Text-Classifier">
+<a class="anchor" href="#Training-a-Text-Classifier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training a Text Classifier<a class="anchor-link" href="#Training-a-Text-Classifier"> </a>
+</h2>
+<p>As we discussed earlier, there are two steps to training a state-of-the-art text classifier using transfer learning: first we need to fine-tune our language model pretrained on Wikipedia to the corpus of IMDB reviews, and then we can use that model to train a classifier.</p>
+<h3 id="Language-Model-using-DataBlock">
+<a class="anchor" href="#Language-Model-using-DataBlock" aria-hidden="true"><span class="octicon octicon-link"></span></a>Language Model using DataBlock<a class="anchor-link" href="#Language-Model-using-DataBlock"> </a>
+</h3>
+<p>Fastai handles tokenization and numericalization automatically when <code>TextBlock</code> is passed to <code>DataBlock</code>.<br>
+Let's create a language model using <code>TextBlock</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">get_imdb</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">get_text_files</span><span class="p">,</span> <span class="n">folders</span><span class="o">=</span><span class="p">[</span><span class="s1">'train'</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">,</span> <span class="s1">'unsup'</span><span class="p">])</span>
+
+<span class="n">dls_lm</span> <span class="o">=</span> <span class="n">DataBlock</span><span class="p">(</span>
+    <span class="n">blocks</span><span class="o">=</span><span class="n">TextBlock</span><span class="o">.</span><span class="n">from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">is_lm</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">get_items</span><span class="o">=</span><span class="n">get_imdb</span><span class="p">,</span> <span class="n">splitter</span><span class="o">=</span><span class="n">RandomSplitter</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Setting up the numericalizer's vocab can take a long time. But <code>TextBlock</code> performs a few optimizations:</p>
+<ul>
+<li>it saves the tokenized documents in a temporary folder, so it doesn't have to tokenize them more than once.</li>
+<li>it runs multiple tokenization processes in parallel, to take advantage of your computer's CPU.</li>
+</ul>
+<p>The <code>from_folder</code> tells <code>TextBlock</code> how to access the texts for the initial preprocessing.</p>
+<p>We can look at a couple of examples in the model.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls_lm</span><span class="o">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>text_</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>xxbos xxmaj airwolf is a classic , action adventure with a great story , good actors and of course good effects . xxmaj this is what i believe could be one of the best movies ever made for television . xxmaj the idea of a supersonic helicopter with 14 firepower options and bulletproof body , just seem to go straight into people 's hearts . xxmaj the movie keeps us watching from start to end and that with great style</td>
+      <td>xxmaj airwolf is a classic , action adventure with a great story , good actors and of course good effects . xxmaj this is what i believe could be one of the best movies ever made for television . xxmaj the idea of a supersonic helicopter with 14 firepower options and bulletproof body , just seem to go straight into people 's hearts . xxmaj the movie keeps us watching from start to end and that with great style .</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>after his breakout success in xxmaj captain xxmaj blood . xxmaj still i attribute this film to the well known xxmaj aussie irreverence for trashing the reputation of one of their own . \n\n xxmaj part of the problem in telling xxmaj errol xxmaj flynn 's life story was that he told enough tall tales in his life right up to the very end in his memoir , xxmaj my xxmaj wicked xxmaj wicked xxmaj ways . i could see</td>
+      <td>his breakout success in xxmaj captain xxmaj blood . xxmaj still i attribute this film to the well known xxmaj aussie irreverence for trashing the reputation of one of their own . \n\n xxmaj part of the problem in telling xxmaj errol xxmaj flynn 's life story was that he told enough tall tales in his life right up to the very end in his memoir , xxmaj my xxmaj wicked xxmaj wicked xxmaj ways . i could see that</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that our data is ready, we can fine-tune the pretrained language model.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fine-tuning-the-Language-Model">
+<a class="anchor" href="#Fine-tuning-the-Language-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fine-tuning the Language Model<a class="anchor-link" href="#Fine-tuning-the-Language-Model"> </a>
+</h3>
+<p>To convert the integer word indices into activations that we can use for our neural network, we will use embeddings. We'll feed those embeddings into a <em>recurrent neural network</em> (RNN), using an architecture called <em>AWD-LSTM</em>.<br>
+The embeddings in the pretrained model are merged with random embeddings added for words that weren't in the pretraining vocabulary. This is handled automatically inside <code>language_model_learner</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">language_model_learner</span><span class="p">(</span>
+    <span class="n">dls_lm</span><span class="p">,</span> <span class="n">AWD_LSTM</span><span class="p">,</span> <span class="n">drop_mult</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">Perplexity</span><span class="p">()]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to_fp16</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Since this is a classification problem, the loss function used by default is <em>cross-entropy loss</em>. The <code>Perplexity</code> metric is the exponential of the loss (i.e. <code>torch.exp(cross_entropy)</code>) and is often used in NLP problems. The <code>accuracy</code> metric is to see how many times our model is right while trying to predict the next word.</p>
+<p>The first stage of the process is over i.e. we have fine-tuned our language model pretrained on Wikipedia to the corpus of IMDB reviews, and we've built the <code>DataLoaders</code> and <code>Learner</code> for the second stage.</p>
+<p>It takes a long time to train each epoch, so we'll be saving the intermediate model results during the training process. Since <code>fine_tune</code> doesn't do that for us, we'll use <code>fit_one_cycle</code>. <code>language_model_learner</code> automatically calls <code>freeze</code> when using a pretrained model (which is the default), so this will only train the embeddings (the only part of the model that contains randomly initialized weights - i.e. embeddings for words that are in our IMDB vocab, but aren't in the pretrained model vocab).</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">2e-2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>perplexity</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>4.133163</td>
+      <td>4.047858</td>
+      <td>0.286861</td>
+      <td>57.274658</td>
+      <td>28:37</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>3.989873</td>
+      <td>3.921189</td>
+      <td>0.297198</td>
+      <td>50.460423</td>
+      <td>28:44</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3.858948</td>
+      <td>3.857302</td>
+      <td>0.303759</td>
+      <td>47.337460</td>
+      <td>28:56</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Since the model took a long time to train, let's save the state of our model.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">'lang_model'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Path('models/lang_model.pth')</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once the initial training has completed, we can continue fine-tuning the model after unfreezing.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">unfreeze</span><span class="p">()</span>
+<span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">2e-3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>perplexity</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>3.678183</td>
+      <td>3.737603</td>
+      <td>0.318232</td>
+      <td>41.997200</td>
+      <td>31:25</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>3.632840</td>
+      <td>3.689973</td>
+      <td>0.323845</td>
+      <td>40.043770</td>
+      <td>31:12</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3.614814</td>
+      <td>3.653279</td>
+      <td>0.328249</td>
+      <td>38.601032</td>
+      <td>31:00</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3.529696</td>
+      <td>3.627186</td>
+      <td>0.332271</td>
+      <td>37.606827</td>
+      <td>31:15</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>3.467677</td>
+      <td>3.610096</td>
+      <td>0.334249</td>
+      <td>36.969608</td>
+      <td>31:18</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3.400183</td>
+      <td>3.594222</td>
+      <td>0.337025</td>
+      <td>36.387383</td>
+      <td>31:17</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>3.336390</td>
+      <td>3.589247</td>
+      <td>0.338615</td>
+      <td>36.206810</td>
+      <td>31:24</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>3.285172</td>
+      <td>3.585617</td>
+      <td>0.339453</td>
+      <td>36.075596</td>
+      <td>31:19</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>3.223539</td>
+      <td>3.590128</td>
+      <td>0.339571</td>
+      <td>36.238712</td>
+      <td>31:25</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>3.181863</td>
+      <td>3.595526</td>
+      <td>0.339376</td>
+      <td>36.434860</td>
+      <td>31:10</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once this is done, we save all of our model except the final layer that converts activation to probabilities of picking each token in our vocabulary. The model not including the final layer is called <em>encoder</em>. We can save it with <code>save_encoder</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">save_encoder</span><span class="p">(</span><span class="s1">'finetuned'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This completes the second stage of the process i.e. fine-tuning the language model.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Creating-the-Classifier-DataLoaders">
+<a class="anchor" href="#Creating-the-Classifier-DataLoaders" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the Classifier DataLoaders<a class="anchor-link" href="#Creating-the-Classifier-DataLoaders"> </a>
+</h2>
+<p>Now that we have fine-tuned the language model, we need to fine-tune the classifier. The language model only predicts the next word of a document so it doesn't need any external labels. Our classifier, however, needs to predict the sentiment of a moview review.</p>
+<p>Let's create a <code>DataBlock</code> for our classifier.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls_clas</span> <span class="o">=</span> <span class="n">DataBlock</span><span class="p">(</span>
+    <span class="n">blocks</span><span class="o">=</span><span class="p">(</span><span class="n">TextBlock</span><span class="o">.</span><span class="n">from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="n">dls_lm</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">CategoryBlock</span><span class="p">),</span>
+    <span class="n">get_y</span><span class="o">=</span><span class="n">parent_label</span><span class="p">,</span>
+    <span class="n">get_items</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">get_text_files</span><span class="p">,</span> <span class="n">folders</span><span class="o">=</span><span class="p">[</span><span class="s1">'train'</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">]),</span>
+    <span class="n">splitter</span><span class="o">=</span><span class="n">GrandparentSplitter</span><span class="p">(</span><span class="n">valid_name</span><span class="o">=</span><span class="s1">'test'</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">72</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this DataBlock, <code>TextBlock.from_folder</code> no longer has the <code>is_lm=True</code> parameter. Instead we pass the <code>vocab</code> we created for the language model fine-tuning. The reason we pass the <code>vocab</code> of the language model is to make sure that we use the same correspondence of token to index. Otherwise the embeddings we learned in our fine-tuned language model won't make any sense to this model, and the fine-tuning step won't be of any use.<br>
+By not passing <code>is_lm</code>, we tell <code>TextBlock</code> that we have regular labeled data, rather than using the next tokens as labels.</p>
+<p><code>show_batch</code> can show us the dependent variable or sentiment in this case, with each indepedent variable or movie review.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls_clas</span><span class="o">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>xxbos xxmaj match 1 : xxmaj tag xxmaj team xxmaj table xxmaj match xxmaj bubba xxmaj ray and xxmaj spike xxmaj dudley vs xxmaj eddie xxmaj guerrero and xxmaj chris xxmaj benoit xxmaj bubba xxmaj ray and xxmaj spike xxmaj dudley started things off with a xxmaj tag xxmaj team xxmaj table xxmaj match against xxmaj eddie xxmaj guerrero and xxmaj chris xxmaj benoit . xxmaj according to the rules of the match , both opponents have to go through tables in order to get the win . xxmaj benoit and xxmaj guerrero heated up early on by taking turns hammering first xxmaj spike and then xxmaj bubba xxmaj ray . a xxmaj german xxunk by xxmaj benoit to xxmaj bubba took the wind out of the xxmaj dudley brother . xxmaj spike tried to help his brother , but the referee restrained him while xxmaj benoit and xxmaj guerrero</td>
+      <td>pos</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>xxbos xxmaj some have praised xxunk xxmaj lost xxmaj xxunk as a xxmaj disney adventure for adults . i do n't think so -- at least not for thinking adults . \n\n xxmaj this script suggests a beginning as a live - action movie , that struck someone as the type of crap you can not sell to adults anymore . xxmaj the " crack staff " of many older adventure movies has been done well before , ( think xxmaj the xxmaj dirty xxmaj dozen ) but xxunk represents one of the worse films in that motif . xxmaj the characters are weak . xxmaj even the background that each member trots out seems stock and awkward at best . xxmaj an xxup md / xxmaj medicine xxmaj man , a tomboy mechanic whose father always wanted sons , if we have not at least seen these before ,</td>
+      <td>neg</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>xxbos xxmaj warning : xxmaj does contain spoilers . \n\n xxmaj open xxmaj your xxmaj eyes \n\n xxmaj if you have not seen this film and plan on doing so , just stop reading here and take my word for it . xxmaj you have to see this film . i have seen it four times so far and i still have n't made up my mind as to what exactly happened in the film . xxmaj that is all i am going to say because if you have not seen this film , then stop reading right now . \n\n xxmaj if you are still reading then i am going to pose some questions to you and maybe if anyone has any answers you can email me and let me know what you think . \n\n i remember my xxmaj grade 11 xxmaj english teacher quite well . xxmaj</td>
+      <td>pos</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We do have to collate multiple documents into a mini-batch. We will expand the shortest texts to make them all the same size using a special padding token that will be ignored by our model. Also, to avoid memory issues and improve performance, we will batch together texts that are roughly the same lengths by sorting the documents in the training set by length prior to each epoch. Hence, the documents collated into a single batch will tend to be of similar lengths. We won't pad every batch to the same size, but will instead use the size of the largest document in each batch as the target size.</p>
+<p>The sorting and padding are done automatically by the data block API when using a <code>TextBlock</code>, with <code>is_lm=False</code>.<br>
+Let's now create a model to classify our texts.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">text_classifier_learner</span><span class="p">(</span><span class="n">dls_clas</span><span class="p">,</span> <span class="n">AWD_LSTM</span><span class="p">,</span> <span class="n">drop_mult</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                                <span class="n">metrics</span><span class="o">=</span><span class="n">accuracy</span><span class="p">)</span><span class="o">.</span><span class="n">to_fp16</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The final step prior to training the classifer is to load the encoder from our fine-tuned model. We use <code>load_encoder</code> instead of <code>load</code> because we only have pretrained weights available for the encoder; <code>load</code> be default raises an exception if an incomplete model is loaded.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">learn</span><span class="o">.</span><span class="n">load_encoder</span><span class="p">(</span><span class="s1">'finetuned'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Fine-Tuning-the-Classifier">
+<a class="anchor" href="#Fine-Tuning-the-Classifier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fine-Tuning the Classifier<a class="anchor-link" href="#Fine-Tuning-the-Classifier"> </a>
+</h2>
+<p>The last step is to train with discriminative learning rates and gradual unfreezing. Unfreezing a few layers at a time gives better results for NLP tasks.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2e-2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.247250</td>
+      <td>0.183979</td>
+      <td>0.928880</td>
+      <td>01:41</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can pass <code>-2</code> to <code>freeze_to</code> to freeze all except the last two parameter groups.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">freeze_to</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="mf">1e-2</span><span class="o">/</span><span class="p">(</span><span class="mf">2.6</span><span class="o">**</span><span class="mi">4</span><span class="p">),</span> <span class="mf">5e-3</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.226782</td>
+      <td>0.169867</td>
+      <td>0.934840</td>
+      <td>01:54</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can unfreeze a bit more and continue training.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">freeze_to</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="mf">5e-3</span><span class="o">/</span><span class="p">(</span><span class="mf">2.6</span><span class="o">**</span><span class="mi">4</span><span class="p">),</span> <span class="mf">5e-3</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.203316</td>
+      <td>0.154957</td>
+      <td>0.941880</td>
+      <td>02:40</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And now we'll finally unfreeze the whole model.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">unfreeze</span><span class="p">()</span>
+<span class="n">learn</span><span class="o">.</span><span class="n">fit_one_cycle</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="mf">1e-3</span><span class="o">/</span><span class="p">(</span><span class="mf">2.6</span><span class="o">**</span><span class="mi">4</span><span class="p">),</span> <span class="mf">1e-3</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.164804</td>
+      <td>0.151554</td>
+      <td>0.943000</td>
+      <td>03:15</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.151896</td>
+      <td>0.150165</td>
+      <td>0.943280</td>
+      <td>03:15</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Considering the resources we used and the time taken, a 94.3% accuracy is amazing! Let's check some of the results achieved by our model.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">show_results</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>category</th>
+      <th>category_</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>xxbos xxmaj there 's a sign on xxmaj the xxmaj lost xxmaj highway that says : \n\n * major xxup spoilers xxup ahead * \n\n ( but you already knew that , did n't you ? ) \n\n xxmaj since there 's a great deal of people that apparently did not get the point of this movie , xxmaj i 'd like to contribute my interpretation of why the plot makes perfect sense . xxmaj as others have pointed out , one single viewing of this movie is not sufficient . xxmaj if you have the xxup dvd of xxup md , you can " cheat " by looking at xxmaj david xxmaj lynch 's " top 10 xxmaj hints to xxmaj unlocking xxup md " ( but only upon second or third viewing , please . ) ;) \n\n xxmaj first of all , xxmaj mulholland xxmaj drive is</td>
+      <td>pos</td>
+      <td>pos</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>xxbos ( some spoilers included : ) \n\n xxmaj although , many commentators have called this film surreal , the term fits poorly here . xxmaj to quote from xxmaj encyclopedia xxmaj xxunk 's , surreal means : \n\n " fantastic or incongruous imagery " : xxmaj one need n't explain to the unimaginative how many ways a plucky ten - year - old boy at large and seeking his fortune in the driver 's seat of a red xxmaj mustang could be fantastic : those curious might read xxmaj james xxmaj kincaid ; but if you asked said lad how he were incongruous behind the wheel of a sports car , he 'd surely protest , " no way ! " xxmaj what fantasies and incongruities the film offers mostly appear within the first fifteen minutes . xxmaj thereafter we get more iterations of the same , in an</td>
+      <td>pos</td>
+      <td>pos</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>xxbos xxmaj tony xxmaj hawk 's xxmaj pro xxmaj skater 2x , is n't much different at all from the previous games ( excluding xxmaj tony xxmaj hawk 3 ) . xxmaj the only thing new that is featured in xxmaj tony xxmaj hawk 's xxmaj pro xxmaj skater 2x , is the new selection of levels , and tweaked out graphics . xxmaj tony xxmaj hawk 's xxmaj pro xxmaj skater 2x offers a new career mode , and that is the 2x career . xxmaj the 2x career is basically xxmaj tony xxmaj hawk 1 career , because there is only about five challenges per level . xxmaj if you missed xxmaj tony xxmaj hawk 1 and 2 , i suggest that you buy xxmaj tony xxmaj hawk 's xxmaj pro xxmaj skater 2x , but if you have played the first two games , you should still</td>
+      <td>pos</td>
+      <td>pos</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>xxbos xxmaj based on the excellent novel , xxmaj watchers by xxmaj dean xxmaj koontz , is this extremely awful motion picture that probably should n't be viewed by anyone . xxmaj not since " the xxmaj running xxmaj man " have i seen a book butchered so far beyond recognition . xxmaj the difference , however , is that " the xxmaj running xxmaj man " film was still enjoyable as an amusing action film laden down a million catch phrases . xxmaj this film ▁ xxmaj nope , nothing remotely amusing . xxmaj in fact , if you love the book , as i do , you 'll hate this bastardization even more . \n\n * * xxunk xxup spoilers * * xxmaj xxunk , xxmaj i 'm basically going to tell you the story here , almost in it 's entirety . xxmaj why ? xxmaj because</td>
+      <td>neg</td>
+      <td>neg</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>xxbos xxmaj hollywood movies since the 1930s have treated gays as lepers . xxmaj in condemning homosexuality , the film industry has reflected only what the repressive society of its day espoused as an ideology . xxmaj for example , in the 1962 xxmaj otto xxmaj preminger melodrama " advise and xxmaj consent , " straight actor xxmaj don xxmaj murray was cast as a queer congressman who commits suicide rather than confess his alternative lifestyle . xxmaj gay movie characters have covered a lot of ground since " advise and xxmaj consent . " xxmaj in the 1997 movie " in &amp; xxmaj out , " ( * * 1 / 2 out of xxrep 4 * ) , heterosexual actor xxmaj kevin xxmaj kline is cast as a homosexual teacher who comes out of the closet on his wedding day . xxmaj while the conservative xxmaj hollywood of</td>
+      <td>pos</td>
+      <td>neg</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>xxbos " empire xxmaj strikes xxmaj back " director xxmaj irvin xxmaj kershner 's " never xxmaj say xxmaj never xxmaj again , " a remake of the 1965 xxmaj james xxmaj bond movie " thunderball , " does n't surpasses the xxmaj terence xxmaj young original , but this non - harry xxmaj xxunk &amp; xxmaj albert xxup r. xxmaj broccoli film is well worth watching if you call yourself a 007 aficionado . xxmaj nevertheless , despite its shortage of clever gadgets and the lack of a vibrant musical score , " never xxmaj say xxmaj never xxmaj again " rates as an above - average , suspenseful doomsday thriller with top - flight performances by a seasoned cast including xxmaj sean xxmaj connery , xxmaj kim xxmaj basinger , xxmaj klaus xxmaj maria xxmaj brandauer , xxmaj max xxmaj von xxmaj sydow , xxmaj barbara xxmaj carrera</td>
+      <td>pos</td>
+      <td>pos</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>xxbos i really wanted to be able to give this film a 10 . xxmaj i 've long thought it was my favorite of the four modern live - action xxmaj batman films to date ( and maybe it still will be -- i have yet to watch the xxmaj schumacher films again ) . xxmaj i 'm also starting to become concerned about whether xxmaj i 'm somehow subconsciously being contrarian . xxmaj you see , i always liked the xxmaj schumacher films . xxmaj as far as i can remember , they were either 9s or 10s to me . xxmaj but the conventional wisdom is that the two xxmaj tim xxmaj burton directed films are far superior . i had serious problems with the first xxmaj burton xxmaj batman this time around -- i ended up giving it a 7 - -and apologize as i might ,</td>
+      <td>pos</td>
+      <td>pos</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>xxbos xxmaj may 2nd : someone clicked 11 nos , and then proceeded to do 15 more on my previous 15 comments : almost as funny as this turkey ! \n\n xxmaj may 1st : \n\n xxmaj as i write this , xxmaj i 'm still very much under the impression of what must be the funniest thriller xxmaj i 've ever seen . xxmaj i 've got a major case of the giggles , but xxmaj i 'll try and calm down . ( it 's kind of hard to write when your nose spills snot and the mouth ejects sporadic drool onto the keyboard . ) \n\n a pair of young women who just returned from a vacation take a ride on a shuttle bus . a couple of young guys join them . xxmaj but the bus is n't really a taxi service : it 's a</td>
+      <td>neg</td>
+      <td>neg</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>xxbos " the belief in the xxmaj big xxmaj other as an invisible power structure which exists in the xxmaj real is the most succinct definition of paranoia . "  xxmaj slavoj xxmaj zizek \n\n xxmaj this is a review of " marathon xxmaj man " and " the xxmaj falcon and the xxmaj snowman " , two films by director xxmaj john xxmaj schlesinger . \n\n xxmaj though xxmaj hitchcock and xxmaj lang brought the " conspiracy thriller " to xxmaj hollywood , the genre only blossomed in the late 60s and 70s , with films like " the xxmaj parallax xxmaj view " , " z " , " marathon xxmaj man " , " capricorn xxmaj one " , " the xxmaj manchurian xxmaj candidate " , " three xxmaj days of the xxmaj condor " and " all xxmaj the xxmaj president 's xxmaj men</td>
+      <td>pos</td>
+      <td>pos</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="shirolepranav/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/nlp/pytorch/fastai/2021/07/15/classifying-movie-reviews.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" target="_blank" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
