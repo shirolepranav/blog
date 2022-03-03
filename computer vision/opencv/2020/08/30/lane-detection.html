@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Real Time Lane Detection using OpenCV | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Real Time Lane Detection using OpenCV" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="We will perform real time lane detection on this video." />
+<meta property="og:description" content="We will perform real time lane detection on this video." />
+<link rel="canonical" href="https://shirolepranav.github.io/blog/computer%20vision/opencv/2020/08/30/lane-detection.html" />
+<meta property="og:url" content="https://shirolepranav.github.io/blog/computer%20vision/opencv/2020/08/30/lane-detection.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-30T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Real Time Lane Detection using OpenCV" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-08-30T00:00:00-05:00","datePublished":"2020-08-30T00:00:00-05:00","description":"We will perform real time lane detection on this video.","headline":"Real Time Lane Detection using OpenCV","mainEntityOfPage":{"@type":"WebPage","@id":"https://shirolepranav.github.io/blog/computer%20vision/opencv/2020/08/30/lane-detection.html"},"url":"https://shirolepranav.github.io/blog/computer%20vision/opencv/2020/08/30/lane-detection.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shirolepranav.github.io/blog/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Real Time Lane Detection using OpenCV</h1><p class="page-description">We will perform real time lane detection on [this video](https://drive.google.com/file/d/1V7OrAwjxtHR8LkfxXDVRu5lx2e5fxljo/view?usp=sharing).</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-30T00:00:00-05:00" itemprop="datePublished">
+        Aug 30, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#computer vision">computer vision</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#opencv">opencv</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#conversion-to-grayscale">Conversion to grayscale</a></li>
+<li class="toc-entry toc-h3"><a href="#image-smoothening">Image smoothening</a></li>
+<li class="toc-entry toc-h3"><a href="#canny-edge-detector">Canny Edge Detector</a></li>
+<li class="toc-entry toc-h3"><a href="#region-of-interest">Region of interest</a></li>
+<li class="toc-entry toc-h3"><a href="#capturing-and-decoding-the-video-file">Capturing and decoding the video file</a></li>
+<li class="toc-entry toc-h3"><a href="#hough-line-transform">Hough Line Transform</a></li>
+<li class="toc-entry toc-h3"><a href="#input">Input</a></li>
+<li class="toc-entry toc-h3"><a href="#output">Output</a></li>
+</ul><p>Autonomous driving is one of the most exciting and disruptive innovations of our time. Lane Detection is one of the preliminary steps involved during the training of an autonomous driving car.</p>
+
+<p>In this blog post, we will perform real time lane detection on <a href="https://drive.google.com/file/d/1V7OrAwjxtHR8LkfxXDVRu5lx2e5fxljo/view?usp=sharing">this video</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># import the required libraries
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+</code></pre></div></div>
+<hr>
+<h3 id="conversion-to-grayscale">
+<a class="anchor" href="#conversion-to-grayscale" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conversion to grayscale</h3>
+<p>There video frames are in RGB format. We’ll convert this to grayscale because processing a single channel image is faster than processing a three-channel colored image.</p>
+
+<hr>
+
+<h3 id="image-smoothening">
+<a class="anchor" href="#image-smoothening" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image smoothening</h3>
+<p>Noise can create false edges. We will perform image smoothening using the <code class="language-plaintext highlighter-rouge">Gaussian</code> filter.</p>
+
+<hr>
+
+<h3 id="canny-edge-detector">
+<a class="anchor" href="#canny-edge-detector" aria-hidden="true"><span class="octicon octicon-link"></span></a>Canny Edge Detector</h3>
+<p>The Canny Edge Detector computes gradient in all directions of the blurred image and traces the edges with large changes in intensity.<br>
+The <code class="language-plaintext highlighter-rouge">Canny</code> function calculates derivative in both x and y directions, and according to that, we can see changes in intensity value. Larger derivatives equal high intensity, while smaller derivatives equal low intensity.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def canny_edge_detector(image):
+    # convert the image color to grayscale
+    gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+    # reduce noise from the image
+    blur = cv2.GaussianBlur(gray_image, (5, 5), 0)
+    canny = cv2.Canny(blur, 50, 150)
+    return canny
+</code></pre></div></div>
+
+<hr>
+
+<h3 id="region-of-interest">
+<a class="anchor" href="#region-of-interest" aria-hidden="true"><span class="octicon octicon-link"></span></a>Region of interest</h3>
+<p>We need to take into account onnly the region covered by the road lane. A mask is created, which is of the same dimension as our road image.<br>
+A bitwise <code class="language-plaintext highlighter-rouge">AND</code> operation is performed between each pixel of our Canny image and the mask. It ultimately masks the Canny image and shows the region of interest traced by the polygonal contour of the mask.<br>
+Let’s mask our canny image after finding the region of interest.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def region_of_interest(image):
+    height = image.shape[0]
+    polygons = np.array([
+        [(200, height), (1100, height), (550, 250)]
+    ])
+    mask = np.zeros_like(image)
+
+    # fill poly-function deals with multiple polygon
+    cv2.fillPoly(mask, polygons, 255)
+
+    # bitwise operation between canny image and mask image
+    masked_image = cv2.bitwise_and(image, mask)
+    return masked_image
+</code></pre></div></div>
+
+<p>We are going to find the coordinates of our road lane.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def create_coordinates(image, line_parameters):
+    slope, intercept = line_parameters
+    y1 = image.shape[0]
+    y2 = int(y1 * (3 / 5))
+    x1 = int((y1 - intercept) / slope)
+    x2 = int((y2 - intercept) / slope)
+    return np.array([x1, y1, x2, y2])
+</code></pre></div></div>
+
+<p>We’ll differentiate left and right road lanes with the help of positive and negative slopes respectively, and append them into the lists. If the sploe is negative, then the road lane belongs to the left-hand side of the vehicle, and if the slope is positive, then the road lane belongs to the right-hand side of the vehicle.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def average_slope_intercept(image, lines):
+    left_fit = []
+    right_fit = []
+    for line in lines:
+        x1, y1, x2, y2 = line.reshape(4)
+
+        # it will fit the polynomial and the intercept and slope
+        parameters = np.polyfit((x1, x2), (y1, y2), 1)
+        slope = parameters[0]
+        intercept = parameters[1]
+        if slope &lt; 0:
+            left_fit.append((slope, intercept))
+        else:
+            right_fit.append((slope, intercept))
+
+    left_fit_average = np.average(left_fit, axis=0)
+    right_fit_average = np.average(right_fit, axis=0)
+    left_line = create_coordinates(image, left_fit_average)
+    right_line = create_coordinates(image, right_fit_average)
+    return np.array([left_line, right_line])
+</code></pre></div></div>
+
+<p>Fit the coordinates into our actual image and then return the image (i.e. road) with the detected line.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def display_lines(image, lines):
+    line_image = np.zeros_like(image)
+    if lines is not None:
+        for x1, y1, x2, y2 in lines:
+            cv2.line(line_image, (x1, y1), (x2, y2), (255, 0, 0), 10)
+    return line_image
+</code></pre></div></div>
+
+<hr>
+<h3 id="capturing-and-decoding-the-video-file">
+<a class="anchor" href="#capturing-and-decoding-the-video-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Capturing and decoding the video file</h3>
+<p>We will capture the video using <code class="language-plaintext highlighter-rouge">VideoCapture</code> object. After capturing is initialized, every video frame is decoded and converted into a sequence of images.</p>
+
+<hr>
+<h3 id="hough-line-transform">
+<a class="anchor" href="#hough-line-transform" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hough Line Transform</h3>
+<p>This is a transform used to detect straight lines.</p>
+
+<p>The video file is read and decoded into frames. Using the Hough Line Transform method, the straight line which is going through the image is detected.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># path of dataset directory
+cap = cv2.VideoCapture("test2.mp4")
+while (cap.isOpened()):
+    _, frame = cap.read()
+    canny_image = canny_edge_detector(frame)
+    cropped_image = region_of_interest(canny_image)
+
+    lines = cv2.HoughLinesP(cropped_image, 2, np.pi / 180, 100,
+                            np.array([]), minLineLength=40,
+                            maxLineGap=5)
+
+    averaged_lines = average_slope_intercept(frame, lines)
+    line_image = display_lines(frame, averaged_lines)
+    combo_image = cv2.addWeighted(frame, 0.8, line_image, 1, 1)
+    cv2.imshow("results", combo_image)
+
+    # when the below two will be true and will press the 'q' on 
+    # our keyboard, we will break out from the loop
+
+    # wait 0 will wait for infinitely between each frames.
+    # 1ms will wait for the specified time only between each frames
+    if cv2.waitKey(1) &amp; 0xFF == ord('q'):
+        break
+
+# close the video file
+cap.release()
+
+# destroy all the windows that is currently on
+cv2.destroyAllWindows()
+</code></pre></div></div>
+
+<p>The output video can be viewed <a href="https://drive.google.com/file/d/1vp4Jz6hqbolkaaIll-glAzgwrAzebNjn/view?usp=sharing">here</a>.</p>
+
+<p>I have uploaded the input and output images of the program below.</p>
+
+<hr>
+<h3 id="input">
+<a class="anchor" href="#input" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input</h3>
+
+<p><img src="/blog/images/notebooks/lane_detection/road1.JPG" alt=""></p>
+
+<hr>
+<h3 id="output">
+<a class="anchor" href="#output" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h3>
+
+<p><img src="/blog/images/notebooks/lane_detection/road2.JPG" alt=""></p>
+
+<hr>
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="shirolepranav/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/computer%20vision/opencv/2020/08/30/lane-detection.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" target="_blank" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
