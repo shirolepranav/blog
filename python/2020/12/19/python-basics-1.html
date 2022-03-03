@@ -1,0 +1,3423 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Python Basics - Part 1 | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Python Basics - Part 1" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This is Part 1 of a Python tutorial for beginners." />
+<meta property="og:description" content="This is Part 1 of a Python tutorial for beginners." />
+<link rel="canonical" href="https://shirolepranav.github.io/blog/python/2020/12/19/python-basics-1.html" />
+<meta property="og:url" content="https://shirolepranav.github.io/blog/python/2020/12/19/python-basics-1.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-19T00:00:00-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Python Basics - Part 1" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-12-19T00:00:00-06:00","datePublished":"2020-12-19T00:00:00-06:00","description":"This is Part 1 of a Python tutorial for beginners.","headline":"Python Basics - Part 1","mainEntityOfPage":{"@type":"WebPage","@id":"https://shirolepranav.github.io/blog/python/2020/12/19/python-basics-1.html"},"url":"https://shirolepranav.github.io/blog/python/2020/12/19/python-basics-1.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shirolepranav.github.io/blog/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Python Basics - Part 1</h1><p class="page-description">This is Part 1 of a Python tutorial for beginners.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-19T00:00:00-06:00" itemprop="datePublished">
+        Dec 19, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      25 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/shirolepranav/blog/tree/master/_notebooks/2020-12-19-python-basics-1.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/shirolepranav/blog/master?filepath=_notebooks%2F2020-12-19-python-basics-1.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/shirolepranav/blog/blob/master/_notebooks/2020-12-19-python-basics-1.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fshirolepranav%2Fblog%2Fblob%2Fmaster%2F_notebooks%2F2020-12-19-python-basics-1.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#Display-Output">Display Output </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Displaying-blank-lines">Displaying blank lines </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Getting-information-from-the-user">Getting information from the user </a></li>
+<li class="toc-entry toc-h3"><a href="#Comments">Comments </a></li>
+<li class="toc-entry toc-h3"><a href="#String-concepts">String concepts </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Concatenate-strings">Concatenate strings </a></li>
+<li class="toc-entry toc-h4"><a href="#Functions-to-modify-strings">Functions to modify strings </a></li>
+<li class="toc-entry toc-h4"><a href="#Custom-string-formatting">Custom string formatting </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Working-with-numbers">Working with numbers </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Math-with-Numbers">Math with Numbers </a></li>
+<li class="toc-entry toc-h4"><a href="#Type-Conversion">Type Conversion </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Working-with-Dates">Working with Dates </a></li>
+<li class="toc-entry toc-h3"><a href="#Error-Handling">Error Handling </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Syntax-errors">Syntax errors </a></li>
+<li class="toc-entry toc-h4"><a href="#Runtime-errors">Runtime errors </a></li>
+<li class="toc-entry toc-h4"><a href="#Catching-runtime-errors">Catching runtime errors </a></li>
+<li class="toc-entry toc-h4"><a href="#Logic-errors">Logic errors </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Handling-Conditions">Handling Conditions </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#if-statement">if statement </a></li>
+<li class="toc-entry toc-h4"><a href="#if---else-statement">if - else statement </a></li>
+<li class="toc-entry toc-h4"><a href="#if---elif---else-statement">if - elif - else statement </a></li>
+<li class="toc-entry toc-h4"><a href="#OR-statements">OR statements </a></li>
+<li class="toc-entry toc-h4"><a href="#AND-statements">AND statements </a></li>
+<li class="toc-entry toc-h4"><a href="#in-operator">in operator </a></li>
+<li class="toc-entry toc-h4"><a href="#Nested-if-statement">Nested if statement </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Collections">Collections </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Lists">Lists </a></li>
+<li class="toc-entry toc-h4"><a href="#Arrays">Arrays </a></li>
+<li class="toc-entry toc-h4"><a href="#Dictionaries">Dictionaries </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Random-Module">Random Module </a></li>
+<li class="toc-entry toc-h3"><a href="#Loops">Loops </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#for-loops">for loops </a></li>
+<li class="toc-entry toc-h4"><a href="#while-loop">while loop </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Functions">Functions </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Functions-with-Inputs">Functions with Inputs </a></li>
+<li class="toc-entry toc-h4"><a href="#Functions-with-Outputs">Functions with Outputs </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-12-19-python-basics-1.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As a self-taught Data Scientist and programmer, I always get asked about how I started my path towards learning, and a lot of non-coders ask me about how they can learn more about Data Science. And while I tell them about the umpteen Data Analytics and Data Visualization tools, various Machine Learning algorithms, and which Deep Learning frameworks to choose, it all starts with learning Python. Python is an interpreted high-level general-purpose programming language. In my view, Python is the best programming language to learn, in order to become a Data Scientist, owing to its readability, non-complexity, its large standard libraries, and its huge community.<br>
+I have been the beneficiary of several of books and YouTube tutorials that have helped me become a better Python Developer. This blog post is my way of giving back to the community. This might not be the best place to start learning how to code in Python. However, this blog post aims to be a good cheat sheet for beginners trying to look something up or if they want a refresher as to how certain objects perform.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Display-Output">
+<a class="anchor" href="#Display-Output" aria-hidden="true"><span class="octicon octicon-link"></span></a>Display Output<a class="anchor-link" href="#Display-Output"> </a>
+</h3>
+<p>You can use the <code>print</code> function to display output to your console. You can use either single or double quotes; just make sure that you stick to one for consistency.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'Hello, World!'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Python is great"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello, World!
+Python is great
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Displaying-blank-lines">
+<a class="anchor" href="#Displaying-blank-lines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Displaying blank lines<a class="anchor-link" href="#Displaying-blank-lines"> </a>
+</h4>
+<p>Blank lines make the output more readable. For a blank line, you can insert a <code>print</code> function with nothing inside. Each <code>print</code> function prints on a new line by default.<br>
+You can also use <code>\n</code> (the newline character) to print a new line at the end of a string or right in the middle of a string.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Above is a blank line</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Blank line </span><span class="se">\n</span><span class="s1">in the middle of a string'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello
+
+Above is a blank line
+
+Blank line 
+in the middle of a string
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Getting-information-from-the-user">
+<a class="anchor" href="#Getting-information-from-the-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting information from the user<a class="anchor-link" href="#Getting-information-from-the-user"> </a>
+</h3>
+<p>You can use the <code>input</code> to ask for information from your user. We pass in a message with the <code>input</code> function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'What is your name? '</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>What is your name? Pranav
+Pranav
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here, whatever value is typed in by the user will be stored in the variable <code>name</code> and can be used as needed. We've chosen to print the value of <code>name</code> on the screen.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Comments">
+<a class="anchor" href="#Comments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comments<a class="anchor-link" href="#Comments"> </a>
+</h3>
+<p>Comments are a way of documenting your code. Comments can be added using <code>#</code>. These lines of code will not execute.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># the above code of line will not execute</span>
+<span class="c1"># but the below one will </span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'How are you?'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>How are you?
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can also use <code>'''  '''</code> for multi-line comments.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">'''</span>
+<span class="sd">Python is an important</span>
+<span class="sd">programming language in</span>
+<span class="sd">your Data Science journey</span>
+<span class="sd">'''</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Python'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Python
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It's a good idea to write comments before your function explaining what that function does.<br>
+Commenting out lines can also help debug your code.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="String-concepts">
+<a class="anchor" href="#String-concepts" aria-hidden="true"><span class="octicon octicon-link"></span></a>String concepts<a class="anchor-link" href="#String-concepts"> </a>
+</h3>
+<p>Strings can be stored in variables. Variables are just placeholders for some value inside our code.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">first_name</span> <span class="o">=</span> <span class="s1">'Pranav'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">first_name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Pranav
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Concatenate-strings">
+<a class="anchor" href="#Concatenate-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Concatenate strings<a class="anchor-link" href="#Concatenate-strings"> </a>
+</h4>
+<p>You can combine strings with the <code>+</code> operator.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">first_name</span> <span class="o">=</span> <span class="s1">'John'</span>
+<span class="n">last_name</span> <span class="o">=</span> <span class="s1">'Doe'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">first_name</span> <span class="o">+</span> <span class="n">last_name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Hello, '</span> <span class="o">+</span> <span class="n">first_name</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="n">last_name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>JohnDoe
+Hello, John Doe
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Functions-to-modify-strings">
+<a class="anchor" href="#Functions-to-modify-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functions to modify strings<a class="anchor-link" href="#Functions-to-modify-strings"> </a>
+</h4>
+<p>Below we have used functions to</p>
+<ul>
+<li>convert a string to uppercase </li>
+<li>convert a string to lowercase</li>
+<li>capitalize just the first word</li>
+<li>count all of the instances of a particular string.</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sentence</span> <span class="o">=</span> <span class="s1">'My name is John Doe'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">'o'</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>MY NAME IS JOHN DOE
+my name is john doe
+My name is john doe
+2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can use the escape character (backslash) <code>\</code> to insert characters that are illegal in a string. An example of an illegal character is a single quote inside a string that is surrounded by single quotes.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">first_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'What</span><span class="se">\'</span><span class="s1">s your first name? '</span><span class="p">)</span>
+<span class="n">last_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'What</span><span class="se">\'</span><span class="s1">s is your last name? '</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Hello, '</span> <span class="o">+</span> <span class="n">first_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="o">+</span> 
+     <span class="s1">' '</span> <span class="o">+</span> <span class="n">last_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>What's your first name? JOHN
+What's is your last name? doe
+Hello, John Doe
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Custom-string-formatting">
+<a class="anchor" href="#Custom-string-formatting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom string formatting<a class="anchor-link" href="#Custom-string-formatting"> </a>
+</h4>
+<p>To infuse things in strings dynamically, you can use string formatting.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">first_name</span> <span class="o">=</span> <span class="s1">'John'</span>
+<span class="n">last_name</span> <span class="o">=</span> <span class="s1">'Doe'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are two ways you can do this:</p>
+<ul>
+<li>formatting with <code>.format()</code> string method</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s1">'Hello, </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello, John Doe
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>formatting with string literals, called f-strings</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'Hello, </span><span class="si">{</span><span class="n">first_name</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">last_name</span><span class="si">}</span><span class="s1">'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello, John Doe
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Working-with-numbers">
+<a class="anchor" href="#Working-with-numbers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Working with numbers<a class="anchor-link" href="#Working-with-numbers"> </a>
+</h3>
+<p>Numbers can be stored in variables. Make sure the variables have meaningful names. We can pass those variables inside functions.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3.14159
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Math-with-Numbers">
+<a class="anchor" href="#Math-with-Numbers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Math with Numbers<a class="anchor-link" href="#Math-with-Numbers"> </a>
+</h4>
+<ul>
+<li>
+<code>+</code> for addition</li>
+<li>
+<code>-</code> for subtraction</li>
+<li>
+<code>*</code> for multiplication</li>
+<li>
+<code>/</code> for division</li>
+<li>
+<code>**</code> for exponent</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num1</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">num2</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">num1</span> <span class="o">+</span> <span class="n">num2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">num1</span> <span class="o">**</span> <span class="n">num2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>14
+59049
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Type-Conversion">
+<a class="anchor" href="#Type-Conversion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Type Conversion<a class="anchor-link" href="#Type-Conversion"> </a>
+</h4>
+<p>You cannot combine strings with numbers in Python. For e.g., executing the code below will result in an error:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">days_in_Dec</span> <span class="o">=</span> <span class="mi">31</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">days_in_Dec</span> <span class="o">+</span> <span class="s1">' days in December'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-25-07fae050a6ec&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> days_in_Dec <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">31</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>print<span class="ansi-blue-fg">(</span>days_in_Dec <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">' days in December'</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">TypeError</span>: unsupported operand type(s) for +: 'int' and 'str'</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When displaying a string that contains numbers, you must convert the numbers into strings.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">days_in_Dec</span> <span class="o">=</span> <span class="mi">31</span> 
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">days_in_Dec</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' days in December'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>31 days in December
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Numbers can be stored as strings. However, numbers stored as strings are treated as strings.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num1</span> <span class="o">=</span> <span class="s1">'10'</span>
+<span class="n">num2</span> <span class="o">=</span> <span class="s1">'20'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">num1</span> <span class="o">+</span> <span class="n">num2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1020
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Also, the input function always returns a string.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num1</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter the first number: '</span><span class="p">)</span>
+<span class="n">num2</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter the second number:  '</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">num1</span> <span class="o">+</span> <span class="n">num2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Enter the first number: 35
+Enter the second number:  75
+3575
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>But here you can see that you have a number stored in a string. What if you want to treat it as a number and do math with it?<br>
+You can do another data type conversion. The <code>int</code> function will convert it to a whole number, while the <code>float</code> function will convert it into a floating point number that might have decimal places.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num1</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter the first number: '</span><span class="p">)</span>
+<span class="n">num2</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter the second number:  '</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">num1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">num2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">num1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">num2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Enter the first number: 35
+Enter the second number:  75
+110
+110.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Working-with-Dates">
+<a class="anchor" href="#Working-with-Dates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Working with Dates<a class="anchor-link" href="#Working-with-Dates"> </a>
+</h3>
+<p>We often need current date and time when logging errors and saving data. To get the current date and time, we need to use the <code>datetime</code> library.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="c1"># the now function returns a datetime object</span>
+<span class="n">current_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Today is: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">current_date</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Today is: 2021-06-05 11:49:47.183898
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are a whole bunch of functions you can use with <code>datetime</code> objects to manipulate dates.<br>
+<code>timedelta</code> is used to define a period of time.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Today is: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">today</span><span class="p">))</span>
+
+<span class="n">one_day</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">one_week</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">yesterday</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">one_day</span>
+<span class="n">past_week</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">one_week</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Yesterday was: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">yesterday</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'One week ago was: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">past_week</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Today is: 2021-06-05 12:01:31.236665
+Yesterday was: 2021-06-04 12:01:31.236665
+One week ago was: 2021-05-29 12:01:31.236665
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can also control the format of the date displayed on the screen. You can request just the day, month, year, hour, minutes and even seconds.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'Day: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">current_date</span><span class="o">.</span><span class="n">day</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Month: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">current_date</span><span class="o">.</span><span class="n">month</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Year: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">current_date</span><span class="o">.</span><span class="n">year</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Day: 5
+Month: 6
+Year: 2021
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sometimes, you can receive a date as a string, and you might need to store it as a date. You'll need to convert it to a <code>datetime</code> object.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">birthday</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'When is your birthday (dd/mm/yyyy)? '</span><span class="p">)</span>
+
+<span class="c1"># the strptime function allows you to mention the </span>
+<span class="c1"># format in which you'll be receiving the date</span>
+<span class="n">birthday_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">birthday</span><span class="p">,</span> <span class="s1">'</span><span class="si">%d</span><span class="s1">/%m/%Y'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Birthday: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">birthday_date</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>When is your birthday (dd/mm/yyyy)? 28/2/2000
+Birthday: 2000-02-28 00:00:00
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So what date was it three days before you were born?</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">birthday</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'When is your birthday (dd/mm/yyyy)? '</span><span class="p">)</span>
+<span class="n">birthday_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">birthday</span><span class="p">,</span> <span class="s1">'</span><span class="si">%d</span><span class="s1">/%m/%Y'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Birthday: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">birthday_date</span><span class="p">))</span>
+<span class="n">three_days</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">three_before</span> <span class="o">=</span> <span class="n">birthday_date</span> <span class="o">-</span> <span class="n">three_days</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Date three days before birthday: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">three_before</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>When is your birthday (dd/mm/yyyy)? 28/2/2000
+Birthday: 2000-02-28 00:00:00
+Date three days before birthday: 2000-02-25 00:00:00
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Error-Handling">
+<a class="anchor" href="#Error-Handling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Error Handling<a class="anchor-link" href="#Error-Handling"> </a>
+</h3>
+<p><em>Error handling</em> is when you have a problem with your code that is running, and its not something that you're going to be able to predict when you push your code to production. For e.g., permissions issue, database change, server being down, etc. Basically things that happen in the wild, which you have no control over.<br>
+<em>Debugging</em> is when you know that there's something wrong (a bug) with your code because you did something incorrectly, and you're going to have to go in and correct it.</p>
+<p>The following tools we're going to talk about are concerned with error handling. There are three types of errors:</p>
+<ul>
+<li>syntax errors</li>
+<li>runtime errors</li>
+<li>logic errors</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Syntax-errors">
+<a class="anchor" href="#Syntax-errors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Syntax errors<a class="anchor-link" href="#Syntax-errors"> </a>
+</h4>
+<p>With syntax errors, your code is not going to run at all. This type of error is easiest to track down.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">35</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">75</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'x = y'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">"&lt;ipython-input-23-beb86a647368&gt;"</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">4</span>
+<span class="ansi-red-fg">    if x == y</span>
+             ^
+<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We're missing a colon after <code>y</code>, which is why we're getting the error above.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Runtime-errors">
+<a class="anchor" href="#Runtime-errors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Runtime errors<a class="anchor-link" href="#Runtime-errors"> </a>
+</h4>
+<p>With runtime errors, your code will run, but it will fail when it encounters the error.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ZeroDivisionError</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-24-8064a0e4bb6b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> x <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">5</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> y <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">0</span>
+<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg"> </span>print<span class="ansi-blue-fg">(</span>x <span class="ansi-blue-fg">/</span> y<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">ZeroDivisionError</span>: division by zero</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We're trying to divide by zero, which is not possible. Python tells you why you're getting the error and points towards the line which needs to be fixed. It's good practice to start from the line mentioned and work your way up to the error. Runtime errors can also be caused due to an error in the framework you're using, but the chances of that happening are extremely rare. Most probably, if you have a runtime error, it's because there's something wrong in your code.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Catching-runtime-errors">
+<a class="anchor" href="#Catching-runtime-errors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Catching runtime errors<a class="anchor-link" href="#Catching-runtime-errors"> </a>
+</h4>
+<p>When a runtime error occurs, Python generates an exception during the execution and that can be handled, which avoids your program to interrupt.<br>
+Exception handling:</p>
+<ul>
+<li>
+<code>try</code>: this block will test the excepted error to occur</li>
+<li>
+<code>except</code>: here you can handle the error</li>
+<li>
+<code>else</code>: if there is no exception, then this block will be executed</li>
+<li>
+<code>finally</code>: finally block always gets executed whether exception is generated or not</li>
+</ul>
+<p>These tools are not used for finding bugs.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">y</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Sorry, something went wrong'</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Something really went wrong'</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'This line always runs, on success or failure'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Sorry, something went wrong
+This line always runs, on success or failure
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Logic-errors">
+<a class="anchor" href="#Logic-errors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logic errors<a class="anchor-link" href="#Logic-errors"> </a>
+</h4>
+<p>Logic errors occur when the code compiles properly, doesn't give any syntax or runtime errors, but it doesn't give you the response you're looking for.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' is less than '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the code above, <code>x</code> is less than <code>y</code>; but the <code>if</code> statement includes <code>x &gt; y</code>, instead of <code>x &lt; y</code>.</p>
+<p>When you're figuring out what went wrong with your code, just make sure that you reread your code. You can check the documentation and also search the internet on sites like StackOverflow and Medium.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Handling-Conditions">
+<a class="anchor" href="#Handling-Conditions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handling Conditions<a class="anchor-link" href="#Handling-Conditions"> </a>
+</h3>
+<p>Your code might need the ability to take different actions based on different conditions. Below are the operations that you'll need for comparisons:</p>
+<ul>
+<li>
+<code>&gt;</code>: greater than</li>
+<li>
+<code>&lt;</code>: less than</li>
+<li>
+<code>&gt;=</code>: greater than or equal to</li>
+<li>
+<code>&lt;=</code>: less than or equal to</li>
+<li>
+<code>==</code>: is equal to</li>
+<li>
+<code>!=</code>: is not equal to</li>
+</ul>
+<h4 id="if-statement">
+<a class="anchor" href="#if-statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>if statement<a class="anchor-link" href="#if-statement"> </a>
+</h4>
+<p>The <code>if</code> statement contains a logical expression using which the data is compared and a decision is made based on the result of the comparison.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">price</span> <span class="o">=</span> <span class="mf">250.0</span>
+
+<span class="k">if</span> <span class="n">price</span> <span class="o">&gt;=</span> <span class="mf">100.00</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">tax</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="if---else-statement">
+<a class="anchor" href="#if---else-statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>if - else statement<a class="anchor-link" href="#if---else-statement"> </a>
+</h4>
+<p>You can add a default action using <code>else</code>. An <code>else</code> statement contains the block of code that executes if the conditional expression in the <code>if</code> statement resolves to <code>0</code> or a <code>False</code> value.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">price</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="k">if</span> <span class="n">price</span> <span class="o">&gt;=</span> <span class="mf">100.00</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mi">0</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="n">tax</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Be careful when comparing strings. String comparisons are case sensitive.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">country</span> <span class="o">=</span> <span class="s1">'INDIA'</span>
+<span class="k">if</span> <span class="n">country</span> <span class="o">==</span> <span class="s1">'india'</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Namaste'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">country</span> <span class="o">=</span> <span class="s1">'INDIA'</span>
+<span class="k">if</span> <span class="n">country</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'india'</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Namaste'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Namaste
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="if---elif---else-statement">
+<a class="anchor" href="#if---elif---else-statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>if - elif - else statement<a class="anchor-link" href="#if---elif---else-statement"> </a>
+</h4>
+<p>You may need to check multiple conditions to determine the correct action. The <code>elif</code> statement allows you to check multiple expressions for <code>True</code> and execute a block of cide as soon as one of the conditions evaluates to <code>True</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Which state do you live in? '</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">'Georgia'</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">5.75</span>
+<span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">'California'</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">13.3</span>
+<span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">'Texas'</span> <span class="ow">or</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">'Florida'</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">4.0</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tax</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Which state do you live in? Georgia
+5.75
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="OR-statements">
+<a class="anchor" href="#OR-statements" aria-hidden="true"><span class="octicon octicon-link"></span></a>OR statements<a class="anchor-link" href="#OR-statements"> </a>
+</h4>
+<table>
+<thead>
+<tr>
+<th>first condition</th>
+<th>second condition</th>
+<th>evaluation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+</tr>
+<tr>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+</tr>
+<tr>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+<h4 id="AND-statements">
+<a class="anchor" href="#AND-statements" aria-hidden="true"><span class="octicon octicon-link"></span></a>AND statements<a class="anchor-link" href="#AND-statements"> </a>
+</h4>
+<table>
+<thead>
+<tr>
+<th>first condition</th>
+<th>second condition</th>
+<th>evaluation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+</tr>
+<tr>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr>
+<td>False</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="in-operator">
+<a class="anchor" href="#in-operator" aria-hidden="true"><span class="octicon octicon-link"></span></a>in operator<a class="anchor-link" href="#in-operator"> </a>
+</h4>
+<p>If you have a list of possible values to check, you can use the <code>in</code> operator.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Which state do you live in? '</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'Texas'</span><span class="p">,</span> <span class="s1">'Florida'</span><span class="p">,</span> <span class="s1">'Alaska'</span><span class="p">,</span>
+             <span class="s1">'Wyoming'</span><span class="p">,</span> <span class="s1">'South Dakota'</span><span class="p">):</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">'California'</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">13.3</span>
+<span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">'Georgia'</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">5.75</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">4.0</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tax</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Which state do you live in? Alaska
+0.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Nested-if-statement">
+<a class="anchor" href="#Nested-if-statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nested if statement<a class="anchor-link" href="#Nested-if-statement"> </a>
+</h4>
+<p>There may be a situation when you want to check for another condition after a condition resolves to <code>True</code>. If an action depends on a combination of conditions, you can nest <code>if</code> statements.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">country</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">"What country do you live in? "</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">country</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'canada'</span><span class="p">:</span>
+    <span class="n">province</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">"What province/state do you live in? "</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">province</span> <span class="ow">in</span><span class="p">(</span><span class="s1">'Alberta'</span><span class="p">,</span> <span class="s1">'Nunavut'</span><span class="p">,</span><span class="s1">'Yukon'</span><span class="p">):</span>
+        <span class="n">tax</span> <span class="o">=</span> <span class="mf">0.05</span>
+    <span class="k">elif</span> <span class="n">province</span> <span class="o">==</span> <span class="s1">'Ontario'</span><span class="p">:</span>
+        <span class="n">tax</span> <span class="o">=</span> <span class="mf">0.13</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tax</span> <span class="o">=</span> <span class="mf">0.15</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">tax</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tax</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>What country do you live in? Canada
+What province/state do you live in? Ontario
+0.13
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sometimes you can combine conditions with <code>and</code> instead of nested <code>if</code> statements.<br>
+Let's assume that you're trying to calculate which students in a college have made the honor roll. The requirements for making the honor roll are a minimum 85% GPA and maintaining all your grades at at least 70%.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gpa</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">'What</span><span class="se">\'</span><span class="s1">s your GPA? '</span><span class="p">))</span>
+<span class="n">lowest_grade</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">'What was your lowest grade? '</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">gpa</span> <span class="o">&gt;=</span> <span class="mf">0.85</span> <span class="ow">and</span> <span class="n">lowest_grade</span> <span class="o">&gt;=</span> <span class="mf">0.7</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'You made the honor roll'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'You</span><span class="se">\'</span><span class="s1">re really stupid'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>What's your GPA? 0.8
+What was your lowest grade? 0.75
+You're really stupid
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you have a very complicated <code>if</code> statement, rather than copying and pasting it in different parts of you code to do different things, we can remember what happened the last time we looked at the <code>if</code> statement with a Boolean variable.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gpa</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">'What</span><span class="se">\'</span><span class="s1">s your GPA? '</span><span class="p">))</span>
+<span class="n">lowest_grade</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">'What was your lowest grade? '</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">gpa</span> <span class="o">&gt;=</span> <span class="mf">0.85</span> <span class="ow">and</span> <span class="n">lowest_grade</span> <span class="o">&gt;=</span> <span class="mf">0.7</span><span class="p">:</span>
+    <span class="n">honor_roll</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">honor_roll</span> <span class="o">=</span> <span class="kc">False</span>
+    
+<span class="sd">''' Somewhere later in your code if you need</span>
+<span class="sd">to check if a student is on honor roll, all</span>
+<span class="sd">you need to do is check the boolean variable</span>
+<span class="sd">set earlier in the code'''</span>
+<span class="k">if</span> <span class="n">honor_roll</span><span class="p">:</span>  <span class="c1"># True by default</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'You made the honor roll'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>What's your GPA? 0.9
+What was your lowest grade? 0.87
+You made the honor roll
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Collections">
+<a class="anchor" href="#Collections" aria-hidden="true"><span class="octicon octicon-link"></span></a>Collections<a class="anchor-link" href="#Collections"> </a>
+</h3>
+<h4 id="Lists">
+<a class="anchor" href="#Lists" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lists<a class="anchor-link" href="#Lists"> </a>
+</h4>
+<p>Lists are a collection of items.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Will'</span><span class="p">,</span> <span class="s1">'Max'</span><span class="p">]</span>
+
+<span class="c1"># start with an empty list</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># add new item to the end</span>
+<span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">91</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+
+<span class="c1"># lists are zero-indexed</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>['John', 'Will', 'Max']
+[90, 91]
+91
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can get the number of items in a list using <code>len</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Will'</span><span class="p">,</span> <span class="s1">'Max'</span><span class="p">]</span>
+
+<span class="c1"># get the number of items using len</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can insert an item in a list using <code>insert</code>. This will insert the item at the specific index that you mention.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">names</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Bill'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>['Bill', 'John', 'Will', 'Max']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can use <code>sort</code> to sort strings in alphabetical order. In case of numbers, it sorts them in the ascending order. Remember that using <code>sort</code> will modify the list!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">names</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>['Bill', 'John', 'Max', 'Will']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can retrieve a range within the list by indicating the start and end index; the end index being exclusive, i.e. it will not be included in the list.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Amy'</span><span class="p">,</span> <span class="s1">'Susan'</span><span class="p">,</span> <span class="s1">'Jackie'</span><span class="p">,</span> <span class="s1">'Kylie'</span><span class="p">,</span> <span class="s1">'Ellen'</span><span class="p">]</span>
+
+<span class="c1"># start and end index</span>
+<span class="n">presenters</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="c1"># all names up to but not including index 3</span>
+<span class="n">hosts</span> <span class="o">=</span> <span class="n">names</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="c1"># all names from 3 onwards, including index 3</span>
+<span class="n">judges</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">presenters</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hosts</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">judges</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>['Amy', 'Susan', 'Jackie', 'Kylie', 'Ellen']
+['Susan', 'Jackie']
+['Amy', 'Susan', 'Jackie']
+['Kylie', 'Ellen']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Arrays">
+<a class="anchor" href="#Arrays" aria-hidden="true"><span class="octicon octicon-link"></span></a>Arrays<a class="anchor-link" href="#Arrays"> </a>
+</h4>
+<p>Arrays are a collection of numbered data types. Unlike a list, in order for you to use an array, you have to create an array object by importing it from the <code>array</code> library.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">array</span> <span class="kn">import</span> <span class="n">array</span>
+
+<span class="c1"># indicate the numerical type you'll use</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="s1">'d'</span><span class="p">)</span> <span class="c1"># d indicates a double</span>
+<span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">81</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>array('d', [80.0, 81.0])
+80.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So what's the difference between an array and a list?<br>
+Arrays are only numerical data types and everything inside the array must be of the same data type. They can help add extra structure to your code.<br>
+Lists can store anything you want, can store any data type, and can have mixed data types. They give more flexibility to your code.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Dictionaries">
+<a class="anchor" href="#Dictionaries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dictionaries<a class="anchor-link" href="#Dictionaries"> </a>
+</h4>
+<p>Dictionaries give you the ability to put together a group of items; but instead of using numeric indexes, you can use key-value pairs.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">person</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'first'</span><span class="p">:</span> <span class="s1">'John'</span><span class="p">}</span>
+<span class="n">person</span><span class="p">[</span><span class="s1">'last'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Wick'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="p">[</span><span class="s1">'first'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{'first': 'John', 'last': 'Wick'}
+John
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">identity</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'Batman'</span><span class="p">:</span> <span class="s1">'Bruce Wayne'</span><span class="p">,</span>
+    <span class="s1">'Superman'</span><span class="p">:</span> <span class="s1">'Clark Kent'</span><span class="p">,</span>
+    <span class="s1">'Spiderman'</span><span class="p">:</span> <span class="s1">'Peter Parker'</span><span class="p">,</span>
+    <span class="s1">'Iron Man'</span><span class="p">:</span> <span class="s1">'Tony Stark'</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">identity</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{'Batman': 'Bruce Wayne', 'Superman': 'Clark Kent', 'Spiderman': 'Peter Parker', 'Iron Man': 'Tony Stark'}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When to use a dictionary vs a list?
+It depends on whether you want to name things and whether you want items to be in a guaranteed order.<br>
+A dictionary will let you name key-value pairs but it does not guarantee you a specific order.<br>
+A list does guarantee you a specific order since it has a zero-based index.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Random-Module">
+<a class="anchor" href="#Random-Module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Random Module<a class="anchor-link" href="#Random-Module"> </a>
+</h3>
+<p>One way to introduce random numbers in your code is to use the <code>random</code> module.<br>
+First you need to import the <code>random</code> module.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># generate a random whole number between 1 and 50</span>
+<span class="c1"># inclusive of 1 and 50</span>
+<span class="n">random_integer</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">random_integer</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>12
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># exclusive of 1.0 </span>
+<span class="n">random_float</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">random_float</span><span class="p">)</span>
+
+<span class="c1"># generate a random floating point number between 0.0 and 5.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">random_float</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.6343084141143187
+3.1715420705715935
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are so many more methods to the <code>random</code> module and you can check out the Python documentation to find out about all the things you can do with this module.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Loops">
+<a class="anchor" href="#Loops" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loops<a class="anchor-link" href="#Loops"> </a>
+</h3>
+<p>Loops are a concept that is used when you need to have things happening over and over again.</p>
+<h4 id="for-loops">
+<a class="anchor" href="#for-loops" aria-hidden="true"><span class="octicon octicon-link"></span></a>for loops<a class="anchor-link" href="#for-loops"> </a>
+</h4>
+<p><code>for</code> loops are used to loop through a collection. With a <code>for</code> loop, you can go through each item in a list and perform some action with each individual item in the list.</p>
+<blockquote>
+<p><code>for item in list_of_items:# do something to each item</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Will'</span><span class="p">,</span> <span class="s1">'Max'</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>John
+Will
+Max
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">wildcats</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'lion'</span><span class="p">,</span> <span class="s1">'tiger'</span><span class="p">,</span> <span class="s1">'puma'</span><span class="p">,</span> <span class="s1">'jaguar'</span><span class="p">,</span> <span class="s1">'cheetah'</span><span class="p">,</span> <span class="s1">'leopard'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">wildcat</span> <span class="ow">in</span> <span class="n">wildcats</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">wildcat</span> <span class="o">+</span> <span class="s1">' is a wildcat.'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>lion is a wildcat.
+tiger is a wildcat.
+puma is a wildcat.
+jaguar is a wildcat.
+cheetah is a wildcat.
+leopard is a wildcat.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can loop a particular number of times using <code>range</code>. <code>range</code> automatically creates a list of numbers for you. Remember that for the <code>range</code> function, the end index is exclusive.</p>
+<blockquote>
+<p><code>for number in range(a, b):# do something    print(number)</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0
+1
+2
+3
+4
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you want the range to increase by any other number, you can add a step to the function after the starting and ending indices.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0
+3
+6
+9
+12
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="while-loop">
+<a class="anchor" href="#while-loop" aria-hidden="true"><span class="octicon octicon-link"></span></a>while loop<a class="anchor-link" href="#while-loop"> </a>
+</h4>
+<p><code>while</code> loops are used to loop with a condition. As long as something is <code>True</code>, the code will stay inside of the <code>while</code> loop i.e. the loop will continue going while the condition is true. You need to make sure that at some point you change the condition and it must result to <code>False</code>; otherwise the program will be stuck in an infinite loop, resulting in an error.</p>
+<blockquote>
+<p><code>while something_is_true:# do something repeatedly</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Will'</span><span class="p">,</span> <span class="s1">'Max'</span><span class="p">]</span>
+<span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+    <span class="c1"># change the condition</span>
+    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>John
+1
+Will
+2
+Max
+3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">while</span> <span class="n">x</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'This is an example of a while loop.'</span><span class="p">)</span>
+    <span class="c1"># change the condition</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="kc">False</span>
+    
+<span class="k">while</span> <span class="ow">not</span> <span class="n">x</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'This is another example of a while loop.'</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>This is an example of a while loop.
+This is another example of a while loop.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>for</code> loops are great when you want to iterate over something and you need to do something with each thing that you're iterating over. In cases like above, when you have a list, you almost always want use a <code>for</code> loop.</p>
+<p><code>while</code> loops are useful when you don't care about the number in the sequence or about the item you're iterating through in a list, and you just simply want to carry out a functionality many times until a condition is met. You want to typically use a <code>while</code> loop when something is going to change automatically, e.g. when you need to read through a list of lines in a file, skip every alternate line, or if you're looking for something.<br>
+<code>while</code> loops are more dangerous because they can lead to infinite loops if the condition is not met.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Functions">
+<a class="anchor" href="#Functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functions<a class="anchor-link" href="#Functions"> </a>
+</h3>
+<p>A function is a block of organized, reusable code that is used to perform a single, related action. Function provide better modularity for your application and a high degree of code reusing, e.g. the <code>print()</code> function. You can create your own functions, called <em>user-defined functions</em>.<br>
+Programming is all about copying and pasting code from one place to another. If you find yourself copying and pasting the exact same lines of code to more places in your program, you should probably move that into a function.<br>
+Functions must be declared before the line of code where the function is called.</p>
+<p><strong>Defining Functions</strong></p>
+<blockquote>
+<p>`def my_function():# do this    # then do this</p>
+
+<pre><code># finally do this`</code></pre>
+</blockquote>
+<p><strong>Calling Functions</strong></p>
+<blockquote>
+<p><code>my_function()</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Functions-with-Inputs">
+<a class="anchor" href="#Functions-with-Inputs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functions with Inputs<a class="anchor-link" href="#Functions-with-Inputs"> </a>
+</h4>
+<p>The input to a function is something that can be passed over when we call the function.</p>
+<blockquote>
+<p>`def my_function(something):# do this with something    # then do this</p>
+
+<pre><code># finally do this`
+
+</code></pre>
+<p><code>my_function(123)</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Functions-with-Outputs">
+<a class="anchor" href="#Functions-with-Outputs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functions with Outputs<a class="anchor-link" href="#Functions-with-Outputs"> </a>
+</h4>
+<p>The output keyword for a function is <code>return</code>. The <code>return</code> line must be the last line of the function. You can have multiple return keywords or even a blank return keyword in a function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">my_function</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>20</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When you call a function that has an output, the returned output is what replaces the function call, and the output can be stored as a variable.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">8</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">my_function</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>40
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Imagine that you're trying to figure out why your program is taking a long time to run. So you write some print statements inside your code to tell you what time it is when the code is running, so you can see what time it is at different stages when your code is running.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c1"># print timestamps to see how long</span>
+<span class="c1"># sections take to run</span>
+
+<span class="n">first_name</span> <span class="o">=</span> <span class="s1">'John'</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'task completed'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'task completed'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>task completed
+2021-06-07 13:58:13.113387
+
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+task completed
+2021-06-07 13:58:13.115614
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above code can be rewritten using a function. You can define the function using <code>def</code> keyword, followed by the name of the function, and then a colon (<code>:</code>). Remember to use indentation which determines what code belongs to that function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="c1"># print the current time</span>
+<span class="k">def</span> <span class="nf">print_time</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'task completed'</span><span class="p">)</span>
+    <span class="c1"># no need for the extra datetime prefix</span>
+    <span class="c1"># since the class is imported above</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span> 
+    <span class="nb">print</span><span class="p">()</span>
+    
+<span class="n">first_name</span> <span class="o">=</span> <span class="s1">'John'</span>
+<span class="n">print_time</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">print_time</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>task completed
+2021-06-07 14:11:40.583077
+
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+task completed
+2021-06-07 14:11:40.589036
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sometimes when you copy/paste your code, we want to change some part of it. In the above example, what if you want to display a different message each time you run it. Say you want to display a specific message depending on the command you were running. This is where function parameters come in. <em>Parameters</em> or <em>arguments</em> are placed or defined within the parentheses of a function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="c1"># print the current time and task name</span>
+<span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="n">task_name</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">task_name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">()</span>
+    
+<span class="n">first_name</span> <span class="o">=</span> <span class="s1">'John'</span>
+<span class="c1"># pass in the task_name as a parameter</span>
+<span class="n">print_time</span><span class="p">(</span><span class="s1">'first name assigned'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1"># pass in the task_name as a parameter</span>
+<span class="n">print_time</span><span class="p">(</span><span class="s1">'loop completed'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>first name assigned
+2021-06-07 16:07:57.077250
+
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+loop completed
+2021-06-07 16:07:57.079687
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's take another example where the code looks different but we're using the same logic. Suppose you're interested in getting initials for a user ID after the user enters their name.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">first_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter your first name: '</span><span class="p">)</span>
+<span class="c1"># get only the first letter of input</span>
+<span class="n">first_name_initial</span> <span class="o">=</span> <span class="n">first_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">last_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter your last name: '</span><span class="p">)</span>
+<span class="n">last_name_initial</span> <span class="o">=</span> <span class="n">last_name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Your initials are: '</span> <span class="o">+</span> <span class="n">first_name_initial</span> <span class="o">+</span> <span class="n">last_name_initial</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Enter your first name: John 
+Enter your last name: Wick
+Your initials are: JW
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above code can be written using a function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_initial</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">initial</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># the return function returns a value</span>
+    <span class="k">return</span> <span class="n">initial</span>
+
+<span class="n">first_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter your first name: '</span><span class="p">)</span>
+<span class="n">first_name_initial</span> <span class="o">=</span> <span class="n">get_initial</span><span class="p">(</span><span class="n">first_name</span><span class="p">)</span>
+
+<span class="n">last_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter your last name: '</span><span class="p">)</span>
+<span class="n">last_name_initial</span> <span class="o">=</span> <span class="n">get_initial</span><span class="p">(</span><span class="n">last_name</span><span class="p">)</span>
+
+<span class="c1"># nested function in another call</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Your initials are: '</span> <span class="o">+</span> <span class="n">get_initial</span><span class="p">(</span><span class="n">first_name</span><span class="p">)</span> <span class="o">+</span> 
+      <span class="n">get_initial</span><span class="p">(</span><span class="n">last_name</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Enter your first name: john
+Enter your last name: wick
+Your initials are: jw
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Functions can accept multiple parameters. In the above example, suppose you want to the user initials to only be uppercase for a user ID but lowercase for an email ID.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_initial</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">force_uppercase</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span> <span class="c1"># default to True</span>
+    <span class="k">if</span> <span class="n">force_uppercase</span><span class="p">:</span>
+        <span class="n">initial</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">initial</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">initial</span>
+
+<span class="n">first_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter your first name: '</span><span class="p">)</span>
+<span class="n">first_name_initial</span> <span class="o">=</span> <span class="n">get_initial</span><span class="p">(</span><span class="n">first_name</span><span class="p">)</span>
+
+<span class="n">last_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'Enter your last name: '</span><span class="p">)</span>
+<span class="n">last_name_initial</span> <span class="o">=</span> <span class="n">get_initial</span><span class="p">(</span><span class="n">last_name</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Your initials are: '</span> <span class="o">+</span> <span class="n">first_name_initial</span> <span class="o">+</span> <span class="n">last_name_initial</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Enter your first name: john
+Enter your last name: wick
+Your initials are: Jw
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When calling a function, you have to pass the parameters in the same order as when you defined the function. An exception to this is when you use named parameters, which offer better readability.<br>
+<code>first_name_initial = get_initial(force_uppercase=True, name=first_name)</code></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Functions make the code more readable if you use good function names. They make the code less clunky. Always add comments to explain the purpose of your function.<br>
+The main advantage of functions is that if you ever need to change your function code, you only need to change it in one place. You also reduce rework and the chance to introduce bugs when you change the code you copied.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="shirolepranav/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/python/2020/12/19/python-basics-1.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" target="_blank" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
