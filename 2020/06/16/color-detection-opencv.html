@@ -1,0 +1,128 @@
+<h1 id="creating-a-color-detector-using-opencv-and-python">Creating a Color Detector using OpenCV and Python</h1>
+
+<blockquote>
+  <p>We will create a Color Detector that will detect color names and RGB values from any picture.</p>
+</blockquote>
+
+<ul>
+  <li>toc: true</li>
+  <li>branch: master</li>
+  <li>badges: true</li>
+  <li>comments: true</li>
+  <li>categories: [computer vision, opencv]</li>
+</ul>
+
+<p>In this blog post, we will create a Color Detector that will detect color names and RGB values from any picture using Python and OpenCV. The application will gives us the name of the color when we click on any area in the picture.<br />
+We have a data file that contains color names and its RGB values. We will calculate the distance from each color and find the shortest one. We can use an IDE like Spyder or PyCharm for this project.</p>
+
+<h2 id="the-dataset">The dataset</h2>
+<p>Colors are made up of 3 primary colors: red, green and blue. Computers define each color value within a range of 0 to 255. We will be using a dataset (<a href="https://github.com/codebrainz/color-names/blob/master/output/colors.csv">download here</a>) that contains 865 RGB values with their corresponding names.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># import libraries
+</span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+</code></pre></div></div>
+
+<p>We will give the option to choose an image from our computer. For that, we will create an argument parser using the argparse library. We can directly give an image from the command prompt.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># create argument parser to take image path from command line
+</span><span class="n">ap</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">ap</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-i'</span><span class="p">,</span> <span class="s">'--image'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Image Path'</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">ap</span><span class="p">.</span><span class="n">parse_args</span><span class="p">())</span>
+<span class="n">img_path</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">'image'</span><span class="p">]</span>
+
+<span class="c1"># read the image with opencv
+</span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We’ll read the CSV file and load it into the pandas dataframe. We’ll assign each column with a name for better comprehension.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># name each column
+</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s">'color'</span><span class="p">,</span> <span class="s">'color_name'</span><span class="p">,</span> <span class="s">'hex'</span><span class="p">,</span> <span class="s">'R'</span><span class="p">,</span> <span class="s">'G'</span><span class="p">,</span> <span class="s">'B'</span><span class="p">]</span>
+
+<span class="c1"># read csv file with pandas
+</span><span class="n">csv</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'colors.csv'</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We’ll create a window in which the input image will display, and set a callback function which will be called when a mouse event happens.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># create window to display input image
+</span><span class="n">cv2</span><span class="p">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s">'image'</span><span class="p">)</span>
+
+<span class="c1"># set callback function for mouse event
+</span><span class="n">cv2</span><span class="p">.</span><span class="n">setMouseCallback</span><span class="p">(</span><span class="s">'image'</span><span class="p">,</span> <span class="n">draw_function</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We’ll create a function will will calculate the RGB values of the pixel where we double-click on the image. The function parameters have the event name, (x, y) co-ordinates of the mouse position, etc. In the function, we check if the event is double-clicked, and then we calculate and set the r,g,b values along with the x,y positions of the mouse.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">draw_function</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="n">cv2</span><span class="p">.</span><span class="n">EVENT_LBUTTONDBLCLICK</span><span class="p">:</span>
+        <span class="k">global</span> <span class="n">b</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="p">,</span> <span class="n">clicked</span>
+        <span class="n">clicked</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">xpos</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">ypos</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We’ll need another function which will return the color name from RGB values. To get the color name, we calculate a distance <code class="language-plaintext highlighter-rouge">d</code>, which tells us how close we are to the color and choose the one having the minimum distance.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">getColorName</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="n">G</span><span class="p">,</span><span class="n">B</span><span class="p">):</span>
+    <span class="n">minimum</span> <span class="o">=</span> <span class="mi">10000</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">csv</span><span class="p">)):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">R</span><span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">csv</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s">"R"</span><span class="p">]))</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">G</span><span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">csv</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s">"G"</span><span class="p">]))</span><span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">B</span><span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">csv</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s">"B"</span><span class="p">]))</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">d</span><span class="o">&lt;=</span><span class="n">minimum</span><span class="p">):</span>
+            <span class="n">minimum</span> <span class="o">=</span> <span class="n">d</span>
+            <span class="n">cname</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="s">"color_name"</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">cname</span>
+</code></pre></div></div>
+
+<p>Whenever we double-click on a pixel on the image, the corresponding color name and RGB values will appear on the top of the window.<br />
+Using the <code class="language-plaintext highlighter-rouge">cv2.imshow()</code> function, we draw the image on the window. When the user double clicks the window, we draw a rectangle using <code class="language-plaintext highlighter-rouge">cv2.rectangle</code> and get the color name to draw text on the window using <code class="language-plaintext highlighter-rouge">cv2.putText()</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+
+    <span class="n">cv2</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="s">"image"</span><span class="p">,</span><span class="n">img</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">clicked</span><span class="p">):</span>
+   
+        <span class="c1">#cv2.rectangle(image, startpoint, endpoint, color, thickness)-1 fills entire rectangle 
+</span>        <span class="n">cv2</span><span class="p">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">img</span><span class="p">,(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">750</span><span class="p">,</span><span class="mi">60</span><span class="p">),</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">r</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1">#Creating text string to display( Color name and RGB values )
+</span>        <span class="n">text</span> <span class="o">=</span> <span class="n">getColorName</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="s">' R='</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">+</span>  <span class="s">' G='</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="o">+</span>  <span class="s">' B='</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        
+        <span class="c1">#cv2.putText(img,text,start,font(0-7),fontScale,color,thickness,lineType )
+</span>        <span class="n">cv2</span><span class="p">.</span><span class="n">putText</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">text</span><span class="p">,(</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span><span class="mi">2</span><span class="p">,</span><span class="n">cv2</span><span class="p">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+
+        <span class="c1">#For very light colours we will display text in black colour
+</span>        <span class="k">if</span><span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">g</span><span class="o">+</span><span class="n">b</span><span class="o">&gt;=</span><span class="mi">600</span><span class="p">):</span>
+            <span class="n">cv2</span><span class="p">.</span><span class="n">putText</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">text</span><span class="p">,(</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mi">2</span><span class="p">,</span><span class="n">cv2</span><span class="p">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+            
+        <span class="n">clicked</span><span class="o">=</span><span class="bp">False</span>
+
+    <span class="c1">#Break the loop when user hits 'esc' key    
+</span>    <span class="k">if</span> <span class="n">cv2</span><span class="p">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">==</span><span class="mi">27</span><span class="p">:</span>
+        <span class="k">break</span>
+    
+<span class="n">cv2</span><span class="p">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The application is now built. We can run the Python file from the command prompt using the following code. If the image is in the same directory, use the image name. If the image is in a different directory, make sure you give the full path of the image.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">python</span> <span class="n">color_detection</span><span class="p">.</span><span class="n">py</span> <span class="o">&lt;</span><span class="n">image</span> <span class="n">name</span><span class="o">/</span><span class="n">path</span> <span class="n">here</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>Below are some examples of color detection on an image in my files. The area surrounded by a red square is where I double-clicked my mouse to find the color of that spot. You can use this application on some of your images as well.</p>
+
+<p><img src="/blog/images/notebooks/color_detection/Capture4.png" alt="" /></p>
+
+<p><img src="/blog/images/notebooks/color_detection/Capture5.png" alt="" /></p>
+
+<p><img src="/blog/images/notebooks/color_detection/Capture6.png" alt="" /></p>
+
+<hr />
+
