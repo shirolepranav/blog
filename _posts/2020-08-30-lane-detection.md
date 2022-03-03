@@ -1,12 +1,14 @@
-# Real Time Lane Detection using OpenCV
+---
+title: Real Time Lane Detection using OpenCV
+description: We will perform real time lane detection on [this video](https://drive.google.com/file/d/1V7OrAwjxtHR8LkfxXDVRu5lx2e5fxljo/view?usp=sharing).
+layout: post
+toc: true
+comments: true
+hide: false
+search_exclude: false
+categories: [computer vision, opencv]
+---
 
-> We will perform real time lane detection on [this video](https://drive.google.com/file/d/1V7OrAwjxtHR8LkfxXDVRu5lx2e5fxljo/view?usp=sharing).
-
-- toc: true
-- branch: master
-- badges: true
-- comments: true
-- categories: [computer vision, opencv]
 
 Autonomous driving is one of the most exciting and disruptive innovations of our time. Lane Detection is one of the preliminary steps involved during the training of an autonomous driving car.  
 
