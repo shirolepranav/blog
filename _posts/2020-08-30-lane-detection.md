@@ -1,6 +1,6 @@
 ---
 title: Real Time Lane Detection using OpenCV
-description: We will perform real time lane detection on [this video](https://drive.google.com/file/d/1V7OrAwjxtHR8LkfxXDVRu5lx2e5fxljo/view?usp=sharing).
+description: We will perform real time lane detection on a video.
 layout: post
 toc: true
 comments: true
