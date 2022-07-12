@@ -1,0 +1,5885 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>PostgreSQL Tutorial | pranav shirole</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="PostgreSQL Tutorial" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A blog post that outlines PostgreSQL basics" />
+<meta property="og:description" content="A blog post that outlines PostgreSQL basics" />
+<link rel="canonical" href="https://shirolepranav.github.io/blog/sql/postgresql/2021/10/10/postgresql-tutorial.html" />
+<meta property="og:url" content="https://shirolepranav.github.io/blog/sql/postgresql/2021/10/10/postgresql-tutorial.html" />
+<meta property="og:site_name" content="pranav shirole" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-10T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="PostgreSQL Tutorial" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-10-10T00:00:00-05:00","datePublished":"2021-10-10T00:00:00-05:00","description":"A blog post that outlines PostgreSQL basics","headline":"PostgreSQL Tutorial","mainEntityOfPage":{"@type":"WebPage","@id":"https://shirolepranav.github.io/blog/sql/postgresql/2021/10/10/postgresql-tutorial.html"},"url":"https://shirolepranav.github.io/blog/sql/postgresql/2021/10/10/postgresql-tutorial.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shirolepranav.github.io/blog/feed.xml" title="pranav shirole" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">pranav shirole</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">PostgreSQL Tutorial</h1><p class="page-description">A blog post that outlines PostgreSQL basics</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-10-10T00:00:00-05:00" itemprop="datePublished">
+        Oct 10, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      43 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#sql">sql</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#postgresql">postgresql</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/shirolepranav/blog/tree/master/_notebooks/2021-10-10-postgresql-tutorial.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/shirolepranav/blog/blob/master/_notebooks/2021-10-10-postgresql-tutorial.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#Creating-a-Database">Creating a Database </a></li>
+<li class="toc-entry toc-h3"><a href="#Connecting-to-Database">Connecting to Database </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Setting-up-the-conda-environment">Setting up the conda environment </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Creating-a-Table">Creating a Table </a></li>
+<li class="toc-entry toc-h3"><a href="#Inserting-Rows-into-a-Table">Inserting Rows into a Table </a></li>
+<li class="toc-entry toc-h3"><a href="#Basic-SELECT-Syntax">Basic SELECT Syntax </a></li>
+<li class="toc-entry toc-h3"><a href="#Querying-a-Subset-of-Columns">Querying a Subset of Columns </a></li>
+<li class="toc-entry toc-h3"><a href="#Finding-Unique-Values">Finding Unique Values </a></li>
+<li class="toc-entry toc-h3"><a href="#Sorting-Data">Sorting Data </a></li>
+<li class="toc-entry toc-h3"><a href="#Filtering-Rows-with-WHERE">Filtering Rows with WHERE </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Comparison-and-Matching-Operators">Comparison and Matching Operators </a></li>
+<li class="toc-entry toc-h4"><a href="#Using-LIKE-and-ILIKE-with-WHERE">Using LIKE and ILIKE with WHERE </a></li>
+<li class="toc-entry toc-h4"><a href="#Combining-Operators-with-AND-and-OR">Combining Operators with AND and OR </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Character-Data-Types">Character Data Types </a></li>
+<li class="toc-entry toc-h3"><a href="#Number-Data-Types">Number Data Types </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Integers">Integers </a></li>
+<li class="toc-entry toc-h4"><a href="#Auto-incrementing-Integers">Auto-incrementing Integers </a></li>
+<li class="toc-entry toc-h4"><a href="#Decimal-Numbers">Decimal Numbers </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Date-and-Time-Data-Types">Date and Time Data Types </a></li>
+<li class="toc-entry toc-h3"><a href="#Transforming-Values-from-One-Data-Type-to-Another">Transforming Values from One Data Type to Another </a></li>
+<li class="toc-entry toc-h3"><a href="#Importing-and-Exporting-Data">Importing and Exporting Data </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Delimited-Text-Files">Delimited Text Files </a></li>
+<li class="toc-entry toc-h4"><a href="#Columns-that-contain-Delimiters">Columns that contain Delimiters </a></li>
+<li class="toc-entry toc-h4"><a href="#Handling-Header-Rows">Handling Header Rows </a></li>
+<li class="toc-entry toc-h4"><a href="#Using-COPY-to-Import-Data">Using COPY to Import Data </a></li>
+<li class="toc-entry toc-h4"><a href="#Using-COPY-to-Export-Data">Using COPY to Export Data </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Math-with-SQL">Math with SQL </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Basic-Math-Operators">Basic Math Operators </a></li>
+<li class="toc-entry toc-h4"><a href="#Math-across-Columns">Math across Columns </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Statistics-with-SQL">Statistics with SQL </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Finding-Percentages-of-the-Whole">Finding Percentages of the Whole </a></li>
+<li class="toc-entry toc-h4"><a href="#Tracking-Percent-Change">Tracking Percent Change </a></li>
+<li class="toc-entry toc-h4"><a href="#Averages-and-Sums">Averages and Sums </a></li>
+<li class="toc-entry toc-h4"><a href="#Finding-the-Median">Finding the Median </a></li>
+<li class="toc-entry toc-h4"><a href="#Finding-the-Mode">Finding the Mode </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Joining-Tables">Joining Tables </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Querying-multiple-tables-using-JOIN">Querying multiple tables using JOIN </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#JOIN-Types">JOIN Types </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Selecting-Specific-Columns-in-a-JOIN">Selecting Specific Columns in a JOIN </a></li>
+<li class="toc-entry toc-h4"><a href="#Table-Aliases">Table Aliases </a></li>
+<li class="toc-entry toc-h4"><a href="#Joining-Multiple-Tables">Joining Multiple Tables </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Find-Rows-with-Missing-Values-with-NULL">Find Rows with Missing Values with NULL </a></li>
+<li class="toc-entry toc-h3"><a href="#Primary-and-Foreign-Keys">Primary and Foreign Keys </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Composite-Primary-Key">Composite Primary Key </a></li>
+<li class="toc-entry toc-h4"><a href="#Auto-incrementing-Surrogate-Key">Auto-incrementing Surrogate Key </a></li>
+<li class="toc-entry toc-h4"><a href="#Foreign-Keys">Foreign Keys </a></li>
+<li class="toc-entry toc-h4"><a href="#Deleting-Related-Records-with-CASCADE">Deleting Related Records with CASCADE </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Constraints">Constraints </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#The-CHECK-Constraint">The CHECK Constraint </a></li>
+<li class="toc-entry toc-h4"><a href="#The-UNIQUE-Constraint">The UNIQUE Constraint </a></li>
+<li class="toc-entry toc-h4"><a href="#The-NOT-NULL-Constraint">The NOT NULL Constraint </a></li>
+<li class="toc-entry toc-h4"><a href="#Modifying-Constraints">Modifying Constraints </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Counting-Rows-and-Values-using-count()">Counting Rows and Values using count() </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Counting-Values-present-in-a-Column">Counting Values present in a Column </a></li>
+<li class="toc-entry toc-h4"><a href="#Counting-Distinct-Values-in-a-Column">Counting Distinct Values in a Column </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Finding-Maximum-and-Minimum-Values">Finding Maximum and Minimum Values </a></li>
+<li class="toc-entry toc-h3"><a href="#Aggregating-Data-using-GROUP-BY">Aggregating Data using GROUP BY </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Combining-GROUP-BY-with-count()">Combining GROUP BY with count() </a></li>
+<li class="toc-entry toc-h4"><a href="#Using-GROUP-BY--on-Multiple-Columns-with-count()">Using GROUP BY  on Multiple Columns with count() </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Filtering-an-Aggregate-using-HAVING">Filtering an Aggregate using HAVING </a></li>
+<li class="toc-entry toc-h3"><a href="#Checking-the-Length-of-a-String-using-length()">Checking the Length of a String using length() </a></li>
+<li class="toc-entry toc-h3"><a href="#String-Concatenation">String Concatenation </a></li>
+<li class="toc-entry toc-h3"><a href="#Modifying-Tables,-Columns-and-Data">Modifying Tables, Columns and Data </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Modifying-Tables-with-ALTER-TABLE">Modifying Tables with ALTER TABLE </a></li>
+<li class="toc-entry toc-h4"><a href="#Modifying-Values-with-UPDATE">Modifying Values with UPDATE </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Deleting-Data">Deleting Data </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Deleting-Rows-from-a-Table">Deleting Rows from a Table </a></li>
+<li class="toc-entry toc-h4"><a href="#Deleting-a-Column-from-a-Table">Deleting a Column from a Table </a></li>
+<li class="toc-entry toc-h4"><a href="#Deleting-a-Table-from-a-Database">Deleting a Table from a Database </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Save-or-Revert-Changes-using-Transaction-Blocks">Save or Revert Changes using Transaction Blocks </a></li>
+<li class="toc-entry toc-h3"><a href="#Improving-Performance-when-Updating-Large-Tables">Improving Performance when Updating Large Tables </a></li>
+<li class="toc-entry toc-h3"><a href="#Finding-Ranks">Finding Ranks </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Ranking-within-Subgroups-with-PARTITION-BY">Ranking within Subgroups with PARTITION BY </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Calculating-Rates">Calculating Rates </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-10-10-postgresql-tutorial.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Creating-a-Database">
+<a class="anchor" href="#Creating-a-Database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a Database<a class="anchor-link" href="#Creating-a-Database"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">analysis</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This statement creates a database on your server named <code>analysis</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Connecting-to-Database">
+<a class="anchor" href="#Connecting-to-Database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Connecting to Database<a class="anchor-link" href="#Connecting-to-Database"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Setting-up-the-conda-environment">
+<a class="anchor" href="#Setting-up-the-conda-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting up the conda environment<a class="anchor-link" href="#Setting-up-the-conda-environment"> </a>
+</h4>
+<p><code>conda create -n sql python</code><br>
+<code>conda activate sql</code><br>
+<code>conda install ipython-sql sqlalchemy psycopg2 notebook pandas -c conda-forge</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> sql
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">host</span> <span class="o">=</span> <span class="s2">"localhost"</span>
+<span class="n">database</span> <span class="o">=</span> <span class="s2">"analysis"</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'SQL_USER'</span><span class="p">)</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'SQL_PASSWORD'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">connection_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"postgresql://</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">database</span><span class="si">}</span><span class="s2">"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">sql</span> $connection_string
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Connected: postgres@analysis'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Creating-a-Table">
+<a class="anchor" href="#Creating-a-Table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a Table<a class="anchor-link" href="#Creating-a-Table"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE employees (
+    id serial,
+    first_name varchar(25),
+    last_name varchar(50),
+    department varchar(50),
+    hire_date date,
+    salary numeric
+);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Each column name represents one discrete data element defined by a data type. The <code>id</code> column is of data type <code>serial</code>, a special integer type that auto-increments every time you add a row to the table.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Inserting-Rows-into-a-Table">
+<a class="anchor" href="#Inserting-Rows-into-a-Table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inserting Rows into a Table<a class="anchor-link" href="#Inserting-Rows-into-a-Table"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+INSERT INTO employees (first_name, last_name, department, hire_date, salary)
+VALUES  ('Paul', 'Johnson', 'Sales', '2011-10-04', 85000),
+        ('Nitin', 'Agarwal', 'Engineering', '2016-01-19', 65000),
+        ('Tom', 'Rock', 'Engineering', '2015-09-15', 56000),
+        ('Arun', 'Patil', 'Design', '2020-06-16', 44000),
+        ('Nathan', 'Drake', 'Development', '2019-10-04', 68000),
+        ('Tony', 'Brown', 'Development', '2021-10-04', 35000);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After the <code>INSERT INTO</code> keywords is the name of the table, and in parentheses are the columns to be filled. In the next row is the <code>VALUES</code> keyword and the data to insert into each column in each row. You need to enclose the data for each row in a set of parentheses, and inside each set of parentheses, use a comma to separate each column value. The order of the values must also match the other of the columns specified after the table name. Each row of data ends with a comma, and the last row ends the entire statement with a semicolon. Text and dates require quotes, whereas numbers, including integers and decimals, don't require quotes. The date format used is the international standard for date formats and using it will help you avoid confusion.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Basic-SELECT-Syntax">
+<a class="anchor" href="#Basic-SELECT-Syntax" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic SELECT Syntax<a class="anchor-link" href="#Basic-SELECT-Syntax"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT * FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>department</th>
+            <th>hire_date</th>
+            <th>salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Paul</td>
+            <td>Johnson</td>
+            <td>Sales</td>
+            <td>2011-10-04</td>
+            <td>85000</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Nitin</td>
+            <td>Agarwal</td>
+            <td>Engineering</td>
+            <td>2016-01-19</td>
+            <td>65000</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Tom</td>
+            <td>Rock</td>
+            <td>Engineering</td>
+            <td>2015-09-15</td>
+            <td>56000</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Arun</td>
+            <td>Patil</td>
+            <td>Design</td>
+            <td>2020-06-16</td>
+            <td>44000</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Nathan</td>
+            <td>Drake</td>
+            <td>Development</td>
+            <td>2019-10-04</td>
+            <td>68000</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Tony</td>
+            <td>Brown</td>
+            <td>Development</td>
+            <td>2021-10-04</td>
+            <td>35000</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>SELECT *</code> fetches every row and column in a table. The <code>*</code> is a <em>wildcard</em>: a stand-in for a value and it represents everything that a value could possibly be.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Querying-a-Subset-of-Columns">
+<a class="anchor" href="#Querying-a-Subset-of-Columns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Querying a Subset of Columns<a class="anchor-link" href="#Querying-a-Subset-of-Columns"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT last_name, first_name, salary FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>last_name</th>
+            <th>first_name</th>
+            <th>salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Johnson</td>
+            <td>Paul</td>
+            <td>85000</td>
+        </tr>
+        <tr>
+            <td>Agarwal</td>
+            <td>Nitin</td>
+            <td>65000</td>
+        </tr>
+        <tr>
+            <td>Rock</td>
+            <td>Tom</td>
+            <td>56000</td>
+        </tr>
+        <tr>
+            <td>Patil</td>
+            <td>Arun</td>
+            <td>44000</td>
+        </tr>
+        <tr>
+            <td>Drake</td>
+            <td>Nathan</td>
+            <td>68000</td>
+        </tr>
+        <tr>
+            <td>Brown</td>
+            <td>Tony</td>
+            <td>35000</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can fetch a limited number of columns by naming columns, separated by commas, right after the <code>SELECT</code> keyword. You're able to retrieve columns in any order you like.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Finding-Unique-Values">
+<a class="anchor" href="#Finding-Unique-Values" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding Unique Values<a class="anchor-link" href="#Finding-Unique-Values"> </a>
+</h3>
+<p>To understand the range of values in a column, we can use the <code>DISTINCT</code> keyword as part of a query that eliminates duplicates and shows only unique values.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT DISTINCT department
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>department</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Design</td>
+        </tr>
+        <tr>
+            <td>Development</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+        </tr>
+        <tr>
+            <td>Sales</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>DISTINCT</code> keyword also works on more than one column at a time. If we add a column, the query returns each unique pair of values.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT DISTINCT department, salary
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>department</th>
+            <th>salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Sales</td>
+            <td>85000</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+            <td>65000</td>
+        </tr>
+        <tr>
+            <td>Design</td>
+            <td>44000</td>
+        </tr>
+        <tr>
+            <td>Development</td>
+            <td>68000</td>
+        </tr>
+        <tr>
+            <td>Development</td>
+            <td>35000</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+            <td>56000</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This technique gives us the ability to ask, "For each <em>x</em> in the table, what are all the <em>y</em> values? For e.g., for each department, what are all the salaries?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Sorting-Data">
+<a class="anchor" href="#Sorting-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sorting Data<a class="anchor-link" href="#Sorting-Data"> </a>
+</h3>
+<p>We order the results of a query using a clause containing the keywords <code>ORDER BY</code> followed by the name of the column or columns to sort. Applying this clause doesn't change the original table, only the result of the query.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT first_name, last_name, salary
+FROM employees
+ORDER BY salary DESC;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Paul</td>
+            <td>Johnson</td>
+            <td>85000</td>
+        </tr>
+        <tr>
+            <td>Nathan</td>
+            <td>Drake</td>
+            <td>68000</td>
+        </tr>
+        <tr>
+            <td>Nitin</td>
+            <td>Agarwal</td>
+            <td>65000</td>
+        </tr>
+        <tr>
+            <td>Tom</td>
+            <td>Rock</td>
+            <td>56000</td>
+        </tr>
+        <tr>
+            <td>Arun</td>
+            <td>Patil</td>
+            <td>44000</td>
+        </tr>
+        <tr>
+            <td>Tony</td>
+            <td>Brown</td>
+            <td>35000</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>ORDER BY</code> sorts values in the ascending order (<code>ASC</code>) by default, but you can use the <code>DESC</code> keyword to sort in the descending order.<br>
+We're not limited to sorting on just one column.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT first_name, last_name, department, hire_date
+FROM employees
+ORDER BY department ASC, hire_date DESC;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>department</th>
+            <th>hire_date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Arun</td>
+            <td>Patil</td>
+            <td>Design</td>
+            <td>2020-06-16</td>
+        </tr>
+        <tr>
+            <td>Tony</td>
+            <td>Brown</td>
+            <td>Development</td>
+            <td>2021-10-04</td>
+        </tr>
+        <tr>
+            <td>Nathan</td>
+            <td>Drake</td>
+            <td>Development</td>
+            <td>2019-10-04</td>
+        </tr>
+        <tr>
+            <td>Nitin</td>
+            <td>Agarwal</td>
+            <td>Engineering</td>
+            <td>2016-01-19</td>
+        </tr>
+        <tr>
+            <td>Tom</td>
+            <td>Rock</td>
+            <td>Engineering</td>
+            <td>2015-09-15</td>
+        </tr>
+        <tr>
+            <td>Paul</td>
+            <td>Johnson</td>
+            <td>Sales</td>
+            <td>2011-10-04</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This statement shows us who are the newest employees in each department.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Filtering-Rows-with-WHERE">
+<a class="anchor" href="#Filtering-Rows-with-WHERE" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filtering Rows with WHERE<a class="anchor-link" href="#Filtering-Rows-with-WHERE"> </a>
+</h3>
+<p>You can limit the rows a query returns to only those in which one or more columns meet certain criteria.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT last_name, department, hire_date
+FROM employees
+WHERE department = 'Sales';
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>last_name</th>
+            <th>department</th>
+            <th>hire_date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Johnson</td>
+            <td>Sales</td>
+            <td>2011-10-04</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The statement shows just the employees in the Sales department.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Comparison-and-Matching-Operators">
+<a class="anchor" href="#Comparison-and-Matching-Operators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparison and Matching Operators<a class="anchor-link" href="#Comparison-and-Matching-Operators"> </a>
+</h4>
+<p><code>=</code> Equal to<br>
+<code>&lt;&gt;</code> or <code>!=</code> Not equal to<br>
+<code>&gt;</code> Greater than<br>
+<code>&lt;</code> Less than<br>
+<code>&gt;=</code> Greater than or equal to<br>
+<code>&lt;=</code> Less than or equal to<br>
+<code>BETWEEN</code> Within a range<br>
+<code>IN</code> Match one of a set of values<br>
+<code>LIKE</code> Match a pattern (case sensitive)<br>
+<code>ILIKE</code> Match a pattern (case insensitive)<br>
+<code>NOT</code> Negates a condition</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Using-LIKE-and-ILIKE-with-WHERE">
+<a class="anchor" href="#Using-LIKE-and-ILIKE-with-WHERE" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <em>LIKE</em> and <em>ILIKE</em> with <em>WHERE</em><a class="anchor-link" href="#Using-LIKE-and-ILIKE-with-WHERE"> </a>
+</h4>
+<p>Both operators let you search for patterns in strings by using two special characters:</p>
+<ul>
+<li>Percent sign (<code>%</code>): a wildcard matching one or more characters</li>
+<li>Underscore(<code>_</code>): a wildcard matching just one character.</li>
+</ul>
+<p>For e.g., if you're trying to find the word <code>sales</code>, the following <code>LIKE</code> patterns will match it.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">LIKE</span> <span class="s1">'s%'</span>
+<span class="n">LIKE</span> <span class="s1">'</span><span class="si">%a</span><span class="s1">l%'</span>
+<span class="n">LIKE</span> <span class="s1">'_ales'</span>
+<span class="n">LIKE</span> <span class="s1">'sa_es'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The only difference between the <code>LIKE</code> and <code>ILIKE</code> operators is that <code>LIKE</code> is case-sensitive and <code>ILIKE</code> is not.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT last_name
+FROM employees
+WHERE last_name ILIKE 'john%'
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>last_name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Johnson</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Combining-Operators-with-AND-and-OR">
+<a class="anchor" href="#Combining-Operators-with-AND-and-OR" aria-hidden="true"><span class="octicon octicon-link"></span></a>Combining Operators with <em>AND</em> and <em>OR</em><a class="anchor-link" href="#Combining-Operators-with-AND-and-OR"> </a>
+</h4>
+<p>We can combine comparison operators using the keywords <code>AND</code> and <code>OR</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT *
+FROM employees
+WHERE department = 'Engineering'
+    AND (salary &lt; 30000 OR salary &gt; 60000)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>department</th>
+            <th>hire_date</th>
+            <th>salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2</td>
+            <td>Nitin</td>
+            <td>Agarwal</td>
+            <td>Engineering</td>
+            <td>2016-01-19</td>
+            <td>65000</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Because we connect the two conditions using <code>AND</code>, both must be true for a row to meet the criteria in the <code>WHERE</code> clause and be returned in the query results. When we connect conditions using <code>OR</code>, only one of the conditions must be true for a row to meet the criteria of the <code>WHERE</code> clause. When we place statements inside parentheses, those are evaluated as a group before being combined with other criteria.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Character-Data-Types">
+<a class="anchor" href="#Character-Data-Types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Character Data Types<a class="anchor-link" href="#Character-Data-Types"> </a>
+</h3>
+<ul>
+<li>
+<code>char(n)</code>: A fixed-length column where the character length is specified by <em>n</em>. This is not used very often nowadays.</li>
+<li>
+<code>varchar(n)</code>: A variable length column where the <em>maximum</em> length is specified by <em>n</em>. If you insert fewer characters than the maximum, PostgreSQL will not store the extra spaces. The longer name for this data type is <code>character varying(n)</code>.</li>
+<li>
+<code>text</code>: a variable length column of unlimited length.</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE char_data_types (
+    varchar_column varchar(10),
+    char_column char(10),
+    text_column text 
+);
+
+INSERT INTO char_data_types
+VALUES
+    ('abc', 'abc', 'abc'),
+    ('jklmnop', 'jklmnop', 'jklmnop');
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+2 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">COPY</span> <span class="n">char_data_types</span> <span class="n">TO</span> <span class="s1">'C:\YourDirectory</span><span class="se">\t</span><span class="s1">ypetest.txt'</span>
+<span class="n">WITH</span> <span class="p">(</span><span class="n">FORMAT</span> <span class="n">CSV</span><span class="p">,</span> <span class="n">HEADER</span><span class="p">,</span> <span class="n">DELIMITER</span> <span class="s1">'|'</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We don't always need to specify the column names with the <code>INSERT INTO</code> statement. If the <code>VALUES</code> statements match the number of columns in the table, the database will assume you're inserting values in the order the column definitions were specified in the table.<br>
+Here, the <code>COPY</code> keyword exports the data to a text file named <code>typetest.txt</code> in a directory you specify. The directory must already exist; PostgreSQL won't create it for you.<br>
+<code>COPY table_name FROM</code> is the import function and <code>COPY table_name TO</code> is the export function.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Number-Data-Types">
+<a class="anchor" href="#Number-Data-Types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Number Data Types<a class="anchor-link" href="#Number-Data-Types"> </a>
+</h3>
+<h4 id="Integers">
+<a class="anchor" href="#Integers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Integers<a class="anchor-link" href="#Integers"> </a>
+</h4>
+<p>There are three integer types</p>
+<ul>
+<li>
+<code>smallint</code>: Storage size of 2 bytes with a range from −32768 to +32767.  </li>
+<li>
+<code>integer</code>: Storage size of 4 bytes with a range from −2147483648 to +2147483647.  </li>
+<li>
+<code>bigint</code>: Storage size of 8 bytes with a range from −9223372036854775808 to +9223372036854775807.  </li>
+</ul>
+<p>When the data values will remain constrained i.e. days of the month or year, <code>smallint</code> makes sense.</p>
+<h4 id="Auto-incrementing-Integers">
+<a class="anchor" href="#Auto-incrementing-Integers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Auto-incrementing Integers<a class="anchor-link" href="#Auto-incrementing-Integers"> </a>
+</h4>
+<p>When you add a column with serial type, PostgreSQL will auto-increment the value in the column each time you insert a row, starting with 1, up to the maximum of each integer type.</p>
+<ul>
+<li>
+<code>smallserial</code>: Storage size of 2 bytes with a range from 1 to 32767</li>
+<li>
+<code>serial</code>: Storage size of 4 bytes with a range from 1 to 2147483647.</li>
+<li>
+<code>bigserial</code>: Storage size of 8 bytes with a range from 1 to 9223372036854775807.  </li>
+</ul>
+<p>Note that when it comes to serial data types, if a row is deleted, the value in that row is never replaced. If a row is insert is aborted, the sequence for the column will still be incremented.</p>
+<h4 id="Decimal-Numbers">
+<a class="anchor" href="#Decimal-Numbers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decimal Numbers<a class="anchor-link" href="#Decimal-Numbers"> </a>
+</h4>
+<ul>
+<li>Fixed-Point Numbers: Also called the <em>arbitrary precision</em> type, is <ul>
+<li>
+<code>numeric(precision,scale)</code>: You give the argument <code>precision</code> as the maximum number of digits to the left and right of the decimal point, and the argument <code>scale</code> as the number of digits allowable on the right of the decimal point. Alternatively, you can specify this type using <code>decimal(precision,scale)</code>. If you omit specifying a scale value, the scale will be set to zero, which creates an integer. If you omit specifying the precision and the scale, the database will store values of any precision and scale up to the maximum allowed.</li>
+</ul>
+</li>
+<li>Floating-Point Types: Also called <em>variable-precision</em> types, these are of two types<ul>
+<li>
+<code>real</code>: Allows precision up to 6 decimal digits.</li>
+<li>
+<code>double</code>: Allows precision up to 15 decimal digits.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE number_data_types (
+    numeric_column numeric(20,5),
+    real_column real, 
+    double_column double precision
+);
+
+INSERT INTO number_data_types
+VALUES
+    (.7, .7, .7),
+    (2.13579, 2.13579, 2.13579),
+    (2.1357987654, 2.1357987654, 2.1357987654);
+
+SELECT * FROM number_data_types;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+3 rows affected.
+3 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>numeric_column</th>
+            <th>real_column</th>
+            <th>double_column</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>0.70000</td>
+            <td>0.7</td>
+            <td>0.7</td>
+        </tr>
+        <tr>
+            <td>2.13579</td>
+            <td>2.13579</td>
+            <td>2.13579</td>
+        </tr>
+        <tr>
+            <td>2.13580</td>
+            <td>2.1357987</td>
+            <td>2.1357987654</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Unless your data uses decimals, stick with integer types.</li>
+<li>Floating-point types are referred to as "in-exact" and can lead to unintended mathematical errors. The storage required by the <code>numeric</code> data type is variable, and can consume considerably more space than the floating point types.</li>
+<li>If you're working with decimal data and need calculations to be exact (e.g. money, space travel, etc.), choose <code>numeric</code>/<code>decimal</code>.</li>
+<li>When choosing a number type, err on the side of bigger.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Date-and-Time-Data-Types">
+<a class="anchor" href="#Date-and-Time-Data-Types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Date and Time Data Types<a class="anchor-link" href="#Date-and-Time-Data-Types"> </a>
+</h3>
+<ul>
+<li>
+<code>timestamp</code>: Records date and time. You can add the keywords <code>with time zone</code> to ensure that the time recorded for an event includes the time zone where it occurred. You can either use <code>timestamp with time zone</code> or just <code>timestamptz</code>.</li>
+<li>
+<code>date</code>: Records just the date.</li>
+<li>
+<code>time</code>: Records just the time.</li>
+<li>
+<code>interval</code>: Holds a value representing a unit of time expressed in the format <em>quantity unit</em>. It doesn't record the start or end of a time period, only its length. You'll typically use this type for calculations or filtering on other date and time columns.</li>
+</ul>
+<p>The International Organization for Standardization (ISO) format for dates and times is <code>YYYY-MM-DD HH:MM:SS</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE date_time_types (
+    timestamp_column timestamp with time zone,
+    interval_column interval
+);
+
+INSERT INTO date_time_types
+VALUES
+    ('2018-12-31 01:00 EST','2 days'),
+    ('2018-12-31 01:00 -8','1 month'),
+    ('2018-12-31 01:00 Australia/Melbourne','1 century'),
+    (now(),'1 week');
+
+SELECT * FROM date_time_types;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+4 rows affected.
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>timestamp_column</th>
+            <th>interval_column</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2018-12-31 11:30:00+05:30</td>
+            <td>2 days, 0:00:00</td>
+        </tr>
+        <tr>
+            <td>2018-12-31 14:30:00+05:30</td>
+            <td>30 days, 0:00:00</td>
+        </tr>
+        <tr>
+            <td>2018-12-30 19:30:00+05:30</td>
+            <td>36500 days, 0:00:00</td>
+        </tr>
+        <tr>
+            <td>2022-07-12 11:38:50.663655+05:30</td>
+            <td>7 days, 0:00:00</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For the first row, we use the time zone abbreviation.<br>
+For the second row, we use the a value that represents the number of hours offset from the Coordinated Universal Time (UTC).<br>
+For the third row, we use  the name of an area and location using values found in a standard time zone database.<br>
+For the fourth row, we use the <code>now()</code> function, which captures the current transaction time from your hardware.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Transforming-Values-from-One-Data-Type-to-Another">
+<a class="anchor" href="#Transforming-Values-from-One-Data-Type-to-Another" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transforming Values from One Data Type to Another<a class="anchor-link" href="#Transforming-Values-from-One-Data-Type-to-Another"> </a>
+</h3>
+<p>The <code>CAST()</code> function lets you transform a value from its stored data type to another type, although it only succeeds when the target data type can accommodate the original value. For e.g., casting an integer as text is possible, but the reverse is not.<br>
+A shortcut notation for this function is <code>::</code>. Insert the double colon in between the name of the column and the data type you want to convert it to.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT timestamp_column, CAST(timestamp_column AS varchar(10))
+FROM date_time_types;
+
+SELECT timestamp_column::varchar(10)
+FROM date_time_types;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+4 rows affected.
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>timestamp_column</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2018-12-31</td>
+        </tr>
+        <tr>
+            <td>2018-12-31</td>
+        </tr>
+        <tr>
+            <td>2018-12-30</td>
+        </tr>
+        <tr>
+            <td>2022-07-12</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Importing-and-Exporting-Data">
+<a class="anchor" href="#Importing-and-Exporting-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Importing and Exporting Data<a class="anchor-link" href="#Importing-and-Exporting-Data"> </a>
+</h3>
+<h4 id="Delimited-Text-Files">
+<a class="anchor" href="#Delimited-Text-Files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Delimited Text Files<a class="anchor-link" href="#Delimited-Text-Files"> </a>
+</h4>
+<p>A delimited text file contains rows of data, and each row represents one row in a table. In each row, a character separates, or delimits, each data column.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Columns-that-contain-Delimiters">
+<a class="anchor" href="#Columns-that-contain-Delimiters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Columns that contain Delimiters<a class="anchor-link" href="#Columns-that-contain-Delimiters"> </a>
+</h4>
+<p>Sometimes the delimiter used might also be a piece of the data, for e.g. an address in a CSV file can use a comma as an input value. In such cases, delimited files wrap columns that contain a delimiter character with an arbitrary character called a <em>text classifier</em> that tells SQL to ignore the delimiter character help within. Most of the time in CSV files, the text qualifier used is the double quote.</p>
+<blockquote>
+<p><code>John,Doe,"123 Main St., Apartment 200",Hyde Park,NY,845-555-1212</code></p>
+</blockquote>
+<p>The database will recognize that the double quotes signify one column regardless of whether it finds a delimiter within the quotes.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Handling-Header-Rows">
+<a class="anchor" href="#Handling-Header-Rows" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handling Header Rows<a class="anchor-link" href="#Handling-Header-Rows"> </a>
+</h4>
+<p>A header row is a single row at the top of the file that lists the name of each data field. Because PostgreSQL does not use the header row, we don't want that row imported to a table, so we'll use a <code>HEADER</code> option in the <code>COPY</code> command to exclude it.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Using-COPY-to-Import-Data">
+<a class="anchor" href="#Using-COPY-to-Import-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <em>COPY</em> to Import Data<a class="anchor-link" href="#Using-COPY-to-Import-Data"> </a>
+</h4>
+<blockquote>
+<p><code>COPY table_name</code><br>
+<code>FROM 'C:\YourDirectory\your_file.csv'</code>  <code>WITH (FORMAT CSV, HEADER);</code></p>
+</blockquote>
+<p>The block of code starts with the <code>COPY</code> keyword followed by the name of the target table, which must already exist in your database. The <code>FROM</code> keyword identifies the full path to the source file, including its name. The <code>WITH</code> keyword   lets you specify options, surrounded by parentheses, that you can tailor to your input or output file. Here we specify that the external file should be comma-delimited, and that we should exclude the file's header row in the import.<br>
+Use the <code>FORMAT</code> format_name option to specify the type of file you're reading or writing. Format names are <code>CSV</code>, <code>TEXT</code>, or <code>BINARY</code>. On import, use <code>HEADER</code> to specify that the source file has a header row. On export, using <code>HEADER</code> tells the database to include the column names as a header row in the output file. The <code>DELIMITER 'character'</code> option lets you specify which character your import or export file uses as a delimiter. If you use <code>FORMAT CSV</code>, the assumed delimiter is a comma.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Using-COPY-to-Export-Data">
+<a class="anchor" href="#Using-COPY-to-Export-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <em>COPY</em> to Export Data<a class="anchor-link" href="#Using-COPY-to-Export-Data"> </a>
+</h4>
+<p>The main difference between exporting and importing data with <code>COPY</code> is that rather than using <code>FROM</code> to identify the source data, you use <code>TO</code> for the path and name of the output file.</p>
+<ul>
+<li>
+<p><strong>Exporting All Data:</strong></p>
+<blockquote>
+<p><code>COPY table_name</code><br>
+<code>TO 'C:\YourDirectory\your_file.csv'</code>  <code>WITH (FORMAT CSV, HEADER, DELIMITER '|');</code></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Exporting Particular Columns:</strong></p>
+<blockquote>
+<p><code>COPY table_name (column_1, columns_2, column_3)</code><br>
+<code>TO 'C:\YourDirectory\your_file.csv'</code>  <code>WITH (FORMAT CSV, HEADER, DELIMITER '|');</code></p>
+</blockquote>
+</li>
+<li>
+<p><strong>Exporting Query Results:</strong></p>
+<blockquote>
+<p><code>COPY (</code><br>
+  <code>SELECT column_1, column_2</code><br>
+  <code>FROM table_name</code><br>
+  <code>WHERE column_1 ILIKE '%post%'</code><br>
+<code>TO 'C:\YourDirectory\your_file.csv'</code>  <code>WITH (FORMAT CSV, HEADER, DELIMITER '|');</code></p>
+</blockquote>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Math-with-SQL">
+<a class="anchor" href="#Math-with-SQL" aria-hidden="true"><span class="octicon octicon-link"></span></a>Math with SQL<a class="anchor-link" href="#Math-with-SQL"> </a>
+</h3>
+<h4 id="Basic-Math-Operators">
+<a class="anchor" href="#Basic-Math-Operators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Math Operators<a class="anchor-link" href="#Basic-Math-Operators"> </a>
+</h4>
+<p><code>+</code> Addition<br>
+<code>-</code> Subtraction<br>
+<code>*</code> Multiplication<br>
+<code>/</code> Division (returns only the quotient, no remainder)<br>
+<code>%</code> Modulo (returns just the remainder)<br>
+<code>+</code> Exponentiation<br>
+<code>|/</code> or <code>sqrt(n)</code> Square root<br>
+<code>||/</code> Cube root<br>
+<code>factorial(n)</code> Factorial (how many ways can a number of items be ordered?)</p>
+<p>In calculations with an operator between two numbers - addition, subtraction, multiplication, and division - the data type returned follows this pattern:</p>
+<ul>
+<li>Two integers return an integer.</li>
+<li>A numeric on either side of the operator returns a numeric.</li>
+<li>Anything with a floating-point number returns a floating-point number of type double precision.  </li>
+</ul>
+<p>However, the exponentiation, root, and factorial functions are different. Each takes one number either before or after the operator and returns numeric and floating-point types, even when the input is an integer. Sometimes the result's data type will suit your needs; other times, you may need to use <code>CAST</code> to change the data type</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">SELECT</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">SELECT</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">8</span><span class="p">;</span>
+<span class="n">SELECT</span> <span class="mi">12</span> <span class="o">/</span> <span class="mi">5</span><span class="p">;</span>
+<span class="n">SELECT</span> <span class="mi">12</span> <span class="o">%</span> <span class="mi">5</span><span class="p">;</span>
+<span class="n">SELECT</span> <span class="n">CAST</span> <span class="p">(</span><span class="mi">12</span> <span class="n">AS</span> <span class="n">numeric</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="mi">5</span><span class="p">;</span>
+<span class="n">SELECT</span> <span class="o">|/</span> <span class="mi">25</span><span class="p">;</span>
+<span class="n">SELECT</span> <span class="mi">5</span><span class="o">!</span><span class="p">;</span>
+<span class="n">SELECT</span> <span class="mi">5</span> <span class="o">^</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="mi">4</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Math-across-Columns">
+<a class="anchor" href="#Math-across-Columns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Math across Columns<a class="anchor-link" href="#Math-across-Columns"> </a>
+</h4>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE employees (
+    id serial,
+    first_name varchar(25),
+    last_name varchar(50),
+    department varchar(50),
+    hire_date date,
+    starting_salary numeric,
+    present_salary numeric
+);
+
+INSERT INTO employees (first_name, last_name, department, hire_date, starting_salary, present_salary)
+VALUES  ('Paul', 'Johnson', 'Sales', '2011-10-04', 65000, 85000),
+        ('Nitin', 'Agarwal', 'Engineering', '2016-01-19', 58000, 66000),
+        ('Tom', 'Rock', 'Engineering', '2015-09-15', 48000, 56000),
+        ('Arun', 'Patil', 'Design', '2020-06-16', 42000, 44000),
+        ('Nathan', 'Drake', 'Development', '2019-10-04', 65000, 66000),
+        ('Tony', 'Brown', 'Development', '2021-10-04', 35000, 35000);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT id, 
+    starting_salary,
+    present_salary,
+    present_salary - starting_salary AS "Difference"
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>starting_salary</th>
+            <th>present_salary</th>
+            <th>Difference</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>65000</td>
+            <td>85000</td>
+            <td>20000</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>58000</td>
+            <td>66000</td>
+            <td>8000</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>48000</td>
+            <td>56000</td>
+            <td>8000</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>42000</td>
+            <td>44000</td>
+            <td>2000</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>65000</td>
+            <td>66000</td>
+            <td>1000</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>35000</td>
+            <td>35000</td>
+            <td>0</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above table will give us the difference in the present and starting salary of the employees. The <code>AS</code> keyword is used to give a column a more readable alias.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Statistics-with-SQL">
+<a class="anchor" href="#Statistics-with-SQL" aria-hidden="true"><span class="octicon octicon-link"></span></a>Statistics with SQL<a class="anchor-link" href="#Statistics-with-SQL"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Finding-Percentages-of-the-Whole">
+<a class="anchor" href="#Finding-Percentages-of-the-Whole" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding Percentages of the Whole<a class="anchor-link" href="#Finding-Percentages-of-the-Whole"> </a>
+</h4>
+<p>To figure out the percentage of the whole, divide the number in question by the total, and then multiple by 100.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Tracking-Percent-Change">
+<a class="anchor" href="#Tracking-Percent-Change" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tracking Percent Change<a class="anchor-link" href="#Tracking-Percent-Change"> </a>
+</h4>
+<p>The formula to calculate percent change can be expressed like this:<br>
+((new number - old number) / old number) * 100</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT first_name, starting_salary, present_salary, 
+    round((present_salary - starting_salary) / present_salary * 100, 1) AS "pct_change"
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>first_name</th>
+            <th>starting_salary</th>
+            <th>present_salary</th>
+            <th>pct_change</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Paul</td>
+            <td>65000</td>
+            <td>85000</td>
+            <td>23.5</td>
+        </tr>
+        <tr>
+            <td>Nitin</td>
+            <td>58000</td>
+            <td>66000</td>
+            <td>12.1</td>
+        </tr>
+        <tr>
+            <td>Tom</td>
+            <td>48000</td>
+            <td>56000</td>
+            <td>14.3</td>
+        </tr>
+        <tr>
+            <td>Arun</td>
+            <td>42000</td>
+            <td>44000</td>
+            <td>4.5</td>
+        </tr>
+        <tr>
+            <td>Nathan</td>
+            <td>65000</td>
+            <td>66000</td>
+            <td>1.5</td>
+        </tr>
+        <tr>
+            <td>Tony</td>
+            <td>35000</td>
+            <td>35000</td>
+            <td>0.0</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>round()</code> function here removes all but one decimal place. The function takes two arguments: the column or expression to be rounded, and the number of decimal places to display.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Averages-and-Sums">
+<a class="anchor" href="#Averages-and-Sums" aria-hidden="true"><span class="octicon octicon-link"></span></a>Averages and Sums<a class="anchor-link" href="#Averages-and-Sums"> </a>
+</h4>
+<p>We can use the <code>avg()</code> and <code>sum()</code> functions to find the averages and sums respectively.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT sum(starting_salary) AS "Starting Sum",
+    round(avg(present_salary), 0) as "Present Average"
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>Starting Sum</th>
+            <th>Present Average</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>313000</td>
+            <td>58667</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Finding-the-Median">
+<a class="anchor" href="#Finding-the-Median" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding the Median<a class="anchor-link" href="#Finding-the-Median"> </a>
+</h4>
+<p>The median is the middle value in an ordered set of values. Averages are less helpful when the values are bunched, or skewed, toward on end of the distribution, or if the group includes outliers. On such occasions, the median is a better indicator of the data set. A good test is to calculate the average and the median for a group of values. If they're close, the group is probably normally distributed with a bell curve, and the average is useful. If they're apart, the values are not normally distributed and the median is the better representation.</p>
+<p><strong>Percentiles</strong><br>
+Percentiles indicate the point in an ordered set of data below which a certain percentage of the data is found. The median is equivalent to the 50th percentile. We can use the <em>percentile</em> function to find out the median as well as other quantiles. The <code>percentile_cont(n)</code> function calculates percentiles as continuous values, which means that the result does not have to the one of the numbers in the data set but can be a decimal value in between of the two numbers. The <code>percentile_disc(n)</code> function returns only discrete values, which will return a rounded number from the set.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE percentile_test (
+    numbers integer
+);
+
+INSERT INTO percentile_test (numbers) 
+VALUES (1), (2), (3), (4), (5), (6);
+
+SELECT
+    percentile_cont(.5) WITHIN GROUP (ORDER BY numbers),
+    percentile_disc(.5) WITHIN GROUP (ORDER BY numbers)
+FROM percentile_test;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+6 rows affected.
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>percentile_cont</th>
+            <th>percentile_disc</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>3.5</td>
+            <td>3</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT percentile_cont(.5) 
+    WITHIN GROUP (ORDER BY present_salary) as "Median Salary"
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>Median Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>61000.0</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can also find out a bunch of other percentiles using an array as follows:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT percentile_cont(array[.25,.5,.75]) 
+    WITHIN GROUP (ORDER BY numbers)
+FROM percentile_test;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>percentile_cont</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>[2.25, 3.5, 4.75]</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can use the <code>unnest()</code> function which makes the array easier to read by turning it into rows.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT unnest(
+    percentile_cont(array[.25,.5,.75]) 
+    WITHIN GROUP (ORDER BY numbers)) AS "quartiles"
+FROM percentile_test;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+3 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>quartiles</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2.25</td>
+        </tr>
+        <tr>
+            <td>3.5</td>
+        </tr>
+        <tr>
+            <td>4.75</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Finding-the-Mode">
+<a class="anchor" href="#Finding-the-Mode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding the Mode<a class="anchor-link" href="#Finding-the-Mode"> </a>
+</h4>
+<p>We can find the <em>mode</em>, which is the value that appears most often, using the <code>mode()</code> function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT mode() 
+    WITHIN GROUP (ORDER BY present_salary)
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>mode</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>66000</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Joining-Tables">
+<a class="anchor" href="#Joining-Tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Joining Tables<a class="anchor-link" href="#Joining-Tables"> </a>
+</h3>
+<p>The <code>JOIN</code> statement links one table to another in the database during a query, using matching values in columns we specify in both tables.</p>
+<blockquote>
+<p><code>SELECT *</code><br>
+  <code>FROM table_a JOIN table_b</code><br>
+  <code>ON table_a.key_column = table_b.foreign_key_column</code></p>
+</blockquote>
+<p>This is similar to earlier <code>SELECT</code> statements, but instead of naming one table in the <code>FROM</code> clause, we name a table, give the <code>JOIN</code> keyword, and then name a second table. The <code>ON</code> keyword follows, where we specify the columns we want to use to match values.<br>
+You could also use the <code>ON</code> clause for an expression that evaluates to <code>true</code> or <code>false</code>. For e.g., you could match where values values from one column are greater than or equal to values in another column:&gt; <code>ON table_a.key_column &gt;= table_b.foreign_key_column</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE departments (
+    dept_id bigserial,
+    dept varchar(100),
+    city varchar(100),
+    CONSTRAINT dept_key PRIMARY KEY (dept_id),
+    CONSTRAINT dept_city_unique UNIQUE (dept, city)
+);
+
+CREATE TABLE employees (
+    emp_id bigserial,
+    first_name varchar(100),
+    last_name varchar(100),
+    salary integer,
+    dept_id integer REFERENCES departments (dept_id),
+    CONSTRAINT emp_key PRIMARY KEY (emp_id),
+    CONSTRAINT emp_dept_unique UNIQUE (emp_id, dept_id)
+);
+
+INSERT INTO departments (dept, city)
+VALUES
+    ('Tax', 'Atlanta'),
+    ('IT', 'Boston');
+
+INSERT INTO employees (first_name, last_name, salary, dept_id)
+VALUES
+    ('Nancy', 'Jones', 62500, 1),
+    ('Lee', 'Smith', 59300, 1),
+    ('Soo', 'Nguyen', 83000, 2),
+    ('Janet', 'King', 95000, 2);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+Done.
+2 rows affected.
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the <code>departments</code> table, the <code>dept_id</code> column is the table's primary key. A <em>primary key</em> is a column or collection of columns whose values uniquely identify each row in a table. A valid primary key column enforces certain constraints:</p>
+<ul>
+<li>The column or collection of columns must have a unique value for each row. The values only need to be unique within a table.</li>
+<li>The column or collection of columns can't have missing values.</li>
+</ul>
+<p>You define the primary key for <code>departments</code> and <code>employees</code> using the <code>CONSTRAINT</code> keyword.</p>
+<p>In the <code>employees</code> table, the <code>emp_id</code> column uniquely identifies each row, thereby making it the primary key. The <code>dept_id</code> column in the <code>employees</code> table refers to values in the <code>departments</code> table's primary key. This is a <em>foreign key</em>, which you add as a constraint when creating a table. A foreign key constraint requires a value entered in a column to already exist in the primary key of the table it references. So, values in <code>dept_id</code> in the <code>employees</code> table must exists in <code>dept_id</code> in the <code>departments</code> table; otherwise you can't add them. Unlike a primary key, a foreign key can be empty, and it can contain duplicate values.</p>
+<p>Both tables also include a <code>UNIQUE</code> constraint, which guarantees that values in a column, or a combination of values in more than one column, are unique. In <code>departments</code>, it requires that each row have a unique pair of values for <code>dept</code> and <code>city</code>. In <code>employees</code>, each row must have a unique pair of <code>emp_id</code> and <code>dept_id</code>. You add these constraints to avoid duplicate data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Querying-multiple-tables-using-JOIN">
+<a class="anchor" href="#Querying-multiple-tables-using-JOIN" aria-hidden="true"><span class="octicon octicon-link"></span></a>Querying multiple tables using <em>JOIN</em><a class="anchor-link" href="#Querying-multiple-tables-using-JOIN"> </a>
+</h4>
+<p>When you join tables in a query, the database connects rows in both tables where the columns you specified for the join have matching values. The query results then include columns from both tables if you requested them as part of the query. You also can use columns from the joined tables to filter results using a <code>WHERE</code> clause.</p>
+<p>Let's look at the simple <code>JOIN ... ON</code> syntax first.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT *
+FROM employees JOIN departments
+ON employees.dept_id = departments.dept_id;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>emp_id</th>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>salary</th>
+            <th>dept_id</th>
+            <th>dept_id_1</th>
+            <th>dept</th>
+            <th>city</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Nancy</td>
+            <td>Jones</td>
+            <td>62500</td>
+            <td>1</td>
+            <td>1</td>
+            <td>Tax</td>
+            <td>Atlanta</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Lee</td>
+            <td>Smith</td>
+            <td>59300</td>
+            <td>1</td>
+            <td>1</td>
+            <td>Tax</td>
+            <td>Atlanta</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Soo</td>
+            <td>Nguyen</td>
+            <td>83000</td>
+            <td>2</td>
+            <td>2</td>
+            <td>IT</td>
+            <td>Boston</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Janet</td>
+            <td>King</td>
+            <td>95000</td>
+            <td>2</td>
+            <td>2</td>
+            <td>IT</td>
+            <td>Boston</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the above example, you include an asterisk to choose all columns from both tables. Next, the <code>JOIN</code> keyword goes between the two tables you want data from. Finally, you specify the columns to join the tables using the <code>ON</code> keyword. When you run the query, the results include all values from both tables where values in the <code>dept_id</code> column match.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="JOIN-Types">
+<a class="anchor" href="#JOIN-Types" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>JOIN</em> Types<a class="anchor-link" href="#JOIN-Types"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE schools_left (
+    id integer CONSTRAINT left_id_key PRIMARY KEY,
+    left_school varchar(30)
+);
+
+CREATE TABLE schools_right (
+    id integer CONSTRAINT right_id_key PRIMARY KEY,
+    right_school varchar(30)
+);
+
+INSERT INTO schools_left (id, left_school) 
+VALUES
+    (1, 'Oak Street School'),
+    (2, 'Roosevelt High School'),
+    (5, 'Washington Middle School'),
+    (6, 'Jefferson High School');
+    
+INSERT INTO schools_right (id, right_school) 
+VALUES
+    (1, 'Oak Street School'),
+    (2, 'Roosevelt High School'),
+    (3, 'Morrison Elementary'),
+    (4, 'Chase Magnet Academy'),
+    (6, 'Jefferson High School');
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+Done.
+4 rows affected.
+5 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>JOIN</code> or <code>INNER JOIN</code>: Returns rows from both tables where matching values are found in the joined columns of both tables.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT *
+FROM schools_left JOIN schools_right
+ON schools_left.id = schools_right.id;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+3 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>left_school</th>
+            <th>id_1</th>
+            <th>right_school</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>1</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>6</td>
+            <td>Jefferson High School</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>LEFT JOIN</code>: Returns every row from the left table plus rows that match values in the joined column from the right table.<br>
+The <code>LEFT JOIN</code> and <code>RIGHT JOIN</code> keywords each return all rows from one table and display blank rows from the other table if no matching values are found in the joined columns.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT *
+FROM schools_left LEFT JOIN schools_right
+ON schools_left.id = schools_right.id;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>left_school</th>
+            <th>id_1</th>
+            <th>right_school</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>1</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>None</td>
+            <td>None</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>6</td>
+            <td>Jefferson High School</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>RIGHT JOIN</code>: Returns every row from the right table plus rows that match the key values in the key column from the left table.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT *
+FROM schools_left RIGHT JOIN schools_right
+ON schools_left.id = schools_right.id;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+5 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>left_school</th>
+            <th>id_1</th>
+            <th>right_school</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>1</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>None</td>
+            <td>None</td>
+            <td>3</td>
+            <td>Morrison Elementary</td>
+        </tr>
+        <tr>
+            <td>None</td>
+            <td>None</td>
+            <td>4</td>
+            <td>Chase Magnet Academy</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>6</td>
+            <td>Jefferson High School</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>FULL OUTER JOIN</code>: Returns every row from both tables and matches rows; then joins the rows where values in the joined columns match. If there's no match for a value in either the left or right table, the query result contains an empty row for the other table.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT *
+FROM schools_left FULL OUTER JOIN schools_right
+ON schools_left.id = schools_right.id;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>left_school</th>
+            <th>id_1</th>
+            <th>right_school</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>1</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>None</td>
+            <td>None</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>6</td>
+            <td>Jefferson High School</td>
+        </tr>
+        <tr>
+            <td>None</td>
+            <td>None</td>
+            <td>4</td>
+            <td>Chase Magnet Academy</td>
+        </tr>
+        <tr>
+            <td>None</td>
+            <td>None</td>
+            <td>3</td>
+            <td>Morrison Elementary</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>CROSS JOIN</code>: The query returns each row in the left table with each row in the right table to present all possible combination of rows from both tables.<br>
+Definitely avoid this join on large tables.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT *
+FROM schools_left CROSS JOIN schools_right;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+20 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>left_school</th>
+            <th>id_1</th>
+            <th>right_school</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>1</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>3</td>
+            <td>Morrison Elementary</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>4</td>
+            <td>Chase Magnet Academy</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>6</td>
+            <td>Jefferson High School</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>1</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>3</td>
+            <td>Morrison Elementary</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>4</td>
+            <td>Chase Magnet Academy</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>6</td>
+            <td>Jefferson High School</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>1</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>3</td>
+            <td>Morrison Elementary</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>4</td>
+            <td>Chase Magnet Academy</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>6</td>
+            <td>Jefferson High School</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>1</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>3</td>
+            <td>Morrison Elementary</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>4</td>
+            <td>Chase Magnet Academy</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>6</td>
+            <td>Jefferson High School</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Selecting-Specific-Columns-in-a-JOIN">
+<a class="anchor" href="#Selecting-Specific-Columns-in-a-JOIN" aria-hidden="true"><span class="octicon octicon-link"></span></a>Selecting Specific Columns in a JOIN<a class="anchor-link" href="#Selecting-Specific-Columns-in-a-JOIN"> </a>
+</h4>
+<p>To select particular columns, you use the <code>SELECT</code> keyword followed by the desired column names. When joining tables, you must include the column as well as its table name.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT schools_left.id AS left_id, schools_left.left_school,
+    schools_right.right_school
+FROM schools_left LEFT JOIN schools_right
+ON schools_left.id = schools_right.id;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>left_id</th>
+            <th>left_school</th>
+            <th>right_school</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>None</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>Jefferson High School</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Table-Aliases">
+<a class="anchor" href="#Table-Aliases" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table Aliases<a class="anchor-link" href="#Table-Aliases"> </a>
+</h4>
+<p>To create a table alias, we place a character or two after the table name when we declare it in the <code>FROM</code> clause. Those characters then serve as an alias we can use instead of the full table name.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT lt.id, lt.left_school, rt.right_school
+FROM schools_left AS lt LEFT JOIN schools_right AS rt
+ON lt.id = rt.id;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>left_school</th>
+            <th>right_school</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>Oak Street School</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>Roosevelt High School</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>None</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>Jefferson High School</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Joining-Multiple-Tables">
+<a class="anchor" href="#Joining-Multiple-Tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Joining Multiple Tables<a class="anchor-link" href="#Joining-Multiple-Tables"> </a>
+</h4>
+<p>We can continue adding tables to a query as long as we have columns with matching values to join on.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE schools_enrollment (
+    id integer,
+    enrollment integer
+);
+
+CREATE TABLE schools_grades (
+    id integer,
+    grades varchar(10)
+);
+
+INSERT INTO schools_enrollment (id, enrollment)
+VALUES
+    (1, 360),
+    (2, 1001),
+    (5, 450),
+    (6, 927);
+    
+INSERT INTO schools_grades (id, grades)
+VALUES
+    (1, 'K-3'),
+    (2, '9-12'),
+    (5, '6-8'),
+    (6, '9-12');
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+Done.
+4 rows affected.
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT lt.id, lt.left_school, en.enrollment, gr.grades
+FROM schools_left AS lt LEFT JOIN schools_enrollment AS en
+    ON lt.id = en.id
+LEFT JOIN schools_grades AS gr
+    ON lt.id = gr.id;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>left_school</th>
+            <th>enrollment</th>
+            <th>grades</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Oak Street School</td>
+            <td>360</td>
+            <td>K-3</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Roosevelt High School</td>
+            <td>1001</td>
+            <td>9-12</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>450</td>
+            <td>6-8</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Jefferson High School</td>
+            <td>927</td>
+            <td>9-12</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the above <code>SELECT</code> query, we join <code>schools_left</code> to <code>schools_enrollment</code> using the tables' <code>id</code> fields. Next, the query joins <code>schools_left</code> to <code>school_grades</code> again on the <code>id</code> fields.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Find-Rows-with-Missing-Values-with-NULL">
+<a class="anchor" href="#Find-Rows-with-Missing-Values-with-NULL" aria-hidden="true"><span class="octicon octicon-link"></span></a>Find Rows with Missing Values with <em>NULL</em><a class="anchor-link" href="#Find-Rows-with-Missing-Values-with-NULL"> </a>
+</h3>
+<p>In SQL, <code>NULL</code> is a special value that represents a condition in which there's no data present or where the data is unknown because it wasn't included. You can use <code>NULL</code> across data types.<br>
+You can find empty rows by adding a <code>WHERE</code> clause to filter for <code>NULL</code> by using the phrase <code>IS NULL</code>. If you want to look for columns <em>with</em> data, use <code>IS NOT NULL</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT *
+FROM schools_left LEFT JOIN schools_right
+ON schools_left.id = schools_right.id
+WHERE schools_right.id IS NULL;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>left_school</th>
+            <th>id_1</th>
+            <th>right_school</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>5</td>
+            <td>Washington Middle School</td>
+            <td>None</td>
+            <td>None</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Primary-and-Foreign-Keys">
+<a class="anchor" href="#Primary-and-Foreign-Keys" aria-hidden="true"><span class="octicon octicon-link"></span></a>Primary and Foreign Keys<a class="anchor-link" href="#Primary-and-Foreign-Keys"> </a>
+</h3>
+<p>We can declare a primary key using either the column constraint or the table constraint method.</p>
+<p>Let's look at an example of a column constraint. The typical syntax is</p>
+<blockquote>
+<p><em>column_name</em> <em>data_type</em> <code>CONSTRAINT</code> <em>key_name</em> <code>PRIMARY KEY</code>;</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE natural_key(
+    license_id varchar(10) CONSTRAINT license_key PRIMARY KEY,
+    first_name varchar(50),
+    last_name varchar(50)
+);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that in the column constraint syntax, you can omit the <code>CONSTRAINT</code> keyword and the name for the key, and simply use <code>PRIMARY KEY</code>.</p>
+<p>Now let's look at an example of a table constraint, where we declare the <code>CONSTRAINT</code> after listing the final column. with the column we want to use as they key in parentheses.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE natural_key(
+    license_id varchar(10),
+    first_name varchar(50),
+    last_name varchar(50),
+    CONSTRAINT license_key PRIMARY KEY (license_id)
+);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that you must use the table constraint syntax when you want to create a primary key using more than one column. In that case, you would list the columns in parentheses, separated by commas.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Composite-Primary-Key">
+<a class="anchor" href="#Composite-Primary-Key" aria-hidden="true"><span class="octicon octicon-link"></span></a>Composite Primary Key<a class="anchor-link" href="#Composite-Primary-Key"> </a>
+</h4>
+<p>A <em>composite primary key</em> is when you create a suitable key from a combination of columns.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">natural_key_composite</span><span class="p">(</span>
+    <span class="n">license_id</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">first_name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+    <span class="n">last_name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+    <span class="n">CONSTRAINT</span> <span class="n">license_key</span> <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="p">(</span><span class="n">license_id</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Auto-incrementing-Surrogate-Key">
+<a class="anchor" href="#Auto-incrementing-Surrogate-Key" aria-hidden="true"><span class="octicon octicon-link"></span></a>Auto-incrementing Surrogate Key<a class="anchor-link" href="#Auto-incrementing-Surrogate-Key"> </a>
+</h4>
+<p>We've already seen the three serial types: <code>smallserial</code>, <code>serial</code>, and <code>bigserial</code>. An easy way to create a surrogate primary key is with an auto-incrementing integer using one of the serial data types.<br>
+PostgreSQL also allows you store and compare UUID values but it does not include functions for generating the UUID values in its core. Instead, it relies on the third-party modules that provide specific algorithms to generate UUIDs.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">surrogate_key_example</span> <span class="p">(</span>
+    <span class="n">order_number</span> <span class="n">bigserial</span><span class="p">,</span>
+    <span class="n">product_name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+    <span class="n">order_numberder_date</span> <span class="n">date</span><span class="p">,</span>
+    <span class="n">CONSTRAINT</span> <span class="n">order_key</span> <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="p">(</span><span class="n">order_number</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Foreign-Keys">
+<a class="anchor" href="#Foreign-Keys" aria-hidden="true"><span class="octicon octicon-link"></span></a>Foreign Keys<a class="anchor-link" href="#Foreign-Keys"> </a>
+</h4>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">licenses</span> <span class="p">(</span>
+    <span class="n">license_id</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">first_name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+    <span class="n">last_name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+    <span class="n">CONSTRAINT</span> <span class="n">licenses_key</span> <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="p">(</span><span class="n">license_id</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">licenses</span> <span class="p">(</span><span class="n">license_id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span>
+<span class="n">VALUES</span> <span class="p">(</span><span class="s1">'T229901'</span><span class="p">,</span> <span class="s1">'Lynn'</span><span class="p">,</span> <span class="s1">'Malero'</span><span class="p">);</span>
+
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">registrations</span> <span class="p">(</span>
+    <span class="n">registration_id</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">registration_date</span> <span class="n">date</span><span class="p">,</span>
+    <span class="n">license_id</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="n">REFERENCES</span> <span class="n">licenses</span> <span class="p">(</span><span class="n">license_id</span><span class="p">),</span>
+    <span class="n">CONSTRAINT</span> <span class="n">registration_key</span> <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="p">(</span><span class="n">registration_id</span><span class="p">,</span> <span class="n">license_id</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">registrations</span> <span class="p">(</span><span class="n">registration_id</span><span class="p">,</span> <span class="n">registration_date</span><span class="p">,</span> <span class="n">license_id</span><span class="p">)</span>
+<span class="n">VALUES</span> <span class="p">(</span><span class="s1">'A203391'</span><span class="p">,</span> <span class="s1">'3/17/2017'</span><span class="p">,</span> <span class="s1">'T229901'</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Deleting-Related-Records-with-CASCADE">
+<a class="anchor" href="#Deleting-Related-Records-with-CASCADE" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deleting Related Records with <em>CASCADE</em><a class="anchor-link" href="#Deleting-Related-Records-with-CASCADE"> </a>
+</h4>
+<p>To maintain referential integrity, the foreign key constraint prevents us from deleting a row from the <code>licenses</code> table above before removing any related rows in the <code>registrations</code> table, because doing so would leave an orphaned record. To delete a row in <code>licenses</code> and have that action automatically delete any related rows in <code>registrations</code>, we can specify that behavior by adding <code>ON DELETE CASCADE</code> when defining the foreign key constraint.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">registrations</span> <span class="p">(</span>
+    <span class="n">registration_id</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">registration_date</span> <span class="n">date</span><span class="p">,</span>
+    <span class="n">license_id</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="n">REFERENCES</span> <span class="n">licenses</span> <span class="p">(</span><span class="n">license_id</span><span class="p">)</span> <span class="n">ON</span> <span class="n">DELETE</span> <span class="n">CASCADE</span><span class="p">,</span>
+    <span class="n">CONSTRAINT</span> <span class="n">registration_key</span> <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="p">(</span><span class="n">registration_id</span><span class="p">,</span> <span class="n">license_id</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>With the above query, deleting a row in <code>licenses</code> should also delete all related rows in <code>registrations</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Constraints">
+<a class="anchor" href="#Constraints" aria-hidden="true"><span class="octicon octicon-link"></span></a>Constraints<a class="anchor-link" href="#Constraints"> </a>
+</h3>
+<h4 id="The-CHECK-Constraint">
+<a class="anchor" href="#The-CHECK-Constraint" aria-hidden="true"><span class="octicon octicon-link"></span></a>The <em>CHECK</em> Constraint<a class="anchor-link" href="#The-CHECK-Constraint"> </a>
+</h4>
+<p>A <code>CHECK</code> constraint evaluates whether data added to a column meets the expected criteria, which we specify with a logical test. We can implement it as a column or a table constraint.<br>
+For a column constraint, declare it in the <code>CREATE TABLE</code> statement after the column name and data type: <code>CHECK</code> (<em>logical expression</em>).<br>
+As a table constraint, use the syntax <code>CONSTRAINT</code> <em>constraint_name</em> <code>CHECK</code> (<em>logical expression</em>) after all columns are defined.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE check_constraint_example(
+    user_id bigserial,
+    user_role varchar(50),
+    salary integer,
+    CONSTRAINT user_id_key PRIMARY KEY (user_id),
+    CONSTRAINT check_role_in_list CHECK (user_role IN ('Admin', 'Staff')),
+    CONSTRAINT check_salary_not_zero CHECK (salary &gt; 0)
+);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we use the table constraint syntax, we can also combine more than one test in single <code>CHECK</code> statement.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CONSTRAINT</span> <span class="n">grad_check</span> <span class="n">CHECK</span> <span class="p">(</span><span class="n">credits</span> <span class="o">&gt;=</span> <span class="mi">120</span> <span class="n">AND</span> <span class="n">tuition</span> <span class="o">=</span> <span class="s1">'Paid'</span><span class="p">)</span>
+
+<span class="n">CONSTRAINT</span> <span class="n">sale_check</span> <span class="n">CHECK</span> <span class="p">(</span><span class="n">sale_price</span> <span class="o">&lt;</span> <span class="n">retail_price</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="The-UNIQUE-Constraint">
+<a class="anchor" href="#The-UNIQUE-Constraint" aria-hidden="true"><span class="octicon octicon-link"></span></a>The <em>UNIQUE</em> Constraint<a class="anchor-link" href="#The-UNIQUE-Constraint"> </a>
+</h4>
+<p>You can ensure that a column has a unique value in each row by using the <code>UNIQUE</code> constraint. The difference between this and a primary key is that a unique constraint permits multiple <code>NULL</code> values in a column.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE unique_constraint_example (
+    contact_id bigserial CONSTRAINT contact_id_key PRIMARY KEY,
+    first_name varchar(50),
+    last_name varchar(50),
+    email varchar(200),
+    CONSTRAINT email_unique UNIQUE(email)
+);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="The-NOT-NULL-Constraint">
+<a class="anchor" href="#The-NOT-NULL-Constraint" aria-hidden="true"><span class="octicon octicon-link"></span></a>The <em>NOT NULL</em> Constraint<a class="anchor-link" href="#The-NOT-NULL-Constraint"> </a>
+</h4>
+<p>The <code>NOT NULL</code> constraint prevents a column from accepting empty values.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE not_null_example (
+    student_id bigserial,
+    first_name varchar(50) NOT NULL,
+    last_name varchar(50) NOT NULL,
+    CONSTRAINT student_id_key PRIMARY KEY (student_id)
+);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Modifying-Constraints">
+<a class="anchor" href="#Modifying-Constraints" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modifying Constraints<a class="anchor-link" href="#Modifying-Constraints"> </a>
+</h4>
+<p>You can remove a constraint or add one later to an existing table using <code>ALTER TABLE</code>, a command which makes changes to tables and columns. You can only add a constraint to an existing table if the data in the target column
+obeys the limits of the constraint.</p>
+<p>To remove a primary key, foreign key, or a <code>UNIQUE</code> constraint:</p>
+<blockquote>
+<p><code>ALTER TABLE</code> <em>table_name</em> <code>DROP CONSTRAINT</code> <em>constraint_name</em>;</p>
+</blockquote>
+<p>To remove a <code>NOT NULL</code> constraint:&gt; <code>ALTER TABLE</code> <em>table_name</em> <code>ALTER COLUMN</code> <em>column_name</em> <code>DROP NOT NULL</code>;
+The following statements can be executed one at a time.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+ALTER TABLE not_null_example DROP CONSTRAINT student_id_key;
+ALTER TABLE not_null_example ADD CONSTRAINT student_id_key PRIMARY KEY (student_id);
+ALTER TABLE not_null_example ALTER COLUMN first_name DROP NOT NULL;
+ALTER TABLE not_null_example ALTER COLUMN first_name SET NOT NULL;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+Done.
+Done.
+Done.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Counting-Rows-and-Values-using-count()">
+<a class="anchor" href="#Counting-Rows-and-Values-using-count()" aria-hidden="true"><span class="octicon octicon-link"></span></a>Counting Rows and Values using <em>count()</em><a class="anchor-link" href="#Counting-Rows-and-Values-using-count()"> </a>
+</h3>
+<p>The <code>count()</code> aggregate function is used to check the number of tows and perform other counting tasks. If we use an asterisk as an input (<code>count(*)</code>), the function returns the number of table rows regardless of whether they include null values.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+CREATE TABLE employees (
+    id serial,
+    first_name varchar(25),
+    last_name varchar(50),
+    department varchar(50),
+    hire_date date,
+    starting_salary numeric,
+    present_salary numeric
+);
+
+INSERT INTO employees (first_name, last_name, department, hire_date, starting_salary, present_salary)
+VALUES  ('Paul', 'Johnson', 'Sales', '2011-10-04', 65000, 85000),
+        ('Nitin', 'Agarwal', 'Engineering', '2016-01-19', 58000, 66000),
+        ('Tom', 'Rock', 'Engineering', '2015-09-15', 48000, 56000),
+        ('Arun', 'Patil', 'Design', '2020-06-16', 42000, 44000),
+        ('Nathan', 'Drake', 'Development', '2019-10-04', 65000, 66000),
+        ('Tony', 'Brown', 'Development', '2021-10-04', 35000, 35000);
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+Done.
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT count(*)
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>count</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>6</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Counting-Values-present-in-a-Column">
+<a class="anchor" href="#Counting-Values-present-in-a-Column" aria-hidden="true"><span class="octicon octicon-link"></span></a>Counting Values present in a Column<a class="anchor-link" href="#Counting-Values-present-in-a-Column"> </a>
+</h4>
+<p>You can find the number of rows in a specific column that contain non-null values by supplying the name of a column as input to the <code>count()</code> function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT count(present_salary)
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>count</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>6</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Counting-Distinct-Values-in-a-Column">
+<a class="anchor" href="#Counting-Distinct-Values-in-a-Column" aria-hidden="true"><span class="octicon octicon-link"></span></a>Counting Distinct Values in a Column<a class="anchor-link" href="#Counting-Distinct-Values-in-a-Column"> </a>
+</h4>
+<p>Adding <code>DISTINCT</code> to the <code>count()</code> function causes the function to return a count of distinct values from a column.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT count(DISTINCT present_salary)
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>count</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>5</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Finding-Maximum-and-Minimum-Values">
+<a class="anchor" href="#Finding-Maximum-and-Minimum-Values" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding Maximum and Minimum Values<a class="anchor-link" href="#Finding-Maximum-and-Minimum-Values"> </a>
+</h3>
+<p>The <code>max()</code> function returns the largest number in a column. The <code>min()</code> function returns the smallest number in a column.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT max(present_salary), min(present_salary)
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+1 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>max</th>
+            <th>min</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>85000</td>
+            <td>35000</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Aggregating-Data-using-GROUP-BY">
+<a class="anchor" href="#Aggregating-Data-using-GROUP-BY" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aggregating Data using <em>GROUP BY</em><a class="anchor-link" href="#Aggregating-Data-using-GROUP-BY"> </a>
+</h3>
+<p>When you use the <code>GROUP BY</code> clause with aggregate functions, you can group results according to the values in one or more columns. On its own, <code>GROUP BY</code> eliminates duplicate values from the results, similar to <code>DISTINCT</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT department
+FROM employees
+GROUP BY department;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>department</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Design</td>
+        </tr>
+        <tr>
+            <td>Development</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+        </tr>
+        <tr>
+            <td>Sales</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>GROUP BY</code> clause follows the <code>FROM</code> clause and includes the
+You're not limited to grouping just one column.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT department, present_salary
+FROM employees
+GROUP BY department, present_salary
+ORDER BY department, present_salary;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>department</th>
+            <th>present_salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Design</td>
+            <td>44000</td>
+        </tr>
+        <tr>
+            <td>Development</td>
+            <td>35000</td>
+        </tr>
+        <tr>
+            <td>Development</td>
+            <td>66000</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+            <td>56000</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+            <td>66000</td>
+        </tr>
+        <tr>
+            <td>Sales</td>
+            <td>85000</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Combining-GROUP-BY-with-count()">
+<a class="anchor" href="#Combining-GROUP-BY-with-count()" aria-hidden="true"><span class="octicon octicon-link"></span></a>Combining <em>GROUP BY</em> with <em>count()</em><a class="anchor-link" href="#Combining-GROUP-BY-with-count()"> </a>
+</h4>
+<p>You can combine <code>GROUP BY</code> with an aggregate function like <code>count()</code> to pull more descriptive information form the data. For e.g., you can get the number of employees in each department. We ask for the values in the department column and a count of those values.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT department, count(*)
+FROM employees
+GROUP BY department
+ORDER BY count(*) DESC;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+4 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>department</th>
+            <th>count</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Development</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>Design</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Sales</td>
+            <td>1</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that when we select individual columns along with an aggregate function, we must include the columns in a <code>GROUP BY</code> clause. You can't group values by aggregating and have ungrouped column values in the same query.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Using-GROUP-BY--on-Multiple-Columns-with-count()">
+<a class="anchor" href="#Using-GROUP-BY--on-Multiple-Columns-with-count()" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <em>GROUP BY</em>  on Multiple Columns with <em>count()</em><a class="anchor-link" href="#Using-GROUP-BY--on-Multiple-Columns-with-count()"> </a>
+</h4>
+<p>We can check the number of employees in each department and the starting salary at each department.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT department, starting_salary, count(*)
+FROM employees
+GROUP BY department, starting_salary
+ORDER BY starting_salary ASC, count(*) DESC;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>department</th>
+            <th>starting_salary</th>
+            <th>count</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Development</td>
+            <td>35000</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Design</td>
+            <td>42000</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+            <td>48000</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+            <td>58000</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Sales</td>
+            <td>65000</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Development</td>
+            <td>65000</td>
+            <td>1</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Filtering-an-Aggregate-using-HAVING">
+<a class="anchor" href="#Filtering-an-Aggregate-using-HAVING" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filtering an Aggregate using <em>HAVING</em><a class="anchor-link" href="#Filtering-an-Aggregate-using-HAVING"> </a>
+</h3>
+<p>To filter results of aggregate functions, we need to use the <code>HAVING</code> clause. Aggregate functions, such as <code>sum()</code>, can't be used within a <code>WHERE</code> clause because they operate at the row level, and aggregate functions work across rows. The <code>HAVING</code> clause places conditions on groups created by aggregating.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT department,
+    sum(starting_salary) str_sal, sum(present_salary) end_sal,
+    round((cast(sum(present_salary) AS decimal(10,2)) - 
+    sum(starting_salary)) / sum(present_salary)*100,2) AS pct_change
+
+FROM employees
+GROUP BY department, starting_salary
+HAVING starting_salary &gt; 50000
+ORDER BY pct_change DESC;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+3 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>department</th>
+            <th>str_sal</th>
+            <th>end_sal</th>
+            <th>pct_change</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Sales</td>
+            <td>65000</td>
+            <td>85000</td>
+            <td>23.53</td>
+        </tr>
+        <tr>
+            <td>Engineering</td>
+            <td>58000</td>
+            <td>66000</td>
+            <td>12.12</td>
+        </tr>
+        <tr>
+            <td>Development</td>
+            <td>65000</td>
+            <td>66000</td>
+            <td>1.52</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Checking-the-Length-of-a-String-using-length()">
+<a class="anchor" href="#Checking-the-Length-of-a-String-using-length()" aria-hidden="true"><span class="octicon octicon-link"></span></a>Checking the Length of a String using <em>length()</em><a class="anchor-link" href="#Checking-the-Length-of-a-String-using-length()"> </a>
+</h3>
+<p><code>length()</code> is a string function that counts the number of characters in a string.<br>
+For e.g., you can find the longest last name.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT length(last_name) 
+FROM employees
+ORDER BY length(last_name) DESC;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>length</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>7</td>
+        </tr>
+        <tr>
+            <td>7</td>
+        </tr>
+        <tr>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>4</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="String-Concatenation">
+<a class="anchor" href="#String-Concatenation" aria-hidden="true"><span class="octicon octicon-link"></span></a>String Concatenation<a class="anchor-link" href="#String-Concatenation"> </a>
+</h3>
+<p>Concatenation combines two or more string or non-string values into one. We use <code>UPDATE</code> in conjunction with the double-pip string operator <code>||</code>, which performs concatenation.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+UPDATE employees
+SET department = department || ' dept';
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Modifying-Tables,-Columns-and-Data">
+<a class="anchor" href="#Modifying-Tables,-Columns-and-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modifying Tables, Columns and Data<a class="anchor-link" href="#Modifying-Tables,-Columns-and-Data"> </a>
+</h3>
+<h4 id="Modifying-Tables-with-ALTER-TABLE">
+<a class="anchor" href="#Modifying-Tables-with-ALTER-TABLE" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modifying Tables with <em>ALTER TABLE</em><a class="anchor-link" href="#Modifying-Tables-with-ALTER-TABLE"> </a>
+</h4>
+<p>We can use <code>ALTER TABLE</code> to modify the structure of tables.</p>
+<blockquote>
+<p>The code for adding a column:<code>ALTER TABLE table_name ADD COLUMN column_name data_type;</code>&gt; The code to remove a column:<code>ALTER TABLE table_name DROP COLUMN column_name;</code>&gt; The code to change the data type of a column:<code>ALTER TABLE table_name  ALTER COLUMN column_name SET DATA TYPE data_type;</code>&gt; The code to add a <code>NOT NULL</code> constraint to a column:<code>ALTER TABLE table_name ALTER COLUMN column_name SET NOT NULL;</code>&gt; The code to remove a <code>NOT NULL</code> constraint:<code>ALTER TABLE table_name ALTER COLUMN column_name DROP NOT NULL;</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Modifying-Values-with-UPDATE">
+<a class="anchor" href="#Modifying-Values-with-UPDATE" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modifying Values with <em>UPDATE</em><a class="anchor-link" href="#Modifying-Values-with-UPDATE"> </a>
+</h4>
+<p>The <code>UPDATE</code> statement modifies the data in a column in all rows or in a subset of rows that meet a condition. First we pass <code>UPDATE</code> the name of the table to update, and then pass the <code>SET</code> clause the column that contains the values to change. The new value to
+place in the column can be a string, number, the name of another column,
+or even a query or expression that generates a value.</p>
+<blockquote>
+<p><code>UPDATE table_name SET column_name = value;</code></p>
+</blockquote>
+<p>We can update values
+in multiple columns at a time by adding additional columns and source values,
+and separating each column and value statement with a comma.</p>
+<blockquote>
+<p><code>UPDATE table_name 
+SET column_a = value_1, 
+    column_b = value_2;</code></p>
+</blockquote>
+<p>We can restrict the update to particular rows by adding a <code>WHERE</code> clause with some criteria that must be met before the update can happen.</p>
+<blockquote>
+<p><code>UPDATE table_name
+SET column_a = value
+WHERE criteria;</code></p>
+</blockquote>
+<p>We can also update one table with values from another table using a <em>subquery</em>, a query inside a query.</p>
+<blockquote>
+<p><code>UPDATE table_a
+SET column = (SELECT column
+              FROM table_b
+              WHERE table_a.column = table_b.column)
+WHERE EXISTS (SELECT column
+              FROM table_b
+              WHERE table_a.column = table_b.column);</code></p>
+</blockquote>
+<p>The value portion of the <code>SET</code> clause is a subquery, which is a <code>SELECT</code> statement inside parentheses that generates the value for the update. Similarly, the <code>WHERE EXISTS</code> clause uses a <code>SELECT</code> statement to generate values
+that serve as the filter for the update. If we didn't use this clause, we might
+inadvertently set some values to <code>NULL</code> without planning to.</p>
+<p>PostgreSQL also offers a simpler syntax using a <code>FROM</code> clause for updating values across tables.
+<code>UPDATE table_a
+SET column = table_b.column
+FROM table_b
+WHERE table_a.column = table_b.column</code></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Deleting-Data">
+<a class="anchor" href="#Deleting-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deleting Data<a class="anchor-link" href="#Deleting-Data"> </a>
+</h3>
+<p>SQL includes options to remove rows and columns from a table along with options to delete an entire table or database. It's easy to exclude unwanted data in queries using a WHERE clause, so decide whether
+you truly need to delete the data or can just filter it out. Cases where deleting may be
+the best solution include data with errors or data imported incorrectly.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Deleting-Rows-from-a-Table">
+<a class="anchor" href="#Deleting-Rows-from-a-Table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deleting Rows from a Table<a class="anchor-link" href="#Deleting-Rows-from-a-Table"> </a>
+</h4>
+<p>Using a <code>DELETE FROM</code> statement, we can remove all rows from a table, or we can use a <code>WHERE</code> clause to delete only the portion that matches an expression we supply.</p>
+<blockquote>
+<p>Delete all rows from a table:<code>DELETE FROM table_name;</code>&gt; Delete selected rows:<code>DELETE FROM table_name WHERE expression;</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Deleting-a-Column-from-a-Table">
+<a class="anchor" href="#Deleting-a-Column-from-a-Table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deleting a Column from a Table<a class="anchor-link" href="#Deleting-a-Column-from-a-Table"> </a>
+</h4>
+<p>We can remove a column, including all data within the column, from a table by using the <code>DROP</code> keyword in the <code>ALTER TABLE</code> statement.</p>
+<blockquote>
+<p>Remove a column:<code>ALTER TABLE table_name DROP COLUMN column_name</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Deleting-a-Table-from-a-Database">
+<a class="anchor" href="#Deleting-a-Table-from-a-Database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deleting a Table from a Database<a class="anchor-link" href="#Deleting-a-Table-from-a-Database"> </a>
+</h4>
+<blockquote>
+<p>Delete a table:<code>DROP TABLE table_name;</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Save-or-Revert-Changes-using-Transaction-Blocks">
+<a class="anchor" href="#Save-or-Revert-Changes-using-Transaction-Blocks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Save or Revert Changes using Transaction Blocks<a class="anchor-link" href="#Save-or-Revert-Changes-using-Transaction-Blocks"> </a>
+</h3>
+<p>The only way to undo any changes after you run a <code>DELETE</code> or <code>UPDATE</code> query is to restore from a backup. However, you can check your changes
+before finalizing them and cancel the change if it's not what you intended.
+You do this by wrapping the SQL statement within a transaction block, which
+is a group of statements you define using the following keywords at the
+beginning and end of the query:</p>
+<ul>
+<li>
+<code>START TRANSACTION</code> signals the start of the transaction block. In
+PostgreSQL, you can also use the non-ANSI SQL BEGIN keyword.</li>
+<li>
+<code>COMMIT</code> signals the end of the block and saves all changes.</li>
+<li>
+<code>ROLLBACK</code> signals the end of the block and reverts all changes.</li>
+</ul>
+<p>Usually, database programmers employ a transaction block in complex database systems to define the start and end of a sequence of operations that perform one unit of work in a database.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Improving-Performance-when-Updating-Large-Tables">
+<a class="anchor" href="#Improving-Performance-when-Updating-Large-Tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Improving Performance when Updating Large Tables<a class="anchor-link" href="#Improving-Performance-when-Updating-Large-Tables"> </a>
+</h3>
+<p>Adding a column to a table and filling it with values can quickly inflate the table's size because the database creates a new version of the existing row each time a value is updated, and it doesn't delete the old row version.<br>
+Instead of adding a column and filling it with values, we can save disk space by copying the entire table and adding a populated column during the operation. Then, we rename the tables so the copy replaces the original, and the original becomes a backup.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">employees_backup</span> <span class="n">AS</span>
+<span class="n">SELECT</span> <span class="o">*</span><span class="p">,</span> <span class="s1">'2021-01-12'</span><span class="p">::</span><span class="n">date</span> <span class="n">AS</span> <span class="n">end_date</span>
+<span class="n">FROM</span> <span class="n">employees</span><span class="p">;</span>
+
+<span class="n">ALTER</span> <span class="n">TABLE</span> <span class="n">employees</span> 
+    <span class="n">RENAME</span> <span class="n">TO</span> <span class="n">employees_temp</span><span class="p">;</span>
+
+<span class="n">ALTER</span> <span class="n">TABLE</span> <span class="n">employees_backup</span> 
+    <span class="n">RENAME</span> <span class="n">TO</span> <span class="n">employees</span><span class="p">;</span>
+    
+<span class="n">ALTER</span> <span class="n">TABLE</span> <span class="n">employees_temp</span>
+    <span class="n">RENAME</span> <span class="n">TO</span> <span class="n">employees_backup</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Finding-Ranks">
+<a class="anchor" href="#Finding-Ranks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding Ranks<a class="anchor-link" href="#Finding-Ranks"> </a>
+</h3>
+<p>We'll focus on two rank functions, <code>rank()</code> and <code>dense_rank()</code>, which are both <em>window functions</em> that perform calculations across set of rows we specify using the <code>OVER</code> clause.</p>
+<p>The difference between <code>rank()</code> and <code>dense_rank()</code> is the way they handle the next rank value after a tie: <code>rank()</code> includes a gap in the rank order, but <code>dense_rank()</code> does not.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT first_name, present_salary,
+    rank() OVER (ORDER BY present_salary DESC),
+    dense_rank() OVER (ORDER BY present_salary DESC)
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>first_name</th>
+            <th>present_salary</th>
+            <th>rank</th>
+            <th>dense_rank</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Paul</td>
+            <td>85000</td>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Nitin</td>
+            <td>66000</td>
+            <td>2</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>Nathan</td>
+            <td>66000</td>
+            <td>2</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>Tom</td>
+            <td>56000</td>
+            <td>4</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>Arun</td>
+            <td>44000</td>
+            <td>5</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>Tony</td>
+            <td>35000</td>
+            <td>6</td>
+            <td>5</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In my personal opinion, <code>rank()</code> should be used more often since it more accurately reflects the total number of companies ranked.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Ranking-within-Subgroups-with-PARTITION-BY">
+<a class="anchor" href="#Ranking-within-Subgroups-with-PARTITION-BY" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ranking within Subgroups with <em>PARTITION BY</em><a class="anchor-link" href="#Ranking-within-Subgroups-with-PARTITION-BY"> </a>
+</h4>
+<p>A <code>PARTITION BY</code> clause divides table rows according to values in a column we specify.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">sql</span>
+SELECT first_name, department, present_salary, 
+    rank() OVER (PARTITION BY department ORDER BY present_salary DESC)
+FROM employees;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> * postgresql://postgres:***@localhost/analysis
+6 rows affected.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table>
+    <thead>
+        <tr>
+            <th>first_name</th>
+            <th>department</th>
+            <th>present_salary</th>
+            <th>rank</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Arun</td>
+            <td>Design</td>
+            <td>44000</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Nathan</td>
+            <td>Development</td>
+            <td>66000</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Tony</td>
+            <td>Development</td>
+            <td>35000</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>Nitin</td>
+            <td>Engineering</td>
+            <td>66000</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Tom</td>
+            <td>Engineering</td>
+            <td>56000</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>Paul</td>
+            <td>Sales</td>
+            <td>85000</td>
+            <td>1</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="Calculating-Rates">
+<a class="anchor" href="#Calculating-Rates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calculating Rates<a class="anchor-link" href="#Calculating-Rates"> </a>
+</h3>
+<p>Analysts often calculate a rate per 1,000 people, or some multiple of that number, for apples-to-apples comparisons. For e.g., if we're trying to find the rate of crime.</p>
+<blockquote>
+<p>Say x is the number of offenses and p is the total population, then the rate of offenses per 1,000 people is<br>
+(x / p) * 1000</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">select</span> <span class="n">city</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">population</span><span class="p">,</span> <span class="n">crime</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">((</span><span class="n">crime</span><span class="p">::</span><span class="n">numeric</span> <span class="o">/</span> <span class="n">population</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">as</span> <span class="n">pc_per_1000</span>
+<span class="kn">from</span> <span class="nn">crime_data</span>
+<span class="n">where</span> <span class="n">population</span> <span class="o">&gt;=</span> <span class="mi">500000</span>
+<span class="n">order</span> <span class="n">by</span> <span class="p">(</span><span class="n">crime</span><span class="p">::</span><span class="n">numeric</span> <span class="o">/</span> <span class="n">population</span><span class="p">)</span> <span class="n">desc</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="shirolepranav/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/sql/postgresql/2021/10/10/postgresql-tutorial.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A Data Science Blog</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/shirolepranav" target="_blank" title="shirolepranav"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/Shirole_Pranav" target="_blank" title="Shirole_Pranav"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
