@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Vectors &amp; Matrices | pranav shirole</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Vectors &amp; Matrices" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Explaining the concepts of vectors and matrices, and how they help in Data Science." />
+<meta property="og:description" content="Explaining the concepts of vectors and matrices, and how they help in Data Science." />
+<link rel="canonical" href="https://shirolepranav.github.io/blog/numpy/2021/12/18/vectors-matrices.html" />
+<meta property="og:url" content="https://shirolepranav.github.io/blog/numpy/2021/12/18/vectors-matrices.html" />
+<meta property="og:site_name" content="pranav shirole" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-18T00:00:00-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Vectors &amp; Matrices" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-12-18T00:00:00-06:00","datePublished":"2021-12-18T00:00:00-06:00","description":"Explaining the concepts of vectors and matrices, and how they help in Data Science.","headline":"Vectors &amp; Matrices","mainEntityOfPage":{"@type":"WebPage","@id":"https://shirolepranav.github.io/blog/numpy/2021/12/18/vectors-matrices.html"},"url":"https://shirolepranav.github.io/blog/numpy/2021/12/18/vectors-matrices.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shirolepranav.github.io/blog/feed.xml" title="pranav shirole" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">pranav shirole</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Vectors &amp; Matrices</h1><p class="page-description">Explaining the concepts of vectors and matrices, and how they help in Data Science.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-12-18T00:00:00-06:00" itemprop="datePublished">
+        Dec 18, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      12 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#numpy">numpy</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/shirolepranav/blog/tree/master/_notebooks/2021-12-18-vectors-matrices.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/shirolepranav/blog/blob/master/_notebooks/2021-12-18-vectors-matrices.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Vectors">Vectors </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#NumPy-Arrays">NumPy Arrays </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Vector-Creation">Vector Creation </a></li>
+<li class="toc-entry toc-h2"><a href="#Operations-on-Vectors">Operations on Vectors </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Indexing">Indexing </a></li>
+<li class="toc-entry toc-h3"><a href="#Slicing">Slicing </a></li>
+<li class="toc-entry toc-h3"><a href="#Single-Vector-Operations">Single Vector Operations </a></li>
+<li class="toc-entry toc-h3"><a href="#Vector-Vector-element-wise-operations">Vector Vector element-wise operations </a></li>
+<li class="toc-entry toc-h3"><a href="#Scalar-Vector-operations">Scalar Vector operations </a></li>
+<li class="toc-entry toc-h3"><a href="#Vector-Vector-dot-product">Vector Vector dot product </a></li>
+<li class="toc-entry toc-h3"><a href="#Vectors-vs.-For-Loop">Vectors vs. For Loop </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Matrices">Matrices </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#NumPy-Arrays">NumPy Arrays </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Matrix-Creation">Matrix Creation </a></li>
+<li class="toc-entry toc-h2"><a href="#Operations-on-Matrices">Operations on Matrices </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Indexing">Indexing </a></li>
+<li class="toc-entry toc-h3"><a href="#Slicing">Slicing </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-12-18-vectors-matrices.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Vectors">
+<a class="anchor" href="#Vectors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vectors<a class="anchor-link" href="#Vectors"> </a>
+</h2>
+<p>Vectors are ordered arrays of numbers. The elements of a vector are all the same type. A vector does not, for example, contain both characters and numbers. The number of elements in the array is often referred to as the <em>dimension</em> or <em>rank</em>. The elements of a vector can be referenced with an index. In math settings, indexes typically run from 1 to n. In computer science, indexing will typically run from 0 to n-1.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="NumPy-Arrays">
+<a class="anchor" href="#NumPy-Arrays" aria-hidden="true"><span class="octicon octicon-link"></span></a>NumPy Arrays<a class="anchor-link" href="#NumPy-Arrays"> </a>
+</h3>
+<p>NumPy's basic data structure is an indexable, n-dimensional <em>array</em> containing elements of the same type (<code>dtype</code>). Above, <em>dimension</em> was the number of elements in the vector; here, <em>dimension</em> refers to the number of indexes of an array. A one-dimensional or 1-D array has one index.</p>
+<ul>
+<li>1-D array, shape (n,): n elements indexed [0] through [n-1]</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Vector-Creation">
+<a class="anchor" href="#Vector-Creation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vector Creation<a class="anchor-link" href="#Vector-Creation"> </a>
+</h2>
+<p>Data creation routines in NumPy will generally have a first parameter which is the shape of the object. This can either be a single value for a 1-D result or a tuple (n,m,...) specifying the shape of the result.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"np.zeros(4) :   a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">, a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a data type = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,));</span>             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"np.zeros(4,) :  a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">, a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a data type = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"np.random.random_sample(4): a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">, a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a data type = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>np.zeros(4) :   a = [0. 0. 0. 0.], a shape = (4,), a data type = float64
+np.zeros(4,) :  a = [0. 0. 0. 0.], a shape = (4,), a data type = float64
+np.random.random_sample(4): a = [0.60191145 0.65435818 0.27028017 0.69083142], a shape = (4,), a data type = float64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Some data creation routines do not take a shape tuple.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">4.</span><span class="p">);</span>              <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"np.arange(4.):     a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">, a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a data type = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"np.random.rand(4): a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">, a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a data type = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>np.arange(4.):     a = [0. 1. 2. 3.], a shape = (4,), a data type = float64
+np.random.rand(4): a = [0.88573378 0.88693937 0.55170127 0.23140494], a shape = (4,), a data type = float64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Values can be specified manually as well.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]);</span>  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"np.array([5,4,3,2]):  a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">,     a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a data type = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5.</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]);</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"np.array([5.,4,3,2]): a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">, a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a data type = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>np.array([5,4,3,2]):  a = [5 4 3 2],     a shape = (4,), a data type = int32
+np.array([5.,4,3,2]): a = [5. 4. 3. 2.], a shape = (4,), a data type = float64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These have all created one-dimensional vector <code>a</code> with four elements. <code>a.shape</code> returns the dimensions. Here we see a.shape = <code>(4,)</code> indicating a 1-D array with 4 elements.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Operations-on-Vectors">
+<a class="anchor" href="#Operations-on-Vectors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Operations on Vectors<a class="anchor-link" href="#Operations-on-Vectors"> </a>
+</h2>
+<p>Elements of vectors can be accessed via indexing and slicing.<br>
+<strong>Indexing</strong> means referring to <em>an element</em> of an array by its position within the array.<br>
+<strong>Slicing</strong> means getting a subset of elements from an array based on their indices.<br>
+NumPy starts indexing at zero so the 3rd element of a vector a is <code>a[2]</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Indexing">
+<a class="anchor" href="#Indexing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Indexing<a class="anchor-link" href="#Indexing"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="c1"># access an element</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a[2].shape: </span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> a[2]  = </span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">, Accessing an element returns a scalar"</span><span class="p">)</span>
+
+<span class="c1"># access the last element, negative indexes count from the end</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a[-1] = </span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># indexs must be within the range of the vector or they will produce and error</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"The error message you'll see is:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[0 1 2 3 4 5 6 7 8 9]
+a[2].shape: () a[2]  = 2, Accessing an element returns a scalar
+a[-1] = 9
+The error message you'll see is:
+index 10 is out of bounds for axis 0 with size 10
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Slicing">
+<a class="anchor" href="#Slicing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Slicing<a class="anchor-link" href="#Slicing"> </a>
+</h3>
+<p>Slicing creates an array of indices using a set of three values (<code>start:stop:step</code>). A subset of values is also valid.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a        =  </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># access 5 consecutive elements (start:stop:step)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">1</span><span class="p">];</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">"a[2:7:1] = "</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># access 3 elements separated by two </span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">2</span><span class="p">];</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">"a[2:7:2] = "</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># access all elements index 3 and above</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">:];</span>        <span class="nb">print</span><span class="p">(</span><span class="s2">"a[3:]    = "</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># access all elements below index 3</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:</span><span class="mi">3</span><span class="p">];</span>        <span class="nb">print</span><span class="p">(</span><span class="s2">"a[:3]    = "</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># access all elements</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:];</span>         <span class="nb">print</span><span class="p">(</span><span class="s2">"a[:]     = "</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>a        =  [0 1 2 3 4 5 6 7 8 9]
+a[2:7:1] =  [2 3 4 5 6]
+a[2:7:2] =  [2 4 6]
+a[3:]    =  [3 4 5 6 7 8 9]
+a[:3]    =  [0 1 2]
+a[:]     =  [0 1 2 3 4 5 6 7 8 9]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Single-Vector-Operations">
+<a class="anchor" href="#Single-Vector-Operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Single Vector Operations<a class="anchor-link" href="#Single-Vector-Operations"> </a>
+</h3>
+<p>There are a number of useful operations that involve operations on a single vector.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a             : </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># negate elements of a</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="n">a</span> 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b = -a        : </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># sum all elements of a, returns a scalar</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b = np.sum(a) : </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># get the average of elements of a</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b = np.mean(a): </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># square elements of a</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b = a**2      : </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>a             : [1 2 3 4]
+b = -a        : [-1 -2 -3 -4]
+b = np.sum(a) : 10
+b = np.mean(a): 2.5
+b = a**2      : [ 1  4  9 16]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Vector-Vector-element-wise-operations">
+<a class="anchor" href="#Vector-Vector-element-wise-operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vector Vector element-wise operations<a class="anchor-link" href="#Vector-Vector-element-wise-operations"> </a>
+</h3>
+<p>Most of the NumPy arithmatic, logical and comparison operations apply to vectors. These operators work on an element-by-element basis. For example 
+
+$$ c_i = a_i + b_i $$
+</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Binary operators work element wise: </span><span class="si">{</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Binary operators work element wise: [0 0 6 8]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Of course, for this to work correctly, the vectors must be of the same size.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">c</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"The error message you'll see is:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The error message you'll see is:
+operands could not be broadcast together with shapes (4,) (2,) 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Scalar-Vector-operations">
+<a class="anchor" href="#Scalar-Vector-operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scalar Vector operations<a class="anchor-link" href="#Scalar-Vector-operations"> </a>
+</h3>
+<p>Vectors can be 'scaled' by scalar values. A scalar value is just a number. The scalar multiplies all the elements of the vector.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+
+<span class="c1"># multiply a by a scalar</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">a</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b = 5 * a : </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>b = 5 * a : [ 5 10 15 20]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Vector-Vector-dot-product">
+<a class="anchor" href="#Vector-Vector-dot-product" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vector Vector dot product<a class="anchor-link" href="#Vector-Vector-dot-product"> </a>
+</h3>
+<p>The dot product multiplies the values in two vectors element-wise and then sums the result. Vector dot product requires the dimensions of the two vectors to be the same.</p>
+<p>Let's implement our own version of the dot product below:</p>
+<p><strong>Using a for loop</strong>, implement a function which returns the dot product of two vectors. The function to return given inputs $a$ and $b$:
+
+$$ x = \sum_{i=0}^{n-1} a_i b_i $$
+
+Assume both <code>a</code> and <code>b</code> are the same shape.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">my_dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> 
+    <span class="sd">"""</span>
+<span class="sd">   Compute the dot product of two vectors</span>
+<span class="sd"> </span>
+<span class="sd">    Args:</span>
+<span class="sd">      a (ndarray (n,)):  input vector </span>
+<span class="sd">      b (ndarray (n,)):  input vector with same dimension as a</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">      x (scalar): </span>
+<span class="sd">    """</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a : </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b : </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"my_dot(a, b) = </span><span class="si">{</span><span class="n">my_dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>a : [1 2 3 4]
+b : [-1  4  3  2]
+my_dot(a, b) = 24
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note, the dot product is expected to return a scalar value.</p>
+<p>Let's try the same operations using <code>np.dot</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"NumPy 1-D np.dot(a, b) = </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">, np.dot(a, b).shape = </span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> "</span><span class="p">)</span> 
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"NumPy 1-D np.dot(b, a) = </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">, np.dot(a, b).shape = </span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> "</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>NumPy 1-D np.dot(a, b) = 24, np.dot(a, b).shape = () 
+NumPy 1-D np.dot(b, a) = 24, np.dot(a, b).shape = () 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Above, the results for 1-D matched our implementation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Vectors-vs.-For-Loop">
+<a class="anchor" href="#Vectors-vs.-For-Loop" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vectors vs. For Loop<a class="anchor-link" href="#Vectors-vs.-For-Loop"> </a>
+</h3>
+<p>The NumPy library improves speed and memory efficiency as compared to using a for loop for the same task.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10000000</span><span class="p">)</span>  <span class="c1"># very large arrays</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10000000</span><span class="p">)</span>
+
+<span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># capture start time</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># capture end time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"np.dot(a, b) =  </span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Vectorized version duration: </span><span class="si">{</span><span class="mi">1000</span><span class="o">*</span><span class="p">(</span><span class="n">toc</span><span class="o">-</span><span class="n">tic</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms "</span><span class="p">)</span>
+
+<span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># capture start time</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">my_dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># capture end time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"my_dot(a, b) =  </span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"loop version duration: </span><span class="si">{</span><span class="mi">1000</span><span class="o">*</span><span class="p">(</span><span class="n">toc</span><span class="o">-</span><span class="n">tic</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms "</span><span class="p">)</span>
+
+<span class="k">del</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="k">del</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>  <span class="c1">#remove these big arrays from memory</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>np.dot(a, b) =  2501072.5817
+Vectorized version duration: 69.2592 ms 
+my_dot(a, b) =  2501072.5817
+loop version duration: 5942.2548 ms 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, vectorization provides a large speed up in this example. This is because NumPy makes better use of available data parallelism in the underlying hardware. GPU's and modern CPU's implement Single Instruction, Multiple Data (SIMD) pipelines allowing multiple operations to be issued in parallel. This is critical in Machine Learning where the data sets are often very large.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h2 id="Matrices">
+<a class="anchor" href="#Matrices" aria-hidden="true"><span class="octicon octicon-link"></span></a>Matrices<a class="anchor-link" href="#Matrices"> </a>
+</h2>
+<p>Matrices are two-dimensional arrays. The elements of a matrix are all of the same type. In notation, matrices are denoted with a capital, bold letter such as $\mathbf{X}$. In general, <code>m</code> is often the number of rows and <code>n</code> the number of columns. The elements of a matrix can be referenced with a two dimensional index. In math settings, numbers in the index typically run from 1 to n. In computer science and these labs, indexing will run from 0 to n-1.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="NumPy-Arrays">
+<a class="anchor" href="#NumPy-Arrays" aria-hidden="true"><span class="octicon octicon-link"></span></a>NumPy Arrays<a class="anchor-link" href="#NumPy-Arrays"> </a>
+</h3>
+<p>NumPy's basic data structure is an indexable, n-dimensional <em>array</em> containing elements of the same type (<code>dtype</code>). Matrices have a two-dimensional (2-D) index [m,n].</p>
+<p>In machine learning, 2-D matrices are used to hold training data. Training data is $m$ examples by $n$ features creating an (m,n) array.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Matrix-Creation">
+<a class="anchor" href="#Matrix-Creation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Matrix Creation<a class="anchor-link" href="#Matrix-Creation"> </a>
+</h2>
+<p>The same function that created 1-D vectors will create 2-D or n-D arrays.<br>
+Below, the shape tuple is provided to achieve a 2-D result. Notice how NumPy uses brackets to denote each dimension. Notice further than NumPy, when printing, will print one row per line.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>                                       
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>                     
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>                                                                   
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> 
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>a shape = (1, 5), a = [[0. 0. 0. 0. 0.]]
+a shape = (2, 1), a = [[0.]
+ [0.]]
+a shape = (1, 1), a = [[0.44236513]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One can also manually specify data. Dimensions are specified with additional brackets matching the format in the printing above.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">]]);</span>   
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">" a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, np.array: a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">],</span>   <span class="c1"># One can also</span>
+              <span class="p">[</span><span class="mi">4</span><span class="p">],</span>   <span class="c1"># separate values</span>
+              <span class="p">[</span><span class="mi">3</span><span class="p">]]);</span> <span class="c1">#into separate rows</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">" a shape = </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, np.array: a = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> a shape = (3, 1), np.array: a = [[5]
+ [4]
+ [3]]
+ a shape = (3, 1), np.array: a = [[5]
+ [4]
+ [3]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Operations-on-Matrices">
+<a class="anchor" href="#Operations-on-Matrices" aria-hidden="true"><span class="octicon octicon-link"></span></a>Operations on Matrices<a class="anchor-link" href="#Operations-on-Matrices"> </a>
+</h2>
+<h3 id="Indexing">
+<a class="anchor" href="#Indexing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Indexing<a class="anchor-link" href="#Indexing"> </a>
+</h3>
+<p>Matrices include a second index. The two indexes describe [row, column]. Access can either return an element or a row/column.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1">#reshape is a convenient way to create matrices</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a.shape: </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, </span><span class="se">\n</span><span class="s2">a= </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># access an element</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">a[2,0].shape: </span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">,   a[2,0] = </span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">,     type(a[2,0]) = </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">Accessing an element returns a scalar</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># access a row</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a[2].shape: </span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">,   a[2]   = </span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">, type(a[2])   = </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">Accessing a matrix by just specifying the row will return a 1-D vector"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>a.shape: (3, 2), 
+a= [[0 1]
+ [2 3]
+ [4 5]]
+
+a[2,0].shape: (),   a[2,0] = 4,     type(a[2,0]) = &lt;class 'numpy.int32'&gt; 
+Accessing an element returns a scalar
+
+a[2].shape: (2,),   a[2]   = [4 5], type(a[2])   = &lt;class 'numpy.ndarray'&gt; 
+Accessing a matrix by just specifying the row will return a 1-D vector
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Slicing">
+<a class="anchor" href="#Slicing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Slicing<a class="anchor-link" href="#Slicing"> </a>
+</h3>
+<p>Slicing creates an array of indices using a set of three values (<code>start:stop:step</code>). A subset of values is also valid.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a = </span><span class="se">\n</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># access 5 consecutive elements (start:stop:step)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"a[0, 2:7:1] = "</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="s2">",  a[0, 2:7:1].shape ="</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"a 1-D array"</span><span class="p">)</span>
+
+<span class="c1"># access 5 consecutive elements (start:stop:step) in two rows</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"a[:, 2:7:1] = </span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="s2">",  a[:, 2:7:1].shape ="</span><span class="p">,</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"a 2-D array"</span><span class="p">)</span>
+
+<span class="c1"># access all elements</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"a[:,:] = </span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">a</span><span class="p">[:,:],</span> <span class="s2">",  a[:,:].shape ="</span><span class="p">,</span> <span class="n">a</span><span class="p">[:,:]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># access all elements in one row (very common usage)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"a[1,:] = "</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">,:],</span> <span class="s2">",  a[1,:].shape ="</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"a 1-D array"</span><span class="p">)</span>
+<span class="c1"># same as</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"a[1]   = "</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>   <span class="s2">",  a[1].shape   ="</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"a 1-D array"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>a = 
+[[ 0  1  2  3  4  5  6  7  8  9]
+ [10 11 12 13 14 15 16 17 18 19]]
+a[0, 2:7:1] =  [2 3 4 5 6] ,  a[0, 2:7:1].shape = (5,) a 1-D array
+a[:, 2:7:1] = 
+ [[ 2  3  4  5  6]
+ [12 13 14 15 16]] ,  a[:, 2:7:1].shape = (2, 5) a 2-D array
+a[:,:] = 
+ [[ 0  1  2  3  4  5  6  7  8  9]
+ [10 11 12 13 14 15 16 17 18 19]] ,  a[:,:].shape = (2, 10)
+a[1,:] =  [10 11 12 13 14 15 16 17 18 19] ,  a[1,:].shape = (10,) a 1-D array
+a[1]   =  [10 11 12 13 14 15 16 17 18 19] ,  a[1].shape   = (10,) a 1-D array
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="shirolepranav/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/numpy/2021/12/18/vectors-matrices.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A Data Science Blog</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/shirolepranav" target="_blank" title="shirolepranav"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/Shirole_Pranav" target="_blank" title="Shirole_Pranav"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
